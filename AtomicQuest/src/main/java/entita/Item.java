@@ -25,27 +25,27 @@ public class Item {
     
     
     public String getId() {
-        return id;
+        return this.id;
     }
     
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public String getDescrizione() {
-        return descrizione;
+        return this.descrizione;
     }
 
     public boolean isPrendibile() {
-        return prendibile;
+        return this.prendibile;
     }
 
     public boolean isApribile() {
-        return apribile;
+        return this.apribile;
     }
 
     public boolean isAperto() {
-        return aperto;
+        return this.aperto;
     }
 
     public void setAperto(boolean aperto) {
