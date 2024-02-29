@@ -3,8 +3,10 @@ package entita;
 
 
 public enum ModalitaDiAccesso {
-    PORTAPERTA,
+    PORTAAPERTA,
     PORTACONTESSERINO,
     PORTACONCODICE,
-    ASCENSORE
+    ASCENSORE,
+    CONDOTTO,
+    SCALE,
 }

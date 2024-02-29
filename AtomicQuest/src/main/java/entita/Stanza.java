@@ -7,15 +7,13 @@ public class Stanza extends Room {
     
     private ModalitaDiAccesso modAccesso;
     private final LivelloRadioattivita esposizRadioattiva;
-    private final boolean radioattiva;
     
 
     public Stanza(ModalitaDiAccesso modAccesso, LivelloRadioattivita esposizRadioattiva, 
-            boolean radioattiva, String id, String nome, String descrizione, String osserva, String benvenuto) {
+            String id, String nome, String descrizione, String osserva, String benvenuto) {
         super(id, nome, descrizione, osserva, benvenuto);
         this.modAccesso = modAccesso;
         this.esposizRadioattiva = esposizRadioattiva;
-        this.radioattiva = radioattiva;
     }
 
     public ModalitaDiAccesso getModAccesso() {
@@ -31,9 +29,7 @@ public class Stanza extends Room {
     }
 
     public boolean isRadioattiva() {
-        return this.radioattiva;
+        return this.esposizRadioattiva == LivelloRadioattivita.MEDIO || this.esposizRadioattiva == LivelloRadioattivita.ELEVATO;
     }
     
-    
-
 }
