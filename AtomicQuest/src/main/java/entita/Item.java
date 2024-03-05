@@ -5,7 +5,7 @@ import java.util.Objects;
 
 
 public class Item {
-    
+
     private final String id;
     private final String nome;
     private final String descrizione;
@@ -13,8 +13,8 @@ public class Item {
     private final boolean apribile;
     private boolean aperto;
 
-    
-    public Item(String id, String nome, String descrizione, boolean prendibile, boolean apribile, boolean aperto) {
+    public Item(final String id, final String nome, final String descrizione,
+            final boolean prendibile, final boolean apribile, final boolean aperto) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
@@ -22,12 +22,11 @@ public class Item {
         this.apribile = apribile;
         this.aperto = aperto;
     }
-    
-    
+
     public String getId() {
         return this.id;
     }
-    
+
     public String getNome() {
         return this.nome;
     }
@@ -48,11 +47,10 @@ public class Item {
         return this.aperto;
     }
 
-    public void setAperto(boolean aperto) {
+    public void setAperto(final boolean aperto) {
         this.aperto = aperto;
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 7;

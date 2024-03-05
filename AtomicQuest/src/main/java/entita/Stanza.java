@@ -3,25 +3,14 @@ package entita;
 
 
 public class Stanza extends Room {
-    
-    
-    private ModalitaDiAccesso modAccesso;
+
     private final LivelloRadioattivita esposizRadioattiva;
-    
+    private boolean visitata = false;
 
-    public Stanza(ModalitaDiAccesso modAccesso, LivelloRadioattivita esposizRadioattiva, 
-            String id, String nome, String descrizione, String osserva, String benvenuto) {
-        super(id, nome, descrizione, osserva, benvenuto);
-        this.modAccesso = modAccesso;
+    public Stanza(final String id, final String nome, final String descrizione,
+            final String benvenuto, final LivelloRadioattivita esposizRadioattiva) {
+        super(id, nome, descrizione, benvenuto);
         this.esposizRadioattiva = esposizRadioattiva;
-    }
-
-    public ModalitaDiAccesso getModAccesso() {
-        return this.modAccesso;
-    }
-
-    public void setModAccesso(ModalitaDiAccesso modAccesso) {
-        this.modAccesso = modAccesso;
     }
 
     public LivelloRadioattivita getEsposizRadioattiva() {
@@ -31,5 +20,12 @@ public class Stanza extends Room {
     public boolean isRadioattiva() {
         return this.esposizRadioattiva == LivelloRadioattivita.MEDIO || this.esposizRadioattiva == LivelloRadioattivita.ELEVATO;
     }
-    
+
+    public boolean isVisitata() {
+        return this.visitata;
+    }
+
+    public void setVisitata(final boolean visitata) {
+        this.visitata = visitata;
+    }
 }

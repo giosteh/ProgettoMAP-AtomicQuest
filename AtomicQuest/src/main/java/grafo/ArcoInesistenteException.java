@@ -1,10 +1,7 @@
 
 package grafo;
 
-/**
- *
- * @author giosteh
- */
+
 public class ArcoInesistenteException extends Exception {
 
     @Override

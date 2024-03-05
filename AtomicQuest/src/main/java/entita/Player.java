@@ -4,46 +4,30 @@ package entita;
 import grafo.NodoInesistenteException;
 
 
-public class Player {
-    
+public abstract class Player {
+
     private final String nome;
     private final Inventario inventario = new Inventario();
-    private final Mappa mappa = new Mappa();
-    private Room stanzaCorrente;
 
-    public Player(String nome, Stanza stanzaCorrente) {
+    public Player(final String nome) {
         this.nome = nome;
-        this.stanzaCorrente = stanzaCorrente;
-    }
-
-    public Room getStanzaCorrente() {
-        return this.stanzaCorrente;
-    }
-
-    public void setStanzaCorrente(Room stanzaCorrente) {
-        this.stanzaCorrente = stanzaCorrente;
     }
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public Inventario getInventario() {
-        return inventario;
+        return this.inventario;
     }
-    
+
     public void prendiItem(final Item item) {
         this.inventario.aggiungiItem(item);
     }
-    
+
     public void lasciaItem(final Item item) {
-        this.inventario.togliItem(item);
+        this.inventario.rimuoviItem(item);
     }
-    
-    public void spostatiVerso(final Direzione direz) throws NodoInesistenteException {
-        Room stanzaSucc = this.mappa.getStanzaPerDirezione(stanzaCorrente, direz);
-        this.setStanzaCorrente(stanzaSucc);
-    }
-    
-    //usaItem in eventuale Controller
+
+    public abstract void spostatiVerso(final Direzione direzione) throws NodoInesistenteException;
 }

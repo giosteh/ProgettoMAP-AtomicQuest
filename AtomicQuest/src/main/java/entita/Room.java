@@ -1,35 +1,29 @@
 
 package entita;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
 
 public class Room {
-    
+
     private final String id;
     private final String nome;
     private final String descrizione;
-    private String osserva;
+    private final List<String> osserva = new ArrayList<>();
     private final String benvenuto;
-    private Set<Item> itemPresenti = new TreeSet<>();
+    private final Set<Item> itemPresenti = new TreeSet<>();
 
-    public Room(String id, String nome, String descrizione, String osserva, String benvenuto) {
+    public Room(final String id, final String nome, final String descrizione,
+            final String benvenuto) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
-        this.osserva = osserva;
         this.benvenuto = benvenuto;
-    }
-
-    public String getOsserva() {
-        return osserva;
-    }
-
-    public void setOsserva(String osserva) {
-        this.osserva = osserva;
     }
 
     public String getId() {
@@ -48,18 +42,26 @@ public class Room {
         return this.benvenuto;
     }
 
+    public Iterator<String> iteratoreDescr() {
+        return this.osserva.iterator();
+    }
+
+    public void aggiungiDescr(final String descr) {
+        this.osserva.add(descr);
+    }
+
     public void aggiungiItem(final Item item) {
         this.itemPresenti.add(item);
     }
-    
-    public void togliItem(final Item item) {
+
+    public void rimuoviItem(final Item item) {
         this.itemPresenti.remove(item);
     }
-    
-    public Iterator<Item> iteratore() {
+
+    public Iterator<Item> iteratoreItem() {
         return this.itemPresenti.iterator();
     }
-    
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -81,6 +83,4 @@ public class Room {
         final Room other = (Room) obj;
         return Objects.equals(this.id, other.id);
     }
-    
-
 }

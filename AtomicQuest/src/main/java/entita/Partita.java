@@ -3,12 +3,10 @@ package entita;
 
 
 public class Partita {
-    
-    private Giocatore giocatore;
 
-    public Partita(Giocatore giocatore) {
+    private final Giocatore giocatore;
+
+    public Partita(final Giocatore giocatore) {
         this.giocatore = giocatore;
-    }
-    
-    
+    } 
 }
