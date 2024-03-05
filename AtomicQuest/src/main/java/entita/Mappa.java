@@ -1,6 +1,7 @@
 
 package entita;
 
+import grafo.ArcoInesistenteException;
 import grafo.GrafoMap;
 import grafo.NodoInesistenteException;
 
@@ -12,7 +13,6 @@ import java.util.Set;
 public class Mappa {
     
     private final GrafoMap<Stanza, Collegamento> grafo = new GrafoMap<>();
-    private final Set<Stanza> stanze = new TreeSet<>();
 
     private class Collegamento {
 
@@ -69,7 +69,7 @@ public class Mappa {
             this.grafo.inserisciArcoConEtichetta(atrio, anticameraSalaPompe, new Collegamento(Direzione.EST, ModalitaDiAccesso.PORTAAPERTA));
             this.grafo.inserisciArcoConEtichetta(anticameraSalaPompe, atrio, new Collegamento(Direzione.OVEST, ModalitaDiAccesso.PORTAAPERTA));
             this.grafo.inserisciArcoConEtichetta(anticameraSalaPompe, salaPompe, new Collegamento(Direzione.NORD, ModalitaDiAccesso.CONDOTTO));
-            this.grafo.inserisciArcoConEtichetta(salaPompe, anticameraSalaPompe, new Collegamento(Direzione.SUD, ModalitaDiAccesso.CONDOTTO) );
+            this.grafo.inserisciArcoConEtichetta(salaPompe, anticameraSalaPompe, new Collegamento(Direzione.SUD, ModalitaDiAccesso.CONDOTTO));
             this.grafo.inserisciArcoConEtichetta(anticameraSalaPompe, cortile, new Collegamento(Direzione.SUD, ModalitaDiAccesso.CONDOTTO));
             this.grafo.inserisciArcoConEtichetta(atrio, anticameraSalaVapore, new Collegamento(Direzione.NORD, ModalitaDiAccesso.PORTACONTESSERINO));
             this.grafo.inserisciArcoConEtichetta(anticameraSalaVapore, atrio, new Collegamento(Direzione.SUD, ModalitaDiAccesso.PORTAAPERTA));
@@ -93,7 +93,7 @@ public class Mappa {
             this.grafo.inserisciArcoConEtichetta(depositoCombustibile, anticameraDeposito, new Collegamento(Direzione.NORD, ModalitaDiAccesso.PORTAAPERTA));
         } catch (NodoInesistenteException e) {
             System.err.println(e.getMessage());
-        }   
+        }
     }
 
     public Iterator<Stanza> getStanzeAdiacenti(final Stanza stanza) throws NodoInesistenteException {
@@ -111,7 +111,8 @@ public class Mappa {
         return stanzaSucc;
     }
 
-    public void cambiaModalitaDiAccesso(final Stanza stanza1, final Stanza stanza2, final ModalitaDiAccesso modalita) {
+    public void cambiaModalitaDiAccesso(final Stanza stanza1, final Stanza stanza2, final ModalitaDiAccesso modalita)
+            throws NodoInesistenteException, ArcoInesistenteException {
         this.grafo.leggiArco(stanza1, stanza2).setModalita(modalita);
     }
 }
