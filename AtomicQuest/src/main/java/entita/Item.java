@@ -10,17 +10,13 @@ public class Item {
     private final String nome;
     private final String descrizione;
     private final boolean prendibile;
-    private final boolean apribile;
-    private boolean aperto;
 
     public Item(final String id, final String nome, final String descrizione,
-            final boolean prendibile, final boolean apribile, final boolean aperto) {
+            final boolean prendibile) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
         this.prendibile = prendibile;
-        this.apribile = apribile;
-        this.aperto = aperto;
     }
 
     public String getId() {
@@ -37,18 +33,6 @@ public class Item {
 
     public boolean isPrendibile() {
         return this.prendibile;
-    }
-
-    public boolean isApribile() {
-        return this.apribile;
-    }
-
-    public boolean isAperto() {
-        return this.aperto;
-    }
-
-    public void setAperto(final boolean aperto) {
-        this.aperto = aperto;
     }
 
     @Override

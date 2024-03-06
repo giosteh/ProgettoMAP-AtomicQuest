@@ -58,6 +58,20 @@ public class Mappa {
         Stanza anticameraDeposito = new Stanza("014", "Anticamera Deposito", "", "", LivelloRadioattivita.MEDIO);
         Stanza depositoCombustibile = new Stanza("015", "Deposito Combustibile", "", "", LivelloRadioattivita.ELEVATO);
 
+        
+        ItemContenitore armadiettoSinistro = new ItemContenitore("078", "Armadietto sinistro", "E' un semplice armadietto di metallo", false, false);
+        spogliatoio.aggiungiItem(armadiettoSinistro);
+        armadiettoSinistro.aggiungiItem(new Item("096", "Tuta", "E' una tuta che protegge dalle radiazioni", true));
+        ItemContenitore armadiettoDestro = new ItemContenitore("079", "Armadietto destro", "E' un semplice armadietto di metallo", false, false);
+        spogliatoio.aggiungiItem(armadiettoDestro);
+        armadiettoDestro.aggiungiItem(new Item("068", "Tesserino", "E' un tesserino che permette di aprire le porte", true));
+        salaVapore.aggiungiItem(new Item("130", "Cacciavite", "E' un cacciavite a stella", true));
+        salaPompe.aggiungiItem(new Item("131", "Chiave ascensore", "E' una chiave inglese", true));
+        salaMacchine.aggiungiItem(new Item("115", "Foglio", "E' un foglio apparentemente bianco", true));
+        salaMacchine.aggiungiItem(new Item("082", "Chiave armadietto", "E' una chiave", true));
+        salaReattore.aggiungiItem(new Item("120", "Torcia", "E' una torcia a luce ultravioletta", true));
+        depositoCombustibile.aggiungiItem(new Item("132", "Uranio", "E' l'uranio che stavi cercando", true));
+
         this.grafo.inserisciNodi(cortile, atrio, spogliatoio, anticameraSalaPompe, salaPompe, anticameraSalaVapore,
                 salaVapore, anticameraSalaMacchine, corridoio, anticameraSalaReattore, salaReattore, salaControllo,
                 anticameraDeposito, depositoCombustibile);

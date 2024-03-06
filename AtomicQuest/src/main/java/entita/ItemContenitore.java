@@ -9,10 +9,12 @@ import java.util.TreeSet;
 public class ItemContenitore extends Item {
 
     private Set<Item> itemsContenuti = new TreeSet<>();
+    private boolean aperto;
 
     public ItemContenitore(final String id, final String nome, final String descrizione,
-            final boolean prendibile, final boolean apribile, final boolean aperto) {
-        super(id, nome, descrizione, prendibile, apribile, aperto);
+            final boolean prendibile, boolean aperto) {
+        super(id, nome, descrizione, prendibile);
+        this.aperto = aperto;
     }
 
     public void aggiungiItem(final Item item) {
@@ -21,6 +23,14 @@ public class ItemContenitore extends Item {
 
     public void rimuoviItem(final Item item) {
         this.itemsContenuti.remove(item);
+    }
+
+    public boolean isAperto() {
+        return this.aperto;
+    }
+
+    public void setAperto(final boolean aperto) {
+        this.aperto = aperto;
     }
 
     public Iterator<Item> iteratore() {
