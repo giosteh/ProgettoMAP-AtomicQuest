@@ -66,9 +66,9 @@ public class Mappa {
         spogliatoio.aggiungiItem(armadiettoDestro);
         armadiettoDestro.aggiungiItem(new Item("068", "Tesserino", "E' un tesserino che permette di aprire le porte", true));
         salaVapore.aggiungiItem(new Item("130", "Cacciavite", "E' un cacciavite a stella", true));
-        salaPompe.aggiungiItem(new Item("131", "Chiave ascensore", "E' una chiave inglese", true));
+        salaPompe.aggiungiItem(new Item("131", "Telecomando", "E' un telecomando che permette di utilizzare l'ascensore", true));
         salaMacchine.aggiungiItem(new Item("115", "Foglio", "E' un foglio apparentemente bianco", true));
-        salaMacchine.aggiungiItem(new Item("082", "Chiave armadietto", "E' una chiave", true));
+        salaMacchine.aggiungiItem(new Item("082", "Chiave", "E' una chiave che permette di aprire qualcosa", true));
         salaReattore.aggiungiItem(new Item("120", "Torcia", "E' una torcia a luce ultravioletta", true));
         depositoCombustibile.aggiungiItem(new Item("132", "Uranio", "E' l'uranio che stavi cercando", true));
 
