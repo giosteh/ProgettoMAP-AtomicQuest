@@ -9,11 +9,11 @@ import java.util.stream.Collectors;
 
 
 public class Parser {
-    
+
     interface ValidatoreComando {
         boolean isValido(String comando);
     }
-    
+
     private final Giocatore giocatore;
     private final Map<String, String> vocabolario;
     private final Map<String, Integer> comandi;
@@ -22,7 +22,7 @@ public class Parser {
         this.giocatore = giocatore;
         // caricamento delle hashmap
     }
-    
+
     public OutputParser analizzaComando(final String comando) {
         String codiceComando = this.ottieniCodiceComando(comando.toLowerCase());
         ValidatoreComando validatore = (a) -> (this.comandi.get(a) != null);
@@ -33,33 +33,29 @@ public class Parser {
         }
         return outputComando;
     }
-    
-    private void gestisciSpostamento(final String codiceComando, final OutputParser outputComando) {
+
+    private void gestisciSpostamento(final int tipoComando, final OutputParser outputComando) {
 
     }
-    
-    private void gestisciOsserva(final String codiceComando, final OutputParser outputComando) {
+
+    private void gestisciOsserva(final int tipoComando, final OutputParser outputComando) {
         
     }
-    
-    private void gestisciUso(final String codiceComando, final OutputParser outputComando) {
+
+    private void gestisciUso(final int tipoComando, final OutputParser outputComando) {
         
     }
-    
-    private void gestisciInventario(final String codiceComando, final OutputParser outputComando) {
+
+    private void gestisciInventario(final int tipoComando, final OutputParser outputComando) {
         
     }
-    
-    private void gestisciFinale(final String codiceComando, final OutputParser outputComando) {
-        
-    }
-    
-    private void gestisciComandoNonValido(final String codiceComando, final OutputParser outputComando) {
+
+    private void gestisciFinale(final int tipoComando, final OutputParser outputComando) {
         
     }
     
     private String ottieniCodiceComando(final String comando) {
-        String codiceComando = this.giocatore.getStanzaCorrente().getId();
+        String codiceComando = "";
         Scanner scanComando = new Scanner(comando.trim().replaceAll("[\\p{Punct}&&[^']]", ""));
         scanComando.useDelimiter("\\s+|'");
         
