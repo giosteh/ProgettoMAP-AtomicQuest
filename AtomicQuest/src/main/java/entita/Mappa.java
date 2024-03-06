@@ -129,4 +129,12 @@ public class Mappa {
             throws NodoInesistenteException, ArcoInesistenteException {
         this.grafo.leggiArco(stanza1, stanza2).setModalita(modalita);
     }
+
+    public boolean esisteStanzaSuccessiva(final Stanza stanza, final Direzione direzione) {
+        try {
+            return this.getStanzaPerDirezione(stanza, direzione) != null;
+        } catch (NodoInesistenteException e) {
+            return false;
+        }
+    }
 }
