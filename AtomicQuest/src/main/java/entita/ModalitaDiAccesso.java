@@ -8,5 +8,5 @@ public enum ModalitaDiAccesso {
     PORTACONCODICE,
     ASCENSORE,
     CONDOTTO,
-    SCALE,
+    SCALE
 }
