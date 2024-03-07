@@ -1,7 +1,10 @@
 
 package controller;
 
+import entita.Direzione;
 import entita.Giocatore;
+import entita.ModalitaDiAccesso;
+import entita.Stanza;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Function;
@@ -14,9 +17,19 @@ public class Parser {
         boolean isValido(String comando);
     }
 
+    interface RiconoscitoreComando {
+        boolean riconosci(int tipoComando);
+    }
+
     private final Giocatore giocatore;
     private final Map<String, String> vocabolario;
     private final Map<String, Integer> comandi;
+    private final RiconoscitoreComando riconoscitoreComandoSpostamento = (a) -> (a >= 1 && a <= 10);
+    private final RiconoscitoreComando riconoscitoreComandoOsserva = (a) -> (a == 41);
+    private final RiconoscitoreComando riconoscitoreComandoUso = (a) -> (a >= 11 && a <= 20);
+    private final RiconoscitoreComando riconoscitoreComandoInventario = (a) -> (a >= 21 && a <= 40);
+    private final RiconoscitoreComando riconoscitoreComandoFinale = (a) -> (a == 42);
+
 
     public Parser(Giocatore giocatore) {
         this.giocatore = giocatore;
@@ -30,12 +43,72 @@ public class Parser {
         if (!validatore.isValido(comando)) {
             outputComando.setStringaDaStampare("Eh??\n\n");
         } else {
+            int tipoComando = this.comandi.get(codiceComando);
+            if (this.riconoscitoreComandoSpostamento.riconosci(tipoComando)) {
+                this.gestisciSpostamento(tipoComando, outputComando);
+            } else if (this.riconoscitoreComandoOsserva.riconosci(tipoComando)) {
+                this.gestisciOsserva(tipoComando, outputComando);
+            } else if (this.riconoscitoreComandoUso.riconosci(tipoComando)) {
+                this.gestisciUso(tipoComando, outputComando);
+            } else if (this.riconoscitoreComandoInventario.riconosci(tipoComando)) {
+                this.gestisciInventario(tipoComando, outputComando);
+            } else if (this.riconoscitoreComandoFinale.riconosci(tipoComando)) {
+                this.gestisciFinale(tipoComando, outputComando);
+            }
         }
         return outputComando;
     }
 
     private void gestisciSpostamento(final int tipoComando, final OutputParser outputComando) {
-
+        Direzione direzione = null;
+        Stanza stanzaCorrente = this.giocatore.getStanzaCorrente();
+        Mappa mappa = this.giocatore.getMappa();
+        if (tipoComando >=1 && tipoComando <= 6) {
+            direzione = Direzione.values()[tipoComando - 1];
+        } else if (tipoComando == 7) {
+            if (stanzaCorrente.getId().equals("006")) {
+                direzione = Direzione.GIU;
+            } else if (stanzaCorrente.getId().equals("008")) {
+                direzione = Direzione.SU;
+            } else {
+                outputComando.setStringaDaStampare("Non c'è nessun ascensore qui.\n\n");
+                return;
+            }
+        } else if (tipoComando == 8) {
+            if (stanzaCorrente.getId().equals("013")) {
+                direzione = Direzione.GIU;
+            } else if (stanzaCorrente.getId().equals("014")) {
+                direzione = Direzione.SU;
+            } else {
+                outputComando.setStringaDaStampare("Non ci sono scale qui.\n\n");
+                return;
+            }
+        }
+        if (!mappa.esisteStanzaSuccessiva(stanzaCorrente, direzione)) {
+            outputComando.setStringaDaStampare("Non puoi andare in quella direzione.\n\n");
+            return;
+        }
+        if (!mappa.verificaModalitaAccesso(stanzaCorrente, direzione, ModalitaDiAccesso.APERTO)) {
+            outputComando.setStringaDaStampare("Non puoi accedere a questa stanza.\n\n");
+            return;
+        }
+        if (!this.giocatore.isTutaIntegra() && mappa.getStanzaPerDirezione(stanzaCorrente, direzione).isRadioattiva()) {
+            outputComando.setStringaDaStampare("Non puoi entrare in una stanza radioattiva con la tuta danneggiata.\n\n");
+            return;
+        }
+        this.giocatore.spostatiVerso(direzione);
+        stanzaCorrente = this.giocatore.getStanzaCorrente();
+        if (stanzaCorrente.getId().equals("005") && !stanzaCorrente.isVisitata()) {
+            this.giocatore.setTutaIntegra(false);
+            outputComando.setStringaDaStampare("La tua tuta si è danneggiata.\n\n");
+            outputComando.setAzione(AzioneSuInterfaccia.CAMBIOTUTA);
+        }
+        if (!stanzaCorrente.isVisitata()){
+            stanzaCorrente.setVisitata(true);
+            outputComando.setStringaDaStampare(stanzaCorrente.getDescrizione());
+        } else {
+            outputComando.setStringaDaStampare(stanzaCorrente.getBenvenuto());
+        }
     }
 
     private void gestisciOsserva(final int tipoComando, final OutputParser outputComando) {
