@@ -3,6 +3,8 @@ package controller;
 
 import entita.Direzione;
 import entita.Giocatore;
+import entita.LivelloRadioattivita;
+import entita.Mappa;
 import entita.ModalitaDiAccesso;
 import entita.Stanza;
 import java.util.Map;
@@ -62,6 +64,7 @@ public class Parser {
     private void gestisciSpostamento(final int tipoComando, final OutputParser outputComando) {
         Direzione direzione = null;
         Stanza stanzaCorrente = this.giocatore.getStanzaCorrente();
+        LivelloRadioattivita livelloRadioattivitaPrecedente = stanzaCorrente.getEsposizRadioattiva();
         Mappa mappa = this.giocatore.getMappa();
         if (tipoComando >=1 && tipoComando <= 6) {
             direzione = Direzione.values()[tipoComando - 1];
@@ -101,7 +104,7 @@ public class Parser {
         if (stanzaCorrente.getId().equals("005") && !stanzaCorrente.isVisitata()) {
             this.giocatore.setTutaIntegra(false);
             outputComando.setStringaDaStampare("La tua tuta si è danneggiata.\n\n");
-            outputComando.setAzione(AzioneSuInterfaccia.CAMBIOTUTA);
+            outputComando.setAzione(AzioneSuInterfaccia.TUTAROTTA);
         }
         if (!stanzaCorrente.isVisitata()){
             stanzaCorrente.setVisitata(true);
@@ -109,10 +112,26 @@ public class Parser {
         } else {
             outputComando.setStringaDaStampare(stanzaCorrente.getBenvenuto());
         }
+        
+        if (stanzaCorrente.getEsposizRadioattiva() != livelloRadioattivitaPrecedente) {
+            switch (stanzaCorrente.getEsposizRadioattiva()) {
+                case BASSO:
+                    outputComando.setAzione(AzioneSuInterfaccia.RADIAZIONIBASSE);
+                    break;
+                case MEDIO:
+                    outputComando.setAzione(AzioneSuInterfaccia.RADIAZIONIMEDIE);
+                    break;
+                case ELEVATO:
+                    outputComando.setAzione(AzioneSuInterfaccia.RADIAZIONIELEVATE);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void gestisciOsserva(final int tipoComando, final OutputParser outputComando) {
-        
+        outputComando.setStringaDaStampare(this.giocatore.getStanzaCorrente().getOsserva());
     }
 
     private void gestisciUso(final int tipoComando, final OutputParser outputComando) {
