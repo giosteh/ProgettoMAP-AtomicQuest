@@ -148,8 +148,8 @@ public class Parser {
     
     private String ottieniCodiceComando(final String comando) {
         String codiceComando = "";
-        Scanner scanComando = new Scanner(comando.trim().replaceAll("[\\p{Punct}&&[^']]", ""));
-        scanComando.useDelimiter("\\s+|'");
+        Scanner scanComando = new Scanner(comando.replaceAll("\\p{Punct}", " ").trim());
+        scanComando.useDelimiter("\\s+");
         
         Function<String, String> codiceMapper = this.vocabolario::get;
         codiceComando = scanComando.tokens().map(codiceMapper)

@@ -1,8 +1,6 @@
 
 package entita;
 
-import grafo.NodoInesistenteException;
-
 
 public class Giocatore extends Player {
 
@@ -35,10 +33,6 @@ public class Giocatore extends Player {
     }
 
     public void spostatiVerso(final Direzione direzione) {
-        try {
-            this.stanzaCorrente = this.mappa.getStanzaPerDirezione(this.stanzaCorrente, direzione);
-        } catch (NodoInesistenteException ex) {
-            System.err.println(ex.getMessage());
-        }
+        this.stanzaCorrente = this.mappa.getStanzaPerDirezione(this.stanzaCorrente, direzione);
     }
 }
