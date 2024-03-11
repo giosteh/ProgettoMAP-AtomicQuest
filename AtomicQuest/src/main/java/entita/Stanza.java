@@ -8,8 +8,8 @@ public class Stanza extends Room {
     private boolean visitata = false;
 
     public Stanza(final String id, final String nome, final String descrizione,
-            final String benvenuto, final LivelloRadioattivita esposizRadioattiva) {
-        super(id, nome, descrizione, benvenuto);
+               final String osserva, final String benvenuto, final LivelloRadioattivita esposizRadioattiva) {
+        super(id, nome, descrizione, osserva, benvenuto);
         this.esposizRadioattiva = esposizRadioattiva;
     }
 

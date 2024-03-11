@@ -14,15 +14,16 @@ public class Room {
     private final String id;
     private final String nome;
     private final String descrizione;
-    private final List<String> osserva = new ArrayList<>();
+    private String osserva;
     private final String benvenuto;
     private final Set<Item> itemPresenti = new TreeSet<>();
 
     public Room(final String id, final String nome, final String descrizione,
-            final String benvenuto) {
+                final String osserva, final String benvenuto) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
+        this.osserva = osserva;
         this.benvenuto = benvenuto;
     }
 
@@ -42,12 +43,12 @@ public class Room {
         return this.benvenuto;
     }
 
-    public Iterator<String> iteratoreDescr() {
-        return this.osserva.iterator();
+    public String getOsserva() {
+        return osserva;
     }
-
-    public void aggiungiDescr(final String descr) {
-        this.osserva.add(descr);
+    
+    public void setOsserva(final String osserva) {
+        this.osserva = osserva;
     }
 
     public void aggiungiItem(final Item item) {
