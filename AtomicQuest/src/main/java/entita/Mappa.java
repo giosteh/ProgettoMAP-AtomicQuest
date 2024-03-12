@@ -4,8 +4,11 @@ package entita;
 import grafo.ArcoInesistenteException;
 import grafo.GrafoMap;
 import grafo.NodoInesistenteException;
+import controller.GestioneFile;
+import controller.Output;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -40,39 +43,73 @@ public class Mappa {
     }
 
     public Mappa() {
+        
     }
 
     public void initMappa() {
 
-        Stanza cortile = new Stanza("001", "Cortile", "", "", LivelloRadioattivita.BASSO);
-        Stanza atrio = new Stanza("002", "Atrio", "", "", LivelloRadioattivita.BASSO);
-        Stanza spogliatoio = new Stanza("003", "Spogliatoio", "", "", LivelloRadioattivita.BASSO);
-        Stanza anticameraSalaPompe = new Stanza("004", "Anticamera Sala Pompe", "", "", LivelloRadioattivita.BASSO);
-        Stanza salaPompe = new Stanza("005", "Sala Pompe", "", "", LivelloRadioattivita.BASSO);
-        Stanza anticameraSalaVapore = new Stanza("006", "Anticamera Sala Vapore", "", "", LivelloRadioattivita.BASSO);
-        Stanza salaVapore = new Stanza("007", "Sala Vapore", "", "", LivelloRadioattivita.BASSO);
-        Stanza anticameraSalaMacchine = new Stanza("008", "Anticamera Sala Macchine", "", "", LivelloRadioattivita.BASSO);
-        Stanza salaMacchine = new Stanza("009", "Sala Macchine", "", "", LivelloRadioattivita.BASSO);
-        Stanza corridoio = new Stanza("010", "Corridoio", "", "", LivelloRadioattivita.BASSO);
-        Stanza anticameraSalaReattore = new Stanza("011", "Anticamera Sala Reattore", "", "", LivelloRadioattivita.MEDIO);
-        Stanza salaReattore = new Stanza("012", "Sala Reattore", "", "", LivelloRadioattivita.MEDIO);
-        Stanza salaControllo = new Stanza("013", "Sala Controllo", "", "", LivelloRadioattivita.MEDIO);
-        Stanza anticameraDeposito = new Stanza("014", "Anticamera Deposito", "", "", LivelloRadioattivita.MEDIO);
-        Stanza depositoCombustibile = new Stanza("015", "Deposito Combustibile", "", "", LivelloRadioattivita.ELEVATO);
+        List<String> stringhe = GestioneFile.caricaList("stringhe.dat");
+        
+        Stanza cortile = new Stanza(Stanze.CORTILE, stringhe.get(Output.DESCRIZIONECORTILE.ordinal()),
+                stringhe.get(Output.OSSERVACORTILE.ordinal()), stringhe.get(Output.BENVENUTOCORTILE.ordinal()),
+                LivelloRadioattivita.BASSO);
+        Stanza atrio = new Stanza(Stanze.ATRIO, stringhe.get(Output.DESCRIZIONEATRIO.ordinal()),
+                stringhe.get(Output.OSSERVAATRIO.ordinal()), stringhe.get(Output.BENVENUTOATRIO.ordinal()),
+                LivelloRadioattivita.BASSO);
+        Stanza spogliatoio = new Stanza(Stanze.SPOGLIATOIO, stringhe.get(Output.DESCRIZIONESPOGLIATOIO.ordinal()),
+                stringhe.get(Output.OSSERVASPOGLIATOIO.ordinal()), stringhe.get(Output.BENVENUTOSPOGLIATOIO.ordinal()),
+                LivelloRadioattivita.BASSO);
+        Stanza anticameraSalaPompe = new Stanza(Stanze.ANTICAMERASALAPOMPE, stringhe.get(Output.DESCRIZIONEANTICAMERASALAPOMPE.ordinal()),
+                stringhe.get(Output.OSSERVAANTICAMERASALAPOMPE.ordinal()), stringhe.get(Output.BENVENUTOANTICAMERASALAPOMPE.ordinal()),
+                LivelloRadioattivita.BASSO);
+        Stanza salaPompe = new Stanza(Stanze.SALAPOMPE, stringhe.get(Output.DESCRIZIONESALAPOMPE.ordinal()),
+                stringhe.get(Output.OSSERVASALAPOMPE.ordinal()), stringhe.get(Output.BENVENUTOSALAPOMPE.ordinal()),
+                LivelloRadioattivita.BASSO);
+        Stanza anticameraSalaVapore = new Stanza(Stanze.ANTICAMERASALAVAPORE, stringhe.get(Output.DESCRIZIONEANTICAMERASALAVAPORE.ordinal()),
+                stringhe.get(Output.OSSERVAANTICAMERASALAVAPORE.ordinal()), stringhe.get(Output.BENVENUTOANTICAMERASALAVAPORE.ordinal()),
+                LivelloRadioattivita.BASSO);
+        Stanza salaVapore = new Stanza(Stanze.SALAVAPORE, stringhe.get(Output.DESCRIZIONESALAVAPORE.ordinal()),
+                stringhe.get(Output.OSSERVASALAVAPORE.ordinal()), stringhe.get(Output.BENVENUTOSALAVAPORE.ordinal()),
+                LivelloRadioattivita.BASSO);
+        Stanza anticameraSalaMacchine = new Stanza(Stanze.ANTICAMERASALAMACCHINE, stringhe.get(Output.DESCRIZIONEANTICAMERASALAMACCHINE.ordinal()),
+                stringhe.get(Output.OSSERVAANTICAMERASALAMACCHINE.ordinal()), stringhe.get(Output.BENVENUTOANTICAMERASALAMACCHINE.ordinal()),
+                LivelloRadioattivita.BASSO);
+        Stanza salaMacchine = new Stanza(Stanze.SALAMACCHINE, stringhe.get(Output.DESCRIZIONESALAMACCHINE.ordinal()),
+                stringhe.get(Output.OSSERVASALAMACCHINE.ordinal()), stringhe.get(Output.BENVENUTOSALAMACCHINE.ordinal()),
+                LivelloRadioattivita.BASSO);
+        Stanza corridoio = new Stanza(Stanze.CORRIDOIO, stringhe.get(Output.DESCRIZIONECORRIDOIO.ordinal()),
+                stringhe.get(Output.OSSERVACORRIDOIOTUTAROTTA.ordinal()), stringhe.get(Output.BENVENUTOCORRIDOIO.ordinal()),
+                LivelloRadioattivita.BASSO);
+        Stanza anticameraSalaReattore = new Stanza(Stanze.ANTICAMERASALAREATTORE, stringhe.get(Output.DESCRIZIONEANTICAMERASALAREATTORE.ordinal()),
+                stringhe.get(Output.OSSERVAANTICAMERASALAREATTORE.ordinal()), stringhe.get(Output.BENVENUTOANTICAMERASALAREATTORE.ordinal()),
+                LivelloRadioattivita.MEDIO);
+        Stanza salaReattore = new Stanza(Stanze.SALAREATTORE, stringhe.get(Output.DESCRIZIONESALAREATTORE.ordinal()),
+                stringhe.get(Output.OSSERVASALAREATTORE.ordinal()), stringhe.get(Output.BENVENUTOSALAREATTORE.ordinal()),
+                LivelloRadioattivita.MEDIO);
+        Stanza salaControllo = new Stanza(Stanze.SALACONTROLLO, stringhe.get(Output.DESCRIZIONESALACONTROLLO.ordinal()),
+                stringhe.get(Output.OSSERVASALACONTROLLO.ordinal()), stringhe.get(Output.BENVENUTOSALACONTROLLO.ordinal()),
+                LivelloRadioattivita.MEDIO);
+        Stanza anticameraDeposito = new Stanza(Stanze.ANTICAMERADEPOSITO, stringhe.get(Output.DESCRIZIONEANTICAMERADEPOSITO.ordinal()),
+                stringhe.get(Output.OSSERVAANTICAMERADEPOSITO.ordinal()), stringhe.get(Output.BENVENUTOANTICAMERADEPOSITO.ordinal()),
+                LivelloRadioattivita.MEDIO);
+        Stanza depositoCombustibile = new Stanza(Stanze.DEPOSITO, stringhe.get(Output.DESCRIZIONEDEPOSITO.ordinal()),
+                stringhe.get(Output.OSSERVADEPOSITO.ordinal()), stringhe.get(Output.BENVENUTODEPOSITO.ordinal()),
+                LivelloRadioattivita.ELEVATO);
 
         
-        ItemContenitore armadiettoSinistro = new ItemContenitore("078", "Armadietto sinistro", "E' un semplice armadietto di metallo", false, false);
-        spogliatoio.aggiungiItem(armadiettoSinistro);
-        armadiettoSinistro.aggiungiItem(new Item("096", "Tuta", "E' una tuta che protegge dalle radiazioni", true));
-        ItemContenitore armadiettoDestro = new ItemContenitore("079", "Armadietto destro", "E' un semplice armadietto di metallo", false, false);
-        spogliatoio.aggiungiItem(armadiettoDestro);
-        armadiettoDestro.aggiungiItem(new Item("068", "Tesserino", "E' un tesserino che permette di aprire le porte", true));
-        salaVapore.aggiungiItem(new Item("130", "Cacciavite", "E' un cacciavite a stella", true));
-        salaPompe.aggiungiItem(new Item("131", "Telecomando", "E' un telecomando che permette di utilizzare l'ascensore", true));
-        salaMacchine.aggiungiItem(new Item("115", "Foglio", "E' un foglio apparentemente bianco", true));
-        salaMacchine.aggiungiItem(new Item("082", "Chiave", "E' una chiave che permette di aprire qualcosa", true));
-        salaReattore.aggiungiItem(new Item("120", "Torcia", "E' una torcia a luce ultravioletta", true));
-        depositoCombustibile.aggiungiItem(new Item("132", "Uranio", "E' l'uranio che stavi cercando", true));
+        ItemContenitore armadiettoSinistro = new ItemContenitore(Items.ARMADIETTOSINISTRO, stringhe.get(Output.OSSERVAARMADIETTO.ordinal()),
+                false, false);
+        spogliatoio.aggiungiItemContenitore(armadiettoSinistro);
+        armadiettoSinistro.aggiungiItem(new Item(Items.TUTA, stringhe.get(Output.OSSERVATUTA.ordinal()), true));
+        ItemContenitore armadiettoDestro = new ItemContenitore(Items.ARMADIETTODESTRO,stringhe.get(Output.OSSERVAARMADIETTO.ordinal()), false, false);
+        spogliatoio.aggiungiItemContenitore(armadiettoDestro);
+        armadiettoDestro.aggiungiItem(new Item(Items.TESSERINO, stringhe.get(Output.OSSERVATESSERINO.ordinal()) , true));
+        salaVapore.aggiungiItem(new Item(Items.CACCIAVITE, stringhe.get(Output.OSSERVACACCIAVITE.ordinal()) , true));
+        salaPompe.aggiungiItem(new Item(Items.TELECOMANDO, stringhe.get(Output.OSSERVATELECOMANDO.ordinal()), true));
+        salaMacchine.aggiungiItem(new Item(Items.FOGLIO,stringhe.get(Output.OSSERVAFOGLIO.ordinal()), true));
+        salaMacchine.aggiungiItem(new Item(Items.CHIAVE,stringhe.get(Output.OSSERVACHIAVE.ordinal()), true));
+        salaReattore.aggiungiItem(new Item(Items.TORCIA, stringhe.get(Output.OSSERVACHIAVE.ordinal()), true));
+        depositoCombustibile.aggiungiItem(new Item(Items.URANIO, stringhe.get(Output.OSSERVAURANIO.ordinal()), true));
 
         this.grafo.inserisciNodi(cortile, atrio, spogliatoio, anticameraSalaPompe, salaPompe, anticameraSalaVapore,
                 salaVapore, anticameraSalaMacchine, corridoio, anticameraSalaReattore, salaReattore, salaControllo,
@@ -132,9 +169,12 @@ public class Mappa {
         return null;
     }
 
-    public void cambiaModalitaDiAccesso(final Stanza stanza1, final Stanza stanza2, final ModalitaDiAccesso modalita)
-            throws NodoInesistenteException, ArcoInesistenteException {
-        this.grafo.leggiArco(stanza1, stanza2).setModalita(modalita);
+    public void cambiaModalitaDiAccesso(final Stanza stanza, final Direzione direzione, final ModalitaDiAccesso modalita) {
+        try {
+            this.grafo.leggiArco(stanza, this.getStanzaPerDirezione(stanza, direzione)).setModalita(modalita);
+        } catch (NodoInesistenteException | ArcoInesistenteException ex) {
+            System.err.println(ex.getMessage());
+        }
     }
 
     public boolean esisteStanzaSuccessiva(final Stanza stanza, final Direzione direzione) {
@@ -144,7 +184,8 @@ public class Mappa {
     public boolean verificaModalitaAccesso(final Stanza stanza, final Direzione direzione, final ModalitaDiAccesso modalita) {
         try {
             return this.grafo.leggiArco(stanza, this.getStanzaPerDirezione(stanza, direzione)).getModalita() == modalita;
-        } catch (NodoInesistenteException | ArcoInesistenteException e) {
+        } catch (NodoInesistenteException | ArcoInesistenteException ex) {
+            System.err.println(ex.getMessage());
             return false;
         }
     }

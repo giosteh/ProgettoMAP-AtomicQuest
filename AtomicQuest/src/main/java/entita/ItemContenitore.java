@@ -11,9 +11,9 @@ public class ItemContenitore extends Item {
     private Set<Item> itemsContenuti = new TreeSet<>();
     private boolean aperto;
 
-    public ItemContenitore(final String id, final String nome, final String descrizione,
+    public ItemContenitore(final Items id, final String descrizione,
             final boolean prendibile, boolean aperto) {
-        super(id, nome, descrizione, prendibile);
+        super(id, descrizione, prendibile);
         this.aperto = aperto;
     }
 
