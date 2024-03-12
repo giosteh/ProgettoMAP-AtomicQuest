@@ -26,6 +26,7 @@ public class Parser {
     private final Giocatore giocatore;
     private final Map<String, String> vocabolario;
     private final Map<String, Integer> comandi;
+    private final List<String> stringhe;
     private final RiconoscitoreComando riconoscitoreComandoSpostamento = (a) -> (a >= 1 && a <= 10);
     private final RiconoscitoreComando riconoscitoreComandoOsserva = (a) -> (a == 41);
     private final RiconoscitoreComando riconoscitoreComandoUso = (a) -> (a >= 11 && a <= 20);
@@ -135,7 +136,38 @@ public class Parser {
     }
 
     private void gestisciUso(final int tipoComando, final OutputParser outputComando) {
-        
+        switch (tipoComando) {
+            case 11:
+                if (!this.giocatore.getStanzaCorrente().getId().equals("003")) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
+                    return;
+                }
+                this.giocatore.getStanzaCorrente().getItemContenitore().setAperto(true);
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAARMADIETTOAPERTO.ordinal()
+                        + this.stringhe.get(Output.OSSERVAARMADIETTOSINISTROAPERTO.ordinal()));
+                break;
+            case 12:
+                if (!this.giocatore.getStanzaCorrente().getId().equals("002") && !this.giocatore.getStanzaCorrente().getId().equals("010")) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONUTILE.ordinal()));
+                    return;
+                }
+                if (this.giocatore.getStanzaCorrente().getId().equals("002")) {
+                    if (this.giocatore.getMappa().verificaModalitaAccesso(this.giocatore.getStanzaCorrente(), Direzione.NORD, ModalitaDiAccesso.APERTO)) {
+                        outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAPORTAGIAAPERTA.ordinal()));
+                        return;
+                    }
+                    this.giocatore.getMappa().cambiaModalitaDiAccesso(this.giocatore.getStanzaCorrente(), Direzione.NORD, ModalitaDiAccesso.APERTO);
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.EVENTOPORTAAPERTA.ordinal()));
+                }
+                if (this.giocatore.getStanzaCorrente().getId().equals("010")) {
+                    if (this.giocatore.getMappa().verificaModalitaAccesso(this.giocatore.getStanzaCorrente(), Direzione.EST, ModalitaDiAccesso.APERTO)) {
+                        outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAPORTAGIAAPERTA.ordinal()));
+                        return;
+                    }
+                    this.giocatore.getMappa().cambiaModalitaDiAccesso(this.giocatore.getStanzaCorrente(), Direzione.EST, ModalitaDiAccesso.APERTO);
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.EVENTOPORTAAPERTA.ordinal()));
+                }
+                break;
     }
 
     private void gestisciInventario(final int tipoComando, final OutputParser outputComando) {
