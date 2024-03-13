@@ -21,8 +21,16 @@ public class ItemContenitore extends Item {
         this.itemsContenuti.add(item);
     }
 
-    public void rimuoviItem(final Item item) {
-        this.itemsContenuti.remove(item);
+    public Item rimuoviItem(final Items id) {
+        Iterator<Item> it = this.itemsContenuti.iterator();
+        while (it.hasNext()) {
+            Item i = it.next();
+            if (i.getId() == id) {
+                it.remove();
+                return i;
+            }
+        }
+        return null;
     }
 
     public boolean isAperto() {

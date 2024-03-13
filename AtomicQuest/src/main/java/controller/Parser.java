@@ -8,6 +8,8 @@ import entita.Mappa;
 import entita.ModalitaDiAccesso;
 import entita.Stanza;
 import entita.Stanze;
+import entita.Items;
+import entita.Item;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -34,6 +36,7 @@ public class Parser {
     private final RiconoscitoreComando riconoscitoreComandoUso = (a) -> (a >= 11 && a <= 20);
     private final RiconoscitoreComando riconoscitoreComandoInventario = (a) -> (a >= 21 && a <= 40);
     private final RiconoscitoreComando riconoscitoreComandoFinale = (a) -> (a == 42);
+    private final RiconoscitoreComando riconoscitoreComandoOsservaItem = (a) -> (a >= 43 && a <= 50);
 
 
     public Parser(Giocatore giocatore) {
@@ -59,6 +62,8 @@ public class Parser {
                 this.gestisciInventario(tipoComando, outputComando);
             } else if (this.riconoscitoreComandoFinale.riconosci(tipoComando)) {
                 this.gestisciFinale(tipoComando, outputComando);
+            } else if (this.riconoscitoreComandoOsservaItem.riconosci(tipoComando)) {
+                this.gestisciOsservaItem(tipoComando, outputComando);
             }
         }
         return outputComando;
@@ -138,46 +143,282 @@ public class Parser {
     }
 
     private void gestisciUso(final int tipoComando, final OutputParser outputComando) {
+        Stanza stanzaCorrente = this.giocatore.getStanzaCorrente();
         switch (tipoComando) {
-            case 11:
-                if (!this.giocatore.getStanzaCorrente().getId().equals("003")) {
+            case 11: // apri armadietto destro
+                if (stanzaCorrente.getId() != Stanze.SPOGLIATOIO) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
                     return;
                 }
-                this.giocatore.getStanzaCorrente().getItemContenitore().setAperto(true);
-                outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAARMADIETTOAPERTO.ordinal()
-                        + this.stringhe.get(Output.OSSERVAARMADIETTOSINISTROAPERTO.ordinal()));
+                if (stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTODESTRO).isAperto()) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAARMADIETTOGIAAPERTO.ordinal()));
+                    return;
+                }
+                stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTODESTRO).setAperto(true);
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAARMADIETTOAPERTO.ordinal())
+                        + this.stringhe.get(Output.OSSERVAARMADIETTODESTROAPERTO.ordinal()));
+                stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVASPOGLIATOIOARMADIETTOAPERTO.ordinal()));
                 break;
-            case 12:
-                if (!this.giocatore.getStanzaCorrente().getId().equals("002") && !this.giocatore.getStanzaCorrente().getId().equals("010")) {
+            case 12: // usa tesserino
+                if (stanzaCorrente.getId() != Stanze.ATRIO && stanzaCorrente.getId() != Stanze.CORRIDOIO) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONUTILE.ordinal()));
                     return;
                 }
-                if (this.giocatore.getStanzaCorrente().getId().equals("002")) {
-                    if (this.giocatore.getMappa().verificaModalitaAccesso(this.giocatore.getStanzaCorrente(), Direzione.NORD, ModalitaDiAccesso.APERTO)) {
-                        outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAPORTAGIAAPERTA.ordinal()));
-                        return;
-                    }
-                    this.giocatore.getMappa().cambiaModalitaDiAccesso(this.giocatore.getStanzaCorrente(), Direzione.NORD, ModalitaDiAccesso.APERTO);
-                    outputComando.setStringaDaStampare(this.stringhe.get(Output.EVENTOPORTAAPERTA.ordinal()));
+                if (!this.giocatore.getInventario().contieneItem(Items.TESSERINO)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                    return;
                 }
-                if (this.giocatore.getStanzaCorrente().getId().equals("010")) {
-                    if (this.giocatore.getMappa().verificaModalitaAccesso(this.giocatore.getStanzaCorrente(), Direzione.EST, ModalitaDiAccesso.APERTO)) {
+                if (stanzaCorrente.getId() == Stanze.ATRIO) {
+                    if (this.giocatore.getMappa().verificaModalitaAccesso(stanzaCorrente, Direzione.NORD, ModalitaDiAccesso.APERTO)) {
                         outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAPORTAGIAAPERTA.ordinal()));
                         return;
                     }
-                    this.giocatore.getMappa().cambiaModalitaDiAccesso(this.giocatore.getStanzaCorrente(), Direzione.EST, ModalitaDiAccesso.APERTO);
+                    this.giocatore.getMappa().cambiaModalitaDiAccesso(stanzaCorrente, Direzione.NORD, ModalitaDiAccesso.APERTO);
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.EVENTOPORTAAPERTA.ordinal()));
+                    stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVAATRIOAPERTO.ordinal()));
+                }
+                if (stanzaCorrente.getId() == Stanze.CORRIDOIO){
+                    if (this.giocatore.getMappa().verificaModalitaAccesso(stanzaCorrente, Direzione.EST, ModalitaDiAccesso.APERTO)) {
+                        outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAPORTAGIAAPERTA.ordinal()));
+                        return;
+                    }
+                    this.giocatore.getMappa().cambiaModalitaDiAccesso(stanzaCorrente, Direzione.EST, ModalitaDiAccesso.APERTO);
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.EVENTOPORTAAPERTA.ordinal()));
+                    stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVACORRIDOIOAPERTO.ordinal()));
                 }
                 break;
+            case 13: //usa cacciavite
+                if (stanzaCorrente.getId() != Stanze.ANTICAMERASALAPOMPE) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONUTILE.ordinal()));
+                    return;
+                }
+                if (!this.giocatore.getInventario().contieneItem(Items.CACCIAVITE)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                    return;
+                }
+                if (this.giocatore.getMappa().verificaModalitaAccesso(stanzaCorrente, Direzione.NORD, ModalitaDiAccesso.APERTO)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICACONDOTTOGIAAPERTO.ordinal()));
+                    return;
+                }
+                this.giocatore.getMappa().cambiaModalitaDiAccesso(stanzaCorrente, Direzione.NORD, ModalitaDiAccesso.APERTO);
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.EVENTOGRATAAPERTA.ordinal()));
+                stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVAANTICAMERASALAPOMPEAPERTO.ordinal()));
+                break;
+            case 14: // usa telecomando
+                if (stanzaCorrente.getId() != Stanze.ANTICAMERASALAVAPORE) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONUTILE.ordinal()));
+                    return;
+                }
+                if (!this.giocatore.getInventario().contieneItem(Items.TELECOMANDO)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                    return;
+                }
+                if (this.giocatore.getMappa().verificaModalitaAccesso(stanzaCorrente, Direzione.NORD, ModalitaDiAccesso.APERTO)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAASCENSOREGIAAPERTO.ordinal()));
+                    return;
+                }
+                this.giocatore.getMappa().cambiaModalitaDiAccesso(stanzaCorrente, Direzione.GIU, ModalitaDiAccesso.APERTO);
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAASCENSOREAPERTO.ordinal()));
+                stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVAANTICAMERASALAVAPOREAPERTO.ordinal()));
+                break;
+            case 15: // usa chiave
+                if (stanzaCorrente.getId() != Stanze.SPOGLIATOIO) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONUTILE.ordinal()));
+                    return;
+                }
+                if (!this.giocatore.getInventario().contieneItem(Items.CHIAVE)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                    return;
+                }
+                if (stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTOSINISTRO).isAperto()) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAARMADIETTOGIAAPERTO.ordinal()));
+                    return;
+                }
+                stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTOSINISTRO).setAperto(true);
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAARMADIETTOAPERTO.ordinal())
+                        + this.stringhe.get(Output.OSSERVAARMADIETTOSINISTROAPERTO.ordinal()));
+                stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVASPOGLIATOIOARMADIETTIAPERTI.ordinal()));
+                break;
+            case 16: // usa foglio e torcia
+                if (!this.giocatore.getInventario().contieneItem(Items.FOGLIO) || !this.giocatore.getInventario().contieneItem(Items.TORCIA)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTINONINPOSSESSO.ordinal()));
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.EVENTOSCOPERTACODICE.ordinal()));
+                break;
+            case 17: // usa torcia
+                if (!this.giocatore.getInventario().contieneItem(Items.TORCIA)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVATORCIA.ordinal()));
+                break;
+            case 18: // usa foglio
+                if (!this.giocatore.getInventario().contieneItem(Items.FOGLIO)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVAFOGLIO.ordinal()));
+                break;
+        }
     }
 
     private void gestisciInventario(final int tipoComando, final OutputParser outputComando) {
-        
+        Stanza stanzaCorrente = this.giocatore.getStanzaCorrente();
+        Item itemRaccolto = null;
+        switch(tipoComando) {
+            case 21: // prendi tesserino
+                if (stanzaCorrente.getId() != Stanze.SPOGLIATOIO) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
+                    return;
+                }
+                if (!stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTODESTRO).isAperto()) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
+                    return;
+                }
+                if (!this.giocatore.getInventario().contieneItem(Items.TESSERINO)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTOGIAPRESENTEININVENTARIO.ordinal()));
+                    return;
+                }
+                itemRaccolto = stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTODESTRO).rimuoviItem(Items.TESSERINO);
+                this.giocatore.getInventario().aggiungiItem(itemRaccolto);
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICATESSERINOPRESO.ordinal()));
+                break;
+            case 22: // prendi cacciavite
+                if (stanzaCorrente.getId() != Stanze.SALAVAPORE) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
+                    return;
+                }
+                if (!this.giocatore.getInventario().contieneItem(Items.CACCIAVITE)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTOGIAPRESENTEININVENTARIO.ordinal()));
+                    return;
+                }
+                itemRaccolto = stanzaCorrente.getItemPerId(Items.CACCIAVITE);
+                this.giocatore.getInventario().aggiungiItem(itemRaccolto);
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICACACCIAVITEPRESO.ordinal()));
+                break;
+            case 23: // prendi telecomando
+                if (stanzaCorrente.getId() != Stanze.SALAPOMPE) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
+                    return;
+                }
+                if (!this.giocatore.getInventario().contieneItem(Items.TELECOMANDO)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTOGIAPRESENTEININVENTARIO.ordinal()));
+                    return;
+                }
+                itemRaccolto = stanzaCorrente.getItemPerId(Items.TELECOMANDO);
+                this.giocatore.getInventario().aggiungiItem(itemRaccolto);
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICATELECOMANDOPRESO.ordinal()));
+                break;
+            case 24: // prendi chiave
+                if (stanzaCorrente.getId() != Stanze.SALAMACCHINE) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
+                    return;
+                }
+                if (!this.giocatore.getInventario().contieneItem(Items.CHIAVE)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTOGIAPRESENTEININVENTARIO.ordinal()));
+                    return;
+                }
+                itemRaccolto = stanzaCorrente.getItemPerId(Items.CHIAVE);
+                this.giocatore.getInventario().aggiungiItem(itemRaccolto);
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICACHIAVEPRESA.ordinal()));
+                break;
+            case 25: // prendi foglio
+                if (stanzaCorrente.getId() != Stanze.SALAMACCHINE) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
+                    return;
+                }
+                if (!this.giocatore.getInventario().contieneItem(Items.FOGLIO)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTOGIAPRESENTEININVENTARIO.ordinal()));
+                    return;
+                }
+                itemRaccolto = stanzaCorrente.getItemPerId(Items.FOGLIO);
+                this.giocatore.getInventario().aggiungiItem(itemRaccolto);
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAFOGLIOPRESO.ordinal()));
+                break;
+            case 26: // prendi torcia
+                if (stanzaCorrente.getId() != Stanze.SALAREATTORE) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
+                    return;
+                }
+                if (!this.giocatore.getInventario().contieneItem(Items.TORCIA)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTOGIAPRESENTEININVENTARIO.ordinal()));
+                    return;
+                }
+                itemRaccolto = stanzaCorrente.getItemPerId(Items.TORCIA);
+                this.giocatore.getInventario().aggiungiItem(itemRaccolto);
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICATORCIAPRESA.ordinal()));
+                break;
+            case 27: // prendi tuta
+                if (stanzaCorrente.getId() != Stanze.SPOGLIATOIO) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
+                    return;
+                }
+                if (!stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTOSINISTRO).isAperto()) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
+                    return;
+                }
+                if (!this.giocatore.getInventario().contieneItem(Items.TUTA)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTOGIAPRESENTEININVENTARIO.ordinal()));
+                    return;
+                }
+                stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTOSINISTRO).rimuoviItem(Items.TUTA);
+                this.giocatore.setTutaIntegra(true);
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICATUTAINDOSSATA.ordinal()));
+                outputComando.setAzione(AzioneSuInterfaccia.TUTAINTEGRA);    
+        }
     }
 
     private void gestisciFinale(final int tipoComando, final OutputParser outputComando) {
         
+    }
+
+    private void gestisciOsservaItem(final int tipoComando, final OutputParser outputComando) {
+        Stanza stanzaCorrente = this.giocatore.getStanzaCorrente();
+        switch(tipoComando) {
+            case 43: // osserva tesserino
+                if (!this.giocatore.getInventario().contieneItem(Items.TESSERINO)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVATESSERINO.ordinal()));
+                break;
+            case 44: // osserva cacciavite
+                if (!this.giocatore.getInventario().contieneItem(Items.CACCIAVITE)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVACACCIAVITE.ordinal()));
+                break;
+            case 45: // osserva telecomando
+                if (!this.giocatore.getInventario().contieneItem(Items.TELECOMANDO)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVATELECOMANDO.ordinal()));
+                break;
+            case 46: // osserva chiave
+                if (!this.giocatore.getInventario().contieneItem(Items.CHIAVE)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVACHIAVE.ordinal()));
+                break;
+            case 47: // osserva foglio
+                if (!this.giocatore.getInventario().contieneItem(Items.FOGLIO)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVACHIAVE.ordinal()));
+                break;
+            case 48: // osserva torcia
+                if (!this.giocatore.getInventario().contieneItem(Items.TORCIA)) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVATORCIA.ordinal()));
+                break;
+        }
     }
     
     private String ottieniCodiceComando(final String comando) {
