@@ -6,10 +6,12 @@ import grafo.GrafoMap;
 import grafo.NodoInesistenteException;
 import controller.GestioneFile;
 import controller.Output;
+import java.util.ArrayList;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 public class Mappa {
@@ -183,9 +185,9 @@ public class Mappa {
                     new Collegamento(Direzione.GIU, ModalitaDiAccesso.SCALE));
             this.grafo.inserisciArcoConEtichetta(anticameraDeposito, salaControllo,
                     new Collegamento(Direzione.SU, ModalitaDiAccesso.SCALE));
-            this.grafo.inserisciArcoConEtichetta(anticameraDeposito, depositoCombustibile,
+            this.grafo.inserisciArcoConEtichetta(anticameraDeposito, deposito,
                     new Collegamento(Direzione.SUD, ModalitaDiAccesso.PORTACONCODICE));
-            this.grafo.inserisciArcoConEtichetta(depositoCombustibile, anticameraDeposito,
+            this.grafo.inserisciArcoConEtichetta(deposito, anticameraDeposito,
                     new Collegamento(Direzione.NORD, ModalitaDiAccesso.APERTO));
         } catch (NodoInesistenteException ex) {
             System.err.println(ex.getMessage());
@@ -198,10 +200,11 @@ public class Mappa {
         } catch (NodoInesistenteException ex) {
             System.err.println(ex.getMessage());
         }
+        return null;
     }
 
     public Stanza getStanzaPerId(final Stanze id) {
-        return this.stanze.get(id.ordinal());
+        return this.stanzePresenti.get(id.ordinal());
     }
 
     public Stanza getStanzaPerDirezione(final Stanza stanza, final Direzione direzione) {
