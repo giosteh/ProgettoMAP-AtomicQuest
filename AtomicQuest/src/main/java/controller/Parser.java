@@ -508,5 +508,10 @@ public class Parser {
         return this.giocatore.isUranioPreso();
     }
 
+    public OutputParser getIntroduzione() {
+        OutputParser outputComando = new OutputParser();
+        outputComando.setStringaDaStampare(this.stringhe.get(Output.INTRODUZIONE.ordinal()) + this.stringhe.get(Output.DESCRIZIONECORTILE.ordinal()));
+        return outputComando;
+    }
 }
 
