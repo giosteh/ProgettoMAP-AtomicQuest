@@ -14,5 +14,9 @@ public enum AzioneSuInterfaccia {
     RADIAZIONIBASSE,
     RADIAZIONIMEDIE,
     RADIAZIONIELEVATE,
+    METEOSOLE,
+    METEOPIOGGIA,
+    METEONUVOLE,
+    FINE,
     NESSUNA
 }

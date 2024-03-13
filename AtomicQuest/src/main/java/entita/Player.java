@@ -25,9 +25,5 @@ public abstract class Player {
         this.inventario.aggiungiItem(item);
     }
 
-    public void lasciaItem(final Item item) {
-        this.inventario.rimuoviItem(item);
-    }
-
     public abstract void spostatiVerso(final Direzione direzione) throws NodoInesistenteException;
 }

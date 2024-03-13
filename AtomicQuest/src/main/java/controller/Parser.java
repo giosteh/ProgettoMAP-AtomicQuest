@@ -35,7 +35,7 @@ public class Parser {
     private final RiconoscitoreComando riconoscitoreComandoOsserva = (a) -> (a == 41);
     private final RiconoscitoreComando riconoscitoreComandoUso = (a) -> (a >= 11 && a <= 20);
     private final RiconoscitoreComando riconoscitoreComandoInventario = (a) -> (a >= 21 && a <= 40);
-    private final RiconoscitoreComando riconoscitoreComandoFinale = (a) -> (a == 42);
+    private final RiconoscitoreComando riconoscitoreComandoFinale = (a) -> (a >= 51 && a <= 53);
     private final RiconoscitoreComando riconoscitoreComandoOsservaItem = (a) -> (a >= 43 && a <= 50);
 
 
@@ -74,6 +74,10 @@ public class Parser {
         Stanza stanzaCorrente = this.giocatore.getStanzaCorrente();
         LivelloRadioattivita livelloRadioattivitaPrecedente = stanzaCorrente.getEsposizRadioattiva();
         Mappa mappa = this.giocatore.getMappa();
+        if (verificaUranio()) {
+            outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASCELTAOBBLIGATORIA.ordinal()));
+            return;
+        }
         if (tipoComando >=1 && tipoComando <= 6) {
             direzione = Direzione.values()[tipoComando - 1];
         } else if (tipoComando == 7) {
@@ -139,11 +143,19 @@ public class Parser {
     }
 
     private void gestisciOsserva(final int tipoComando, final OutputParser outputComando) {
+        if (verificaUranio()) {
+            outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASCELTAOBBLIGATORIA.ordinal()));
+            return;
+        }
         outputComando.setStringaDaStampare(this.giocatore.getStanzaCorrente().getOsserva());
     }
 
     private void gestisciUso(final int tipoComando, final OutputParser outputComando) {
         Stanza stanzaCorrente = this.giocatore.getStanzaCorrente();
+        if (verificaUranio()) {
+            outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASCELTAOBBLIGATORIA.ordinal()));
+            return;
+        }
         switch (tipoComando) {
             case 11: // apri armadietto destro
                 if (stanzaCorrente.getId() != Stanze.SPOGLIATOIO) {
@@ -266,6 +278,10 @@ public class Parser {
     private void gestisciInventario(final int tipoComando, final OutputParser outputComando) {
         Stanza stanzaCorrente = this.giocatore.getStanzaCorrente();
         Item itemRaccolto = null;
+        if (verificaUranio()) {
+            outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASCELTAOBBLIGATORIA.ordinal()));
+            return;
+        }
         switch(tipoComando) {
             case 21: // prendi tesserino
                 if (stanzaCorrente.getId() != Stanze.SPOGLIATOIO) {
@@ -370,11 +386,43 @@ public class Parser {
     }
 
     private void gestisciFinale(final int tipoComando, final OutputParser outputComando) {
-        
+        switch (tipoComando) {
+            case 51: // prendi uranio
+                if (verificaUranio()) {
+                    outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASCELTAOBBLIGATORIA.ordinal()));
+                    return;
+                }
+                if (this.giocatore.getStanzaCorrente().getId() != Stanze.DEPOSITO) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.EVENTOSCELTA.ordinal()));
+                this.giocatore.setUranioPreso(true);
+                break;
+            case 52: // utente scrive sì
+                if (!verificaUranio()) {
+                    outputComando.setStringaDaStampare("Eh??\n\n");
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.EVENTOFINALECONURANIO.ordinal()));
+                outputComando.setAzione(AzioneSuInterfaccia.FINE);
+                break;
+            case 53: // utente scrive no
+                if (!verificaUranio()) {
+                    outputComando.setStringaDaStampare("Eh??\n\n");
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.EVENTOFINALESENZAURANIO.ordinal()));
+                outputComando.setAzione(AzioneSuInterfaccia.FINE);
+                break;
+        }
     }
 
     private void gestisciOsservaItem(final int tipoComando, final OutputParser outputComando) {
-        Stanza stanzaCorrente = this.giocatore.getStanzaCorrente();
+        if (verificaUranio()) {
+            outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASCELTAOBBLIGATORIA.ordinal()));
+            return;
+        }
         switch(tipoComando) {
             case 43: // osserva tesserino
                 if (!this.giocatore.getInventario().contieneItem(Items.TESSERINO)) {
@@ -429,6 +477,12 @@ public class Parser {
         Function<String, String> codiceMapper = this.vocabolario::get;
         codiceComando = scanComando.tokens().map(codiceMapper)
                 .collect(Collectors.joining("", codiceComando, ""));
+        scanComando.close();
         return codiceComando;
     }
+
+    private boolean verificaUranio() {
+        return this.giocatore.isUranioPreso();
+    }
 }
+

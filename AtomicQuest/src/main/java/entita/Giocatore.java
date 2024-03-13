@@ -7,6 +7,7 @@ public class Giocatore extends Player {
     private Stanza stanzaCorrente;
     private final Mappa mappa = new Mappa();
     private boolean tutaIntegra = true;
+    private boolean isUranioPreso = false;
 
     public Giocatore(final String nome) {
         super(nome);
@@ -35,4 +36,13 @@ public class Giocatore extends Player {
     public void spostatiVerso(final Direzione direzione) {
         this.stanzaCorrente = this.mappa.getStanzaPerDirezione(this.stanzaCorrente, direzione);
     }
+
+    public boolean isUranioPreso() {
+        return this.isUranioPreso;
+    }
+
+    public void setUranioPreso(final boolean isUranioPreso) {
+        this.isUranioPreso = isUranioPreso;
+    }
+    
 }
