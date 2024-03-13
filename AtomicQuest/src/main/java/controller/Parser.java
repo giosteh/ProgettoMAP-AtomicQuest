@@ -7,6 +7,8 @@ import entita.LivelloRadioattivita;
 import entita.Mappa;
 import entita.ModalitaDiAccesso;
 import entita.Stanza;
+import entita.Stanze;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Function;
@@ -70,41 +72,41 @@ public class Parser {
         if (tipoComando >=1 && tipoComando <= 6) {
             direzione = Direzione.values()[tipoComando - 1];
         } else if (tipoComando == 7) {
-            if (stanzaCorrente.getId().equals("006")) {
+            if (stanzaCorrente.getId() == Stanze.ANTICAMERASALAVAPORE) {
                 direzione = Direzione.GIU;
-            } else if (stanzaCorrente.getId().equals("008")) {
+            } else if (stanzaCorrente.getId() == Stanze.ANTICAMERASALAMACCHINE) {
                 direzione = Direzione.SU;
             } else {
-                outputComando.setStringaDaStampare("Non c'è nessun ascensore qui.\n\n");
+                outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICAASCENSORENONPRESENTE.ordinal()));
                 return;
             }
         } else if (tipoComando == 8) {
-            if (stanzaCorrente.getId().equals("013")) {
+            if (stanzaCorrente.getId() == Stanze.SALACONTROLLO) {
                 direzione = Direzione.GIU;
-            } else if (stanzaCorrente.getId().equals("014")) {
+            } else if (stanzaCorrente.getId() == Stanze.ANTICAMERADEPOSITO) {
                 direzione = Direzione.SU;
             } else {
-                outputComando.setStringaDaStampare("Non ci sono scale qui.\n\n");
+                outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASCALENONPRESENTI.ordinal()));
                 return;
             }
         }
         if (!mappa.esisteStanzaSuccessiva(stanzaCorrente, direzione)) {
-            outputComando.setStringaDaStampare("Non puoi andare in quella direzione.\n\n");
+            outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASTANZAINESISTENTE.ordinal()));
             return;
         }
         if (!mappa.verificaModalitaAccesso(stanzaCorrente, direzione, ModalitaDiAccesso.APERTO)) {
-            outputComando.setStringaDaStampare("Non puoi accedere a questa stanza.\n\n");
+            outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASTANZAINACCESSIBILE.ordinal()));
             return;
         }
         if (!this.giocatore.isTutaIntegra() && mappa.getStanzaPerDirezione(stanzaCorrente, direzione).isRadioattiva()) {
-            outputComando.setStringaDaStampare("Non puoi entrare in una stanza radioattiva con la tuta danneggiata.\n\n");
+            outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASTANZARADIOATTIVA.ordinal()));
             return;
         }
         this.giocatore.spostatiVerso(direzione);
         stanzaCorrente = this.giocatore.getStanzaCorrente();
-        if (stanzaCorrente.getId().equals("005") && !stanzaCorrente.isVisitata()) {
+        if (stanzaCorrente.getId() == Stanze.SALAPOMPE && !stanzaCorrente.isVisitata()) {
             this.giocatore.setTutaIntegra(false);
-            outputComando.setStringaDaStampare("La tua tuta si è danneggiata.\n\n");
+            outputComando.setStringaDaStampare(stringhe.get(Output.EVENTOTUTAROTTA.ordinal()));
             outputComando.setAzione(AzioneSuInterfaccia.TUTAROTTA);
         }
         if (!stanzaCorrente.isVisitata()){

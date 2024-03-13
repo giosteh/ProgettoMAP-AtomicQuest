@@ -6,25 +6,19 @@ import java.util.Objects;
 
 public class Item {
 
-    private final String id;
-    private final String nome;
+    private final Items id;
     private final String descrizione;
     private final boolean prendibile;
 
-    public Item(final String id, final String nome, final String descrizione,
+    public Item(final Items id, final String descrizione,
             final boolean prendibile) {
         this.id = id;
-        this.nome = nome;
         this.descrizione = descrizione;
         this.prendibile = prendibile;
     }
 
-    public String getId() {
+    public Items getId() {
         return this.id;
-    }
-
-    public String getNome() {
-        return this.nome;
     }
 
     public String getDescrizione() {
