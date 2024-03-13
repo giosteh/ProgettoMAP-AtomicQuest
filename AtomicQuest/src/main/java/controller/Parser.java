@@ -42,7 +42,9 @@ public class Parser {
 
     public Parser(Giocatore giocatore) {
         this.giocatore = giocatore;
-        // caricamento delle hashmap
+        this.vocabolario = GestioneFile.caricaMap("vocabolario.dat");
+        this.comandi = GestioneFile.caricaMap("comandi.dat");
+        this.stringhe = GestioneFile.caricaList("stringhe.dat");
     }
 
     public OutputParser analizzaComando(final String comando) {
