@@ -45,4 +45,15 @@ public class Inventario {
     public boolean contieneItem(final Items id) {
         return this.getItemPerId(id) != null;
     }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nel tuo inventario hai:\n");
+        for (Item i : this.items) {
+            sb.append(i.toString());
+            sb.append(", ");
+        }
+        return sb.toString();
+            
+    }
 }
