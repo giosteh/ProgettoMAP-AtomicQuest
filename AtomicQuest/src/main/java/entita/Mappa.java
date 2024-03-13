@@ -78,7 +78,7 @@ public class Mappa {
                 stringhe.get(Output.OSSERVASALAMACCHINE.ordinal()), stringhe.get(Output.BENVENUTOSALAMACCHINE.ordinal()),
                 LivelloRadioattivita.BASSO);
         Stanza corridoio = new Stanza(Stanze.CORRIDOIO, stringhe.get(Output.DESCRIZIONECORRIDOIO.ordinal()),
-                stringhe.get(Output.OSSERVACORRIDOIOTUTAROTTA.ordinal()), stringhe.get(Output.BENVENUTOCORRIDOIO.ordinal()),
+                stringhe.get(Output.OSSERVACORRIDOIO.ordinal()), stringhe.get(Output.BENVENUTOCORRIDOIO.ordinal()),
                 LivelloRadioattivita.BASSO);
         Stanza anticameraSalaReattore = new Stanza(Stanze.ANTICAMERASALAREATTORE, stringhe.get(Output.DESCRIZIONEANTICAMERASALAREATTORE.ordinal()),
                 stringhe.get(Output.OSSERVAANTICAMERASALAREATTORE.ordinal()), stringhe.get(Output.BENVENUTOANTICAMERASALAREATTORE.ordinal()),
@@ -122,14 +122,14 @@ public class Mappa {
             this.grafo.inserisciArcoConEtichetta(atrio, anticameraSalaPompe, new Collegamento(Direzione.EST, ModalitaDiAccesso.APERTO));
             this.grafo.inserisciArcoConEtichetta(anticameraSalaPompe, atrio, new Collegamento(Direzione.OVEST, ModalitaDiAccesso.APERTO));
             this.grafo.inserisciArcoConEtichetta(anticameraSalaPompe, salaPompe, new Collegamento(Direzione.NORD, ModalitaDiAccesso.CONDOTTO));
-            this.grafo.inserisciArcoConEtichetta(salaPompe, anticameraSalaPompe, new Collegamento(Direzione.SUD, ModalitaDiAccesso.CONDOTTO));
-            this.grafo.inserisciArcoConEtichetta(anticameraSalaPompe, cortile, new Collegamento(Direzione.SUD, ModalitaDiAccesso.CONDOTTO));
+            this.grafo.inserisciArcoConEtichetta(salaPompe, anticameraSalaPompe, new Collegamento(Direzione.SUD, ModalitaDiAccesso.APERTO));
+            this.grafo.inserisciArcoConEtichetta(anticameraSalaPompe, cortile, new Collegamento(Direzione.SUD, ModalitaDiAccesso.APERTO));
             this.grafo.inserisciArcoConEtichetta(atrio, anticameraSalaVapore, new Collegamento(Direzione.NORD, ModalitaDiAccesso.PORTACONTESSERINO));
             this.grafo.inserisciArcoConEtichetta(anticameraSalaVapore, atrio, new Collegamento(Direzione.SUD, ModalitaDiAccesso.APERTO));
             this.grafo.inserisciArcoConEtichetta(anticameraSalaVapore, salaVapore, new Collegamento(Direzione.NORD, ModalitaDiAccesso.APERTO));
             this.grafo.inserisciArcoConEtichetta(salaVapore, anticameraSalaVapore, new Collegamento(Direzione.SUD, ModalitaDiAccesso.APERTO));
             this.grafo.inserisciArcoConEtichetta(anticameraSalaVapore, anticameraSalaMacchine, new Collegamento(Direzione.GIU, ModalitaDiAccesso.ASCENSORE));
-            this.grafo.inserisciArcoConEtichetta(anticameraSalaMacchine, anticameraSalaVapore, new Collegamento(Direzione.SU, ModalitaDiAccesso.ASCENSORE));
+            this.grafo.inserisciArcoConEtichetta(anticameraSalaMacchine, anticameraSalaVapore, new Collegamento(Direzione.SU, ModalitaDiAccesso.APERTO));
             this.grafo.inserisciArcoConEtichetta(anticameraSalaMacchine, salaMacchine, new Collegamento(Direzione.NORD, ModalitaDiAccesso.APERTO));
             this.grafo.inserisciArcoConEtichetta(salaMacchine, anticameraSalaMacchine, new Collegamento(Direzione.SUD, ModalitaDiAccesso.APERTO));
             this.grafo.inserisciArcoConEtichetta(anticameraSalaMacchine, corridoio, new Collegamento(Direzione.EST, ModalitaDiAccesso.APERTO));

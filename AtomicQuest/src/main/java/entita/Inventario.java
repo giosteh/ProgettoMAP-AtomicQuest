@@ -17,11 +17,32 @@ public class Inventario {
         this.items.add(item);
     }
 
-    public void rimuoviItem(final Item item) {
-        this.items.remove(item);
+    public Item rimuoviItem(final Items id) {
+        Iterator<Item> it = this.items.iterator();
+        while (it.hasNext()) {
+            Item i = it.next();
+            if (i.getId() == id) {
+                it.remove();
+                return i;
+            }
+        }
+        return null;
     }
 
     public Iterator<Item> iteratore() {
         return this.items.iterator();
+    }
+
+    public Item getItemPerId(final Items item) {
+        for (Item i : this.items) {
+            if (i.getId() == item){
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public boolean contieneItem(final Items id) {
+        return this.getItemPerId(id) != null;
     }
 }

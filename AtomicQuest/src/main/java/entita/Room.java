@@ -45,8 +45,8 @@ public class Room {
         this.itemPresenti.add(item);
     }
 
-    public void rimuoviItem(final Item item) {
-        this.itemPresenti.remove(item);
+    public void rimuoviItem(final Items id) {
+        this.itemPresenti.removeIf(i -> i.getId() == id);
     }
 
     public Iterator<Item> iteratoreItem() {

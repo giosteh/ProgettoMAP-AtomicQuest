@@ -71,8 +71,12 @@ public class Stanza extends Room {
         }
         return itemCercato;
     }
+
+    public boolean contieneItem(final Items id) {
+        return this.getItemPerId(id) != null;
+    }
     
-    public Item getItemContenitorePerId(final Items id) {
+    public ItemContenitore getItemContenitorePerId(final Items id) {
         Iterator<ItemContenitore> it = this.iteratoreItemContenitore();
         ItemContenitore itemCercato = null;
         while (it.hasNext()) {
