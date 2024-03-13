@@ -11,6 +11,7 @@ public class Giocatore extends Player {
 
     public Giocatore(final String nome) {
         super(nome);
+        this.stanzaCorrente = this.mappa.getStanzaPerId(Stanze.CORTILE);
     }
 
     public boolean isTutaIntegra() {
