@@ -37,7 +37,8 @@ public class Parser {
     private final RiconoscitoreComando riconoscitoreComandoInventario = (a) -> (a >= 21 && a <= 40);
     private final RiconoscitoreComando riconoscitoreComandoFinale = (a) -> (a >= 51 && a <= 53);
     private final RiconoscitoreComando riconoscitoreComandoOsservaItem = (a) -> (a >= 43 && a <= 50);
-
+    private final RiconoscitoreComando riconoscitoreComandoDove = (a) -> (a == 54);
+    private final RiconoscitoreComando riconoscitoreComandoStampaInventario = (a) -> (a == 55);
 
     public Parser(Giocatore giocatore) {
         this.giocatore = giocatore;
@@ -64,6 +65,10 @@ public class Parser {
                 this.gestisciFinale(tipoComando, outputComando);
             } else if (this.riconoscitoreComandoOsservaItem.riconosci(tipoComando)) {
                 this.gestisciOsservaItem(tipoComando, outputComando);
+            } else if (this.riconoscitoreComandoDove.riconosci(tipoComando)) {
+                this.gestisciDove(tipoComando, outputComando);
+            } else if (this.riconoscitoreComandoStampaInventario.riconosci(tipoComando)) {
+                this.gestisciStampaInventario(tipoComando, outputComando);
             }
         }
         return outputComando;
@@ -468,6 +473,22 @@ public class Parser {
                 break;
         }
     }
+
+    private void gestisciDove(final int tipoComando, final OutputParser outputComando) {
+        if (verificaUranio()) {
+            outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASCELTAOBBLIGATORIA.ordinal()));
+            return;
+        }
+        outputComando.setStringaDaStampare(this.giocatore.getStanzaCorrente().getBenvenuto());
+    }
+
+    private void gestisciStampaInventario(final int tipoComando, final OutputParser outputComando) {
+        if (verificaUranio()) {
+            outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASCELTAOBBLIGATORIA.ordinal()));
+            return;
+        }
+        outputComando.setStringaDaStampare(this.giocatore.getInventario().toString());
+    }
     
     private String ottieniCodiceComando(final String comando) {
         String codiceComando = "";
@@ -484,5 +505,6 @@ public class Parser {
     private boolean verificaUranio() {
         return this.giocatore.isUranioPreso();
     }
+
 }
 
