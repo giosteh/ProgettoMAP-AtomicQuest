@@ -285,6 +285,13 @@ public class Parser {
                 }
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVAFOGLIO.ordinal()));
                 break;
+            case 19: // apri armadietto non specificato
+                if (stanzaCorrente.getId() != Stanze.SPOGLIATOIO){
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAARMADIETTONONSPECIFICATO.ordinal()));
+                break;
         }
     }
 
