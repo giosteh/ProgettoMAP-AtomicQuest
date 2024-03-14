@@ -1,11 +1,12 @@
 
 package entita;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Objects;
 
 
-public class Stanza extends Room {
+public class Stanza extends Room implements Serializable {
 
     private final LivelloRadioattivita esposizRadioattiva;
     private boolean visitata = false;

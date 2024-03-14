@@ -4,7 +4,7 @@ package entita;
 import java.util.Objects;
 
 
-public class Item {
+public class Item implements Comparable {
 
     private final Items id;
     private final String descrizione;
@@ -50,4 +50,11 @@ public class Item {
         final Item other = (Item) obj;
         return Objects.equals(this.id, other.id);
     }
+
+    @Override
+    public int compareTo(Object o) {
+        Item other = (Item) o;
+        return this.id.compareTo(other.id);
+    }
+    
 }

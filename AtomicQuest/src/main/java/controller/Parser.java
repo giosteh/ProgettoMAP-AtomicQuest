@@ -51,7 +51,7 @@ public class Parser {
         String codiceComando = this.ottieniCodiceComando(comando.toLowerCase());
         ValidatoreComando validatore = (a) -> (this.comandi.get(a) != null);
         OutputParser outputComando = new OutputParser();
-        if (!validatore.isValido(comando)) {
+        if (!validatore.isValido(codiceComando)) {
             outputComando.setStringaDaStampare("Eh??\n\n");
         } else {
             int tipoComando = this.comandi.get(codiceComando);

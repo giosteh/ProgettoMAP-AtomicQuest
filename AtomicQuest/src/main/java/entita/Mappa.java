@@ -6,6 +6,7 @@ import grafo.GrafoMap;
 import grafo.NodoInesistenteException;
 import controller.GestioneFile;
 import controller.Output;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import java.util.Iterator;
@@ -14,7 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 
-public class Mappa {
+public class Mappa implements Serializable {
     
     private final GrafoMap<Stanza, Collegamento> grafo = new GrafoMap<>();
     private final List<Stanza> stanzePresenti = new ArrayList<>();
@@ -108,11 +109,23 @@ public class Mappa {
         salaMacchine.aggiungiItem(new Item(Items.FOGLIO,stringhe.get(Output.OSSERVAFOGLIO.ordinal()), true));
         salaMacchine.aggiungiItem(new Item(Items.CHIAVE,stringhe.get(Output.OSSERVACHIAVE.ordinal()), true));
         salaReattore.aggiungiItem(new Item(Items.TORCIA, stringhe.get(Output.OSSERVACHIAVE.ordinal()), true));
-        deposito.aggiungiItem(new Item(Items.URANIO, stringhe.get(Output.OSSERVAURANIO.ordinal()), true));
+        
 
-        this.grafo.inserisciNodi(cortile, atrio, spogliatoio, anticameraSalaPompe, salaPompe, anticameraSalaVapore,
-                salaVapore, anticameraSalaMacchine, corridoio, anticameraSalaReattore, salaReattore, salaControllo,
-                anticameraDeposito, deposito);
+        this.grafo.inserisciNodo(cortile);
+        this.grafo.inserisciNodo(atrio);
+        this.grafo.inserisciNodo(spogliatoio);
+        this.grafo.inserisciNodo(anticameraSalaPompe);
+        this.grafo.inserisciNodo(salaPompe);
+        this.grafo.inserisciNodo(anticameraSalaVapore);
+        this.grafo.inserisciNodo(salaVapore);
+        this.grafo.inserisciNodo(anticameraSalaMacchine);
+        this.grafo.inserisciNodo(salaMacchine);
+        this.grafo.inserisciNodo(corridoio);
+        this.grafo.inserisciNodo(anticameraSalaReattore);
+        this.grafo.inserisciNodo(salaReattore);
+        this.grafo.inserisciNodo(salaControllo);
+        this.grafo.inserisciNodo(anticameraDeposito);
+        this.grafo.inserisciNodo(deposito);
         
         this.stanzePresenti.add(cortile);
         this.stanzePresenti.add(atrio);
