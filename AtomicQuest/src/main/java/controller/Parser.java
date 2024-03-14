@@ -449,42 +449,45 @@ public class Parser {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
                     return;
                 }
-                outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVATESSERINO.ordinal()));
+                outputComando.setStringaDaStampare(this.giocatore.getInventario().getItemPerId(Items.TESSERINO).getDescrizione());
                 break;
             case 44: // osserva cacciavite
                 if (!this.giocatore.getInventario().contieneItem(Items.CACCIAVITE)) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
                     return;
                 }
-                outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVACACCIAVITE.ordinal()));
+                outputComando.setStringaDaStampare(this.giocatore.getInventario().getItemPerId(Items.CACCIAVITE).getDescrizione());
                 break;
             case 45: // osserva telecomando
                 if (!this.giocatore.getInventario().contieneItem(Items.TELECOMANDO)) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
                     return;
                 }
-                outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVATELECOMANDO.ordinal()));
+                outputComando.setStringaDaStampare(this.giocatore.getInventario().getItemPerId(Items.TELECOMANDO).getDescrizione());
                 break;
             case 46: // osserva chiave
                 if (!this.giocatore.getInventario().contieneItem(Items.CHIAVE)) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
                     return;
                 }
-                outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVACHIAVE.ordinal()));
+                outputComando.setStringaDaStampare(this.giocatore.getInventario().getItemPerId(Items.CHIAVE).getDescrizione());
                 break;
             case 47: // osserva foglio
                 if (!this.giocatore.getInventario().contieneItem(Items.FOGLIO)) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
                     return;
                 }
-                outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVACHIAVE.ordinal()));
+                outputComando.setStringaDaStampare(this.giocatore.getInventario().getItemPerId(Items.FOGLIO).getDescrizione());
                 break;
             case 48: // osserva torcia
                 if (!this.giocatore.getInventario().contieneItem(Items.TORCIA)) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
                     return;
                 }
-                outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVATORCIA.ordinal()));
+                outputComando.setStringaDaStampare(this.giocatore.getInventario().getItemPerId(Items.TORCIA).getDescrizione());
+                break;
+            case 49: // osserva tuta
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVATUTA.ordinal()));
                 break;
         }
     }
