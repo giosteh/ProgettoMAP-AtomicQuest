@@ -12,6 +12,5 @@ public enum Items {
     FOGLIO,
     CHIAVE,
     TORCIA,
-    URANIO,
     
 }
