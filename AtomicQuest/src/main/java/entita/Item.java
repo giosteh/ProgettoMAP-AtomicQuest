@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Item implements Comparable {
 
     private final Items id;
-    private final String descrizione;
+    private String descrizione;
     private final boolean prendibile;
 
     public Item(final Items id, final String descrizione,
@@ -23,6 +23,10 @@ public class Item implements Comparable {
 
     public String getDescrizione() {
         return this.descrizione;
+    }
+
+    public void setDescrizione(final String descrizione) {
+        this.descrizione = descrizione;
     }
 
     public boolean isPrendibile() {

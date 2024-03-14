@@ -35,10 +35,10 @@ public class Parser {
     private final RiconoscitoreComando riconoscitoreComandoOsserva = (a) -> (a == 41);
     private final RiconoscitoreComando riconoscitoreComandoUso = (a) -> (a >= 11 && a <= 20);
     private final RiconoscitoreComando riconoscitoreComandoInventario = (a) -> (a >= 21 && a <= 40);
-    private final RiconoscitoreComando riconoscitoreComandoFinale = (a) -> (a >= 51 && a <= 53);
-    private final RiconoscitoreComando riconoscitoreComandoOsservaItem = (a) -> (a >= 43 && a <= 50);
-    private final RiconoscitoreComando riconoscitoreComandoDove = (a) -> (a == 54);
-    private final RiconoscitoreComando riconoscitoreComandoStampaInventario = (a) -> (a == 55);
+    private final RiconoscitoreComando riconoscitoreComandoFinale = (a) -> (a >= 53 && a <= 55);
+    private final RiconoscitoreComando riconoscitoreComandoOsservaItem = (a) -> (a >= 43 && a <= 52);
+    private final RiconoscitoreComando riconoscitoreComandoDove = (a) -> (a == 56);
+    private final RiconoscitoreComando riconoscitoreComandoStampaInventario = (a) -> (a == 57);
 
     public Parser(Giocatore giocatore) {
         this.giocatore = giocatore;
@@ -181,6 +181,7 @@ public class Parser {
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAARMADIETTOAPERTO.ordinal())
                         + this.stringhe.get(Output.OSSERVAARMADIETTODESTROAPERTO.ordinal()));
                 stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVASPOGLIATOIOARMADIETTOAPERTO.ordinal()));
+                stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTODESTRO).setDescrizione(this.stringhe.get(Output.OSSERVAARMADIETTODESTROAPERTO.ordinal()));
                 break;
             case 12: // usa tesserino
                 if (stanzaCorrente.getId() != Stanze.ATRIO && stanzaCorrente.getId() != Stanze.CORRIDOIO) {
@@ -261,6 +262,7 @@ public class Parser {
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAARMADIETTOAPERTO.ordinal())
                         + this.stringhe.get(Output.OSSERVAARMADIETTOSINISTROAPERTO.ordinal()));
                 stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVASPOGLIATOIOARMADIETTIAPERTI.ordinal()));
+                stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTOSINISTRO).setDescrizione(this.stringhe.get(Output.OSSERVAARMADIETTOSINISTROAPERTO.ordinal()));
                 break;
             case 16: // usa foglio e torcia
                 if (!this.giocatore.getInventario().contieneItem(Items.FOGLIO) || !this.giocatore.getInventario().contieneItem(Items.TORCIA)) {
@@ -319,6 +321,7 @@ public class Parser {
                 itemRaccolto = stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTODESTRO).rimuoviItem(Items.TESSERINO);
                 this.giocatore.getInventario().aggiungiItem(itemRaccolto);
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICATESSERINOPRESO.ordinal()));
+                stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTODESTRO).setDescrizione(this.stringhe.get(Output.OSSERVAARMADIETTO.ordinal()));
                 break;
             case 22: // prendi cacciavite
                 if (stanzaCorrente.getId() != Stanze.SALAVAPORE) {
@@ -332,6 +335,7 @@ public class Parser {
                 itemRaccolto = stanzaCorrente.getItemPerId(Items.CACCIAVITE);
                 this.giocatore.getInventario().aggiungiItem(itemRaccolto);
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICACACCIAVITEPRESO.ordinal()));
+                stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVASALAVAPORESENZACACCIAVITE.ordinal()));
                 break;
             case 23: // prendi telecomando
                 if (stanzaCorrente.getId() != Stanze.SALAPOMPE) {
@@ -345,6 +349,7 @@ public class Parser {
                 itemRaccolto = stanzaCorrente.getItemPerId(Items.TELECOMANDO);
                 this.giocatore.getInventario().aggiungiItem(itemRaccolto);
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICATELECOMANDOPRESO.ordinal()));
+                stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVASALAPOMPESENZATELECOMANDO.ordinal()));
                 break;
             case 24: // prendi chiave
                 if (stanzaCorrente.getId() != Stanze.SALAMACCHINE) {
@@ -358,6 +363,10 @@ public class Parser {
                 itemRaccolto = stanzaCorrente.getItemPerId(Items.CHIAVE);
                 this.giocatore.getInventario().aggiungiItem(itemRaccolto);
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICACHIAVEPRESA.ordinal()));
+                if (stanzaCorrente.contieneItem(Items.FOGLIO)) 
+                    stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVASALAMACCHINESENZACHIAVE.ordinal()));
+                else
+                    stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVASALAMACCHINEVUOTA.ordinal()));
                 break;
             case 25: // prendi foglio
                 if (stanzaCorrente.getId() != Stanze.SALAMACCHINE) {
@@ -371,6 +380,10 @@ public class Parser {
                 itemRaccolto = stanzaCorrente.getItemPerId(Items.FOGLIO);
                 this.giocatore.getInventario().aggiungiItem(itemRaccolto);
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAFOGLIOPRESO.ordinal()));
+                if (stanzaCorrente.contieneItem(Items.CHIAVE)) 
+                    stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVASALAMACCHINESENZAFOGLIO.ordinal()));
+                else
+                    stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVASALAMACCHINEVUOTA.ordinal()));
                 break;
             case 26: // prendi torcia
                 if (stanzaCorrente.getId() != Stanze.SALAREATTORE) {
@@ -384,6 +397,7 @@ public class Parser {
                 itemRaccolto = stanzaCorrente.getItemPerId(Items.TORCIA);
                 this.giocatore.getInventario().aggiungiItem(itemRaccolto);
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICATORCIAPRESA.ordinal()));
+                stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVASALAREATTORESENZATORCIA.ordinal()));
                 break;
             case 27: // prendi tuta
                 if (stanzaCorrente.getId() != Stanze.SPOGLIATOIO) {
@@ -401,13 +415,14 @@ public class Parser {
                 stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTOSINISTRO).rimuoviItem(Items.TUTA);
                 this.giocatore.setTutaIntegra(true);
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICATUTAINDOSSATA.ordinal()));
+                stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTOSINISTRO).setDescrizione(this.stringhe.get(Output.OSSERVAARMADIETTO.ordinal()));
                 outputComando.setAzione(AzioneSuInterfaccia.TUTAINTEGRA);    
         }
     }
 
     private void gestisciFinale(final int tipoComando, final OutputParser outputComando) {
         switch (tipoComando) {
-            case 51: // prendi uranio
+            case 53: // prendi uranio
                 if (verificaUranio()) {
                     outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASCELTAOBBLIGATORIA.ordinal()));
                     return;
@@ -419,7 +434,7 @@ public class Parser {
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.EVENTOSCELTA.ordinal()));
                 this.giocatore.setUranioPreso(true);
                 break;
-            case 52: // utente scrive sì
+            case 54: // utente scrive sì
                 if (!verificaUranio()) {
                     outputComando.setStringaDaStampare("Eh??\n\n");
                     return;
@@ -427,7 +442,7 @@ public class Parser {
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.EVENTOFINALECONURANIO.ordinal()));
                 outputComando.setAzione(AzioneSuInterfaccia.FINE);
                 break;
-            case 53: // utente scrive no
+            case 55: // utente scrive no
                 if (!verificaUranio()) {
                     outputComando.setStringaDaStampare("Eh??\n\n");
                     return;
@@ -488,6 +503,27 @@ public class Parser {
                 break;
             case 49: // osserva tuta
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVATUTA.ordinal()));
+                break;
+            case 50: // osserva armadietto
+                if (this.giocatore.getStanzaCorrente().getId() != Stanze.SPOGLIATOIO) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAARMADIETTONONSPECIFICATO.ordinal()));
+                break;
+            case 51: // osserva armadietto destro
+                if (this.giocatore.getStanzaCorrente().getId() != Stanze.SPOGLIATOIO) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.giocatore.getStanzaCorrente().getItemContenitorePerId(Items.ARMADIETTODESTRO).getDescrizione());
+                break;
+            case 52: // osserva armadietto sinistro
+                if (this.giocatore.getStanzaCorrente().getId() != Stanze.SPOGLIATOIO) {
+                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
+                    return;
+                }
+                outputComando.setStringaDaStampare(this.giocatore.getStanzaCorrente().getItemContenitorePerId(Items.ARMADIETTOSINISTRO).getDescrizione());
                 break;
         }
     }
