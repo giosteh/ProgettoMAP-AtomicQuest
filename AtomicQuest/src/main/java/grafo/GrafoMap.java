@@ -1,12 +1,13 @@
 
 package grafo;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 
-public class GrafoMap<N, T> implements Grafo<N, T> {
+public class GrafoMap<N, T> implements Grafo<N, T>, Serializable {
 
     private final Map<N, Map<N, T>> grafo = new HashMap<>();
 

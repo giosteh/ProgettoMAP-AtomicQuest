@@ -1,8 +1,10 @@
 
 package entita;
 
+import java.io.Serializable;
 
-public class Giocatore extends Player {
+
+public class Giocatore extends Player implements Serializable {
 
     private Stanza stanzaCorrente;
     private final Mappa mappa = new Mappa();
@@ -13,6 +15,7 @@ public class Giocatore extends Player {
     public Giocatore(final String nome) {
         super(nome);
         this.stanzaCorrente = this.mappa.getStanzaPerId(Stanze.CORTILE);
+        this.stanzaCorrente.setVisitata(true);
     }
 
     public boolean isTutaIntegra() {

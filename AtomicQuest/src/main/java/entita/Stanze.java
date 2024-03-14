@@ -1,7 +1,9 @@
 
 package entita;
 
-public enum Stanze {
+import java.io.Serializable;
+
+public enum Stanze implements Serializable {
     CORTILE,
     ATRIO,
     SPOGLIATOIO,
