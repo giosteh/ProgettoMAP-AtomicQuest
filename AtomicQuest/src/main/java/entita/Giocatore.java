@@ -8,6 +8,7 @@ public class Giocatore extends Player {
     private final Mappa mappa = new Mappa();
     private boolean tutaIntegra = true;
     private boolean isUranioPreso = false;
+    private boolean codiceScoperto = false;
 
     public Giocatore(final String nome) {
         super(nome);
@@ -44,6 +45,14 @@ public class Giocatore extends Player {
 
     public void setUranioPreso(final boolean isUranioPreso) {
         this.isUranioPreso = isUranioPreso;
+    }
+
+    public boolean isCodiceScoperto() {
+        return this.codiceScoperto;
+    }
+
+    public void setCodiceScoperto(final boolean codiceScoperto) {
+        this.codiceScoperto = codiceScoperto;
     }
     
 }

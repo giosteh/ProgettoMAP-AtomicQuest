@@ -118,6 +118,10 @@ public class Parser {
             outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASTANZARADIOATTIVA.ordinal()));
             return;
         }
+        if (!this.giocatore.isCodiceScoperto() && mappa.getStanzaPerDirezione(stanzaCorrente, direzione).getId() == Stanze.DEPOSITO) {
+            outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICACODICENECESSARIO.ordinal()));
+            return;
+        }
         this.giocatore.spostatiVerso(direzione);
         stanzaCorrente = this.giocatore.getStanzaCorrente();
         if (stanzaCorrente.getId() == Stanze.SALAPOMPE && !stanzaCorrente.isVisitata()) {
@@ -264,6 +268,8 @@ public class Parser {
                     return;
                 }
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.EVENTOSCOPERTACODICE.ordinal()));
+                this.giocatore.setCodiceScoperto(true);
+                this.giocatore.getMappa().cambiaModalitaDiAccesso(this.giocatore.getMappa().getStanzaPerId(Stanze.DEPOSITO), Direzione.SUD, ModalitaDiAccesso.APERTO);
                 break;
             case 17: // usa torcia
                 if (!this.giocatore.getInventario().contieneItem(Items.TORCIA)) {
