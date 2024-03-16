@@ -239,7 +239,7 @@ public class Parser {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
                     return;
                 }
-                if (this.giocatore.getMappa().verificaModalitaAccesso(stanzaCorrente, Direzione.NORD, ModalitaDiAccesso.APERTO)) {
+                if (this.giocatore.getMappa().verificaModalitaAccesso(stanzaCorrente, Direzione.GIU, ModalitaDiAccesso.APERTO)) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAASCENSOREGIAAPERTO.ordinal()));
                     return;
                 }
