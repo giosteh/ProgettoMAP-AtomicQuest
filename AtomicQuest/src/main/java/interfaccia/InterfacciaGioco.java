@@ -31,7 +31,7 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         this.parser = new Parser(this.giocatore);
         this.outputParser = new OutputParser();
         this.inizializzaImmaginiLabel();
-        this.textAreaOutput.append(parser.getIntroduzione().getStringaDaStampare() + "\n Che vuoi fare??");
+        this.textAreaOutput.append(parser.getIntroduzione().getStringaDaStampare() + "\n Che vuoi fare?? ");
     }
     
     
@@ -235,8 +235,15 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         else {
            
                 this.outputParser = this.parser.analizzaComando(s);
+                
+                if (this.outputParser.getAzione().ordinal() == AzioneSuInterfaccia.FINE.ordinal()) {
+                    this.textAreaOutput.append("\n\n" + outputParser.getStringaDaStampare());
+                    this.gestisciFinale();
+                    return;
+                }
+                
             
-                this.textAreaOutput.append("\n\n" + outputParser.getStringaDaStampare() + "\n Che vuoi fare?");
+                this.textAreaOutput.append(s + "\n\n" + outputParser.getStringaDaStampare() + "\n Che vuoi fare?");
                 if (this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAINTEGRA || 
                     this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAROTTA) {
                             this.gestisciLabelTuta();
@@ -247,10 +254,6 @@ public class InterfacciaGioco extends javax.swing.JFrame {
                 {
                     this.gestisciLabelRadioattivita();
                 }
-        
-            if (this.outputParser.getAzione().ordinal() == AzioneSuInterfaccia.FINE.ordinal()) {
-                    this.gestisciFinale();
-            }
         }
     }//GEN-LAST:event_textFieldInputActionPerformed
 
