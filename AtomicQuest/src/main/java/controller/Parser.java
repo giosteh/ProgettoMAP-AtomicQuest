@@ -110,7 +110,7 @@ public class Parser {
             outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASTANZAINESISTENTE.ordinal()));
             return;
         }
-        if (!mappa.verificaModalitaAccesso(stanzaCorrente, direzione, ModalitaDiAccesso.APERTO)) {
+        if (!mappa.verificaModalitaAccesso(stanzaCorrente, direzione, ModalitaDiAccesso.APERTO) && !mappa.verificaModalitaAccesso(stanzaCorrente, direzione, ModalitaDiAccesso.SCALE)) {
             outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASTANZAINACCESSIBILE.ordinal()));
             return;
         }
@@ -126,8 +126,10 @@ public class Parser {
         stanzaCorrente = this.giocatore.getStanzaCorrente();
         if (stanzaCorrente.getId() == Stanze.SALAPOMPE && !stanzaCorrente.isVisitata()) {
             this.giocatore.setTutaIntegra(false);
-            outputComando.setStringaDaStampare(stringhe.get(Output.EVENTOTUTAROTTA.ordinal()));
+            outputComando.setStringaDaStampare(stringhe.get(Output.EVENTOTUTAROTTA.ordinal()) + stanzaCorrente.getDescrizione());
             outputComando.setAzione(AzioneSuInterfaccia.TUTAROTTA);
+            stanzaCorrente.setVisitata(true);
+            return;
         }
         if (!stanzaCorrente.isVisitata()){
             stanzaCorrente.setVisitata(true);
@@ -237,7 +239,7 @@ public class Parser {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
                     return;
                 }
-                if (this.giocatore.getMappa().verificaModalitaAccesso(stanzaCorrente, Direzione.NORD, ModalitaDiAccesso.APERTO)) {
+                if (this.giocatore.getMappa().verificaModalitaAccesso(stanzaCorrente, Direzione.GIU, ModalitaDiAccesso.APERTO)) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAASCENSOREGIAAPERTO.ordinal()));
                     return;
                 }
@@ -271,7 +273,7 @@ public class Parser {
                 }
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.EVENTOSCOPERTACODICE.ordinal()));
                 this.giocatore.setCodiceScoperto(true);
-                this.giocatore.getMappa().cambiaModalitaDiAccesso(this.giocatore.getMappa().getStanzaPerId(Stanze.DEPOSITO), Direzione.SUD, ModalitaDiAccesso.APERTO);
+                this.giocatore.getMappa().cambiaModalitaDiAccesso(this.giocatore.getMappa().getStanzaPerId(Stanze.ANTICAMERADEPOSITO), Direzione.SUD, ModalitaDiAccesso.APERTO);
                 break;
             case 17: // usa torcia
                 if (!this.giocatore.getInventario().contieneItem(Items.TORCIA)) {
@@ -314,7 +316,7 @@ public class Parser {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
                     return;
                 }
-                if (!this.giocatore.getInventario().contieneItem(Items.TESSERINO)) {
+                if (this.giocatore.getInventario().contieneItem(Items.TESSERINO)) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTOGIAPRESENTEININVENTARIO.ordinal()));
                     return;
                 }
@@ -328,7 +330,7 @@ public class Parser {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
                     return;
                 }
-                if (!this.giocatore.getInventario().contieneItem(Items.CACCIAVITE)) {
+                if (this.giocatore.getInventario().contieneItem(Items.CACCIAVITE)) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTOGIAPRESENTEININVENTARIO.ordinal()));
                     return;
                 }
@@ -342,7 +344,7 @@ public class Parser {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
                     return;
                 }
-                if (!this.giocatore.getInventario().contieneItem(Items.TELECOMANDO)) {
+                if (this.giocatore.getInventario().contieneItem(Items.TELECOMANDO)) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTOGIAPRESENTEININVENTARIO.ordinal()));
                     return;
                 }
@@ -356,7 +358,7 @@ public class Parser {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
                     return;
                 }
-                if (!this.giocatore.getInventario().contieneItem(Items.CHIAVE)) {
+                if (this.giocatore.getInventario().contieneItem(Items.CHIAVE)) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTOGIAPRESENTEININVENTARIO.ordinal()));
                     return;
                 }
@@ -373,7 +375,7 @@ public class Parser {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
                     return;
                 }
-                if (!this.giocatore.getInventario().contieneItem(Items.FOGLIO)) {
+                if (this.giocatore.getInventario().contieneItem(Items.FOGLIO)) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTOGIAPRESENTEININVENTARIO.ordinal()));
                     return;
                 }
@@ -390,7 +392,7 @@ public class Parser {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
                     return;
                 }
-                if (!this.giocatore.getInventario().contieneItem(Items.TORCIA)) {
+                if (this.giocatore.getInventario().contieneItem(Items.TORCIA)) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTOGIAPRESENTEININVENTARIO.ordinal()));
                     return;
                 }
@@ -408,7 +410,7 @@ public class Parser {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONPRESENTE.ordinal()));
                     return;
                 }
-                if (!this.giocatore.getInventario().contieneItem(Items.TUTA)) {
+                if (this.giocatore.getInventario().contieneItem(Items.TUTA)) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTOGIAPRESENTEININVENTARIO.ordinal()));
                     return;
                 }
