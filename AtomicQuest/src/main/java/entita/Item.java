@@ -9,10 +9,12 @@ public class Item implements Comparable {
     private final Items id;
     private String descrizione;
     private final boolean prendibile;
+    private String nomeItem;
 
-    public Item(final Items id, final String descrizione,
-            final boolean prendibile) {
+    public Item(final Items id, final String nomeItem,
+            final String descrizione, final boolean prendibile) {
         this.id = id;
+        this.nomeItem = nomeItem;
         this.descrizione = descrizione;
         this.prendibile = prendibile;
     }
@@ -59,6 +61,10 @@ public class Item implements Comparable {
     public int compareTo(Object o) {
         Item other = (Item) o;
         return this.id.compareTo(other.id);
+    }
+    
+    public String toString() {
+        return this.nomeItem;
     }
     
 }

@@ -97,18 +97,18 @@ public class Mappa implements Serializable {
                 LivelloRadioattivita.ELEVATO);
 
         ItemContenitore armadiettoSinistro = new ItemContenitore(Items.ARMADIETTOSINISTRO,
-                stringhe.get(Output.OSSERVAARMADIETTO.ordinal()), false, false);
-        armadiettoSinistro.aggiungiItem(new Item(Items.TUTA, stringhe.get(Output.OSSERVATUTA.ordinal()), true));
+                "Armadietto sinistro" , stringhe.get(Output.OSSERVAARMADIETTO.ordinal()), false, false);
+        armadiettoSinistro.aggiungiItem(new Item(Items.TUTA,"Tuta", stringhe.get(Output.OSSERVATUTA.ordinal()), true));
         ItemContenitore armadiettoDestro = new ItemContenitore(Items.ARMADIETTODESTRO,
-                stringhe.get(Output.OSSERVAARMADIETTO.ordinal()), false, false);
-        armadiettoDestro.aggiungiItem(new Item(Items.TESSERINO, stringhe.get(Output.OSSERVATESSERINO.ordinal()) , true));
+                "Armadietto destro", stringhe.get(Output.OSSERVAARMADIETTO.ordinal()), false, false);
+        armadiettoDestro.aggiungiItem(new Item(Items.TESSERINO, "Tesserino", stringhe.get(Output.OSSERVATESSERINO.ordinal()) , true));
         spogliatoio.aggiungiItemContenitore(armadiettoSinistro);
         spogliatoio.aggiungiItemContenitore(armadiettoDestro);
-        salaVapore.aggiungiItem(new Item(Items.CACCIAVITE, stringhe.get(Output.OSSERVACACCIAVITE.ordinal()) , true));
-        salaPompe.aggiungiItem(new Item(Items.TELECOMANDO, stringhe.get(Output.OSSERVATELECOMANDO.ordinal()), true));
-        salaMacchine.aggiungiItem(new Item(Items.FOGLIO,stringhe.get(Output.OSSERVAFOGLIO.ordinal()), true));
-        salaMacchine.aggiungiItem(new Item(Items.CHIAVE,stringhe.get(Output.OSSERVACHIAVE.ordinal()), true));
-        salaReattore.aggiungiItem(new Item(Items.TORCIA, stringhe.get(Output.OSSERVACHIAVE.ordinal()), true));
+        salaVapore.aggiungiItem(new Item(Items.CACCIAVITE, "Cacciavite", stringhe.get(Output.OSSERVACACCIAVITE.ordinal()) , true));
+        salaPompe.aggiungiItem(new Item(Items.TELECOMANDO, "Telecomando", stringhe.get(Output.OSSERVATELECOMANDO.ordinal()), true));
+        salaMacchine.aggiungiItem(new Item(Items.FOGLIO, "Foglio", stringhe.get(Output.OSSERVAFOGLIO.ordinal()), true));
+        salaMacchine.aggiungiItem(new Item(Items.CHIAVE, "Chiave", stringhe.get(Output.OSSERVACHIAVE.ordinal()), true));
+        salaReattore.aggiungiItem(new Item(Items.TORCIA, "Torcia", stringhe.get(Output.OSSERVACHIAVE.ordinal()), true));
         
 
         this.grafo.inserisciNodo(cortile);
