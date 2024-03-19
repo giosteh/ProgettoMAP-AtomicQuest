@@ -1,8 +1,10 @@
 
 package entita;
 
+import java.io.Serializable;
 
-public enum Direzione {
+
+public enum Direzione implements Serializable {
     NORD,
     SUD,
     OVEST,

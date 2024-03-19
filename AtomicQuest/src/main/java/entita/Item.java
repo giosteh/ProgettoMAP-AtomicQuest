@@ -1,10 +1,11 @@
 
 package entita;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 
-public class Item implements Comparable {
+public class Item implements Comparable, Serializable {
 
     private final Items id;
     private String descrizione;

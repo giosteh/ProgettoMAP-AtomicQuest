@@ -1,8 +1,10 @@
 
 package entita;
 
+import java.io.Serializable;
 
-public enum Items {
+
+public enum Items implements Serializable {
     ARMADIETTOSINISTRO,
     ARMADIETTODESTRO,
     TUTA,

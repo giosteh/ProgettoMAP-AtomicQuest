@@ -1,8 +1,10 @@
 
 package entita;
 
+import java.io.Serializable;
 
-public enum ModalitaDiAccesso {
+
+public enum ModalitaDiAccesso implements Serializable {
     APERTO,
     PORTACONTESSERINO,
     PORTACONCODICE,
