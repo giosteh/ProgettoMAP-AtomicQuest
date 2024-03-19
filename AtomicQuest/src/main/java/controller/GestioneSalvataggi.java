@@ -23,9 +23,10 @@ public class GestioneSalvataggi {
     private static List<String> nomiSalvataggi = new ArrayList<>();
     private static final String CREAZIONETABELLA = "CREATE TABLE IF NOT EXISTS salvataggi"
             + "(id INT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(1024), obj BLOB);";
-    
+
+
     private static Connection connettiAlDB() {
-        String dbpath = "jdbc:h2:";
+        String dbpath = "jdbc:h2:./risorse/db/salvataggio";
         Properties props = new Properties();
         props.setProperty("user", "atom");
         props.setProperty("password", "1234");
@@ -37,87 +38,73 @@ public class GestioneSalvataggi {
         }
         return null;
     }
-    
+
     public static void creaTabellaInDB() {
-        try {
-            Connection conn = GestioneSalvataggi.connettiAlDB();
-            Statement stm = conn.createStatement();
+        try (Connection conn = GestioneSalvataggi.connettiAlDB();
+                Statement stm = conn.createStatement()) {
             stm.executeUpdate(CREAZIONETABELLA);
-            stm.close();
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
     }
-    
+
     public static boolean inserisciInDB(final String nome, final Giocatore obj) {
-        ObjectOutputStream outStream = null;
         if (GestioneSalvataggi.isNomeDuplicato(nome)) {
             return false;
         }
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            outStream = new ObjectOutputStream(baos);
+        try (Connection conn = GestioneSalvataggi.connettiAlDB();
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                ObjectOutputStream outStream = new ObjectOutputStream(baos);
+                PreparedStatement pstm = conn.prepareStatement("INSERT INTO salvataggi (nome, obj) VALUES (?, ?)")) {
+
             outStream.writeObject(obj);
             byte[] serializedObj = baos.toByteArray();
-            Connection conn = GestioneSalvataggi.connettiAlDB();
-            String insert = "INSERT INTO salvataggi (nome, obj) VALUES (?, ?)";
-            PreparedStatement pstm = conn.prepareStatement(insert);
             pstm.setString(1, nome);
             pstm.setBytes(2, serializedObj);
             pstm.executeUpdate();
-            pstm.close();
             GestioneSalvataggi.nomiSalvataggi.add(nome);
             return true;
         } catch (SQLException | IOException ex) {
             System.err.println(ex.getMessage());
-        } finally {
-            try {
-                outStream.close();
-            } catch (IOException ex) {
-                System.err.println(ex.getMessage());
-            }
         }
         return false;
     }
 
     public static Giocatore selezionaDaDB(final String nome) {
-        try {
-            Giocatore obj = null;
-            Connection conn = GestioneSalvataggi.connettiAlDB();
-            String selectPerId = "SELECT obj FROM salvataggi WHERE (nome = ?)";
-            PreparedStatement pstm = conn.prepareStatement(selectPerId);
+        try (Connection conn = GestioneSalvataggi.connettiAlDB();
+                PreparedStatement pstm = conn.prepareStatement("SELECT obj FROM salvataggi WHERE (nome = ?)")) {
+
             pstm.setString(1, nome);
-            ResultSet res = pstm.executeQuery();
-            if (res.next()) {
-                byte[] serializedObj = res.getBytes(1);
-                ByteArrayInputStream bais = new ByteArrayInputStream(serializedObj);
-                ObjectInputStream inStream = new ObjectInputStream(bais);
-                obj = (Giocatore) inStream.readObject();
+            try (ResultSet res = pstm.executeQuery()) {
+                if (res.next()) {
+                    byte[] serializedObj = res.getBytes(1);
+                    try (ByteArrayInputStream bais = new ByteArrayInputStream(serializedObj);
+                            ObjectInputStream inStream = new ObjectInputStream(bais)) {
+
+                        return (Giocatore) inStream.readObject();
+                    } catch (ClassNotFoundException | IOException ex) {
+                        System.err.println(ex.getMessage());
+                    }
+                }
             }
-            pstm.close();
-            return obj;
-        } catch (SQLException | IOException ex) {
-            System.err.println(ex.getMessage());
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
         return null;
     }
 
     public static void rimuoviDaDB(final String nome) {
-        try {
-            Connection conn = GestioneSalvataggi.connettiAlDB();
-            String deletePerNome = "DELETE FROM salvataggi WHERE (nome = ?)";
-            PreparedStatement pstm = conn.prepareStatement(deletePerNome);
+        try (Connection conn = GestioneSalvataggi.connettiAlDB();
+                PreparedStatement pstm = conn.prepareStatement("DELETE FROM salvataggi WHERE (nome = ?)")) {
+
             pstm.setString(1, nome);
             pstm.executeUpdate();
-            pstm.close();
             GestioneSalvataggi.nomiSalvataggi.remove(nome);
         } catch (SQLException ex) {
             System.err.println(ex.getMessage());
         }
     }
-    
+
     public static boolean isNomeDuplicato(final String nome) {
         return GestioneSalvataggi.nomiSalvataggi.contains(nome);
     }

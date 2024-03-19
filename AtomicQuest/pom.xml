@@ -11,4 +11,9 @@
         <maven.compiler.target>19</maven.compiler.target>
         <exec.mainClass>com.mycompany.atomicquest.AtomicQuest</exec.mainClass>
     </properties>
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <version>2.2.224</version>
+    </dependency>
 </project>
