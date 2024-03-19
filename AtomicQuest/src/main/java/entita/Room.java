@@ -1,12 +1,13 @@
 
 package entita;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
 
-public class Room {
+public class Room implements Serializable {
 
     private final String descrizione;
     private String osserva;

@@ -5,13 +5,21 @@
 package interfaccia;
 
 import controller.AzioneSuInterfaccia;
+import controller.GestioneSalvataggi;
 import controller.OutputParser;
 import controller.Parser;
 import entita.Giocatore;
+import entita.LivelloRadioattivita;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -20,27 +28,52 @@ import javax.swing.JOptionPane;
 public class InterfacciaGioco extends javax.swing.JFrame {
 
     private Parser parser;
-    private OutputParser outputParser;
+    private OutputParser outputParser = new OutputParser();
     private AzioneSuInterfaccia azione;
     private Giocatore giocatore;
     
-    public InterfacciaGioco() {
+    public InterfacciaGioco(Giocatore giocatore) {
         initComponents();
         centraFrame();
-        this.giocatore = new Giocatore("Giuseppe");
+        listenerTastoEscape();
+        this.giocatore = giocatore;
         this.parser = new Parser(this.giocatore);
-        this.outputParser = new OutputParser();
         this.inizializzaImmaginiLabel();
         this.textAreaOutput.append(parser.getIntroduzione().getStringaDaStampare() + "\n Che vuoi fare?? ");
     }
     
+    public InterfacciaGioco() {
+        initComponents();
+        centraFrame();
+        listenerTastoEscape();
+        Giocatore giocatore = GestioneSalvataggi.selezionaDaDB("Utente");
+        this.giocatore = giocatore;
+        this.parser = new Parser(this.giocatore);
+        this.inizializzaImmaginiLabelDopoCaricamento();
+        this.textAreaOutput.append(this.giocatore.getStanzaCorrente().getDescrizione() + "\n Che vuoi fare?? ");
+    }
+                
     
     
     private void inizializzaImmaginiLabel() {
         this.labelTuta.setIcon(new ImageIcon("TutaIntegra.jpg"));
         this.labelTitolo.setIcon(new ImageIcon("Titolo.png"));
-        this.labelRadioattivita.setIcon(new ImageIcon("RadiazioneBassa.jpg"));
+        this.labelRadioattivita.setIcon(new ImageIcon("RadiazioneBassa.jpg")); 
+    }
+    
+    private void inizializzaImmaginiLabelDopoCaricamento() {
+        if (this.giocatore.isTutaIntegra())
+            this.labelTuta.setIcon(new ImageIcon("TutaIntegra.jpg"));
+        else
+            this.labelTuta.setIcon(new ImageIcon("TutaRotta.jpg"));
         
+        if (this.giocatore.getStanzaCorrente().getEsposizRadioattiva() == LivelloRadioattivita.BASSO)
+            this.labelMeteo.setIcon(new ImageIcon("RadiazioneBassa.jpg"));
+        else if (this.giocatore.getStanzaCorrente().getEsposizRadioattiva() == LivelloRadioattivita.MEDIO)
+            this.labelMeteo.setIcon(new ImageIcon("RadiazioneMedia.jpg"));
+        else if (this.giocatore.getStanzaCorrente().getEsposizRadioattiva() == LivelloRadioattivita.ELEVATO)
+            this.labelMeteo.setIcon(new ImageIcon("RadiazioneElevata.jpg"));
+            
     }
     
     private void centraFrame() {
@@ -56,6 +89,19 @@ public class InterfacciaGioco extends javax.swing.JFrame {
 
         // Impostare la posizione del frame
         setLocation(x, y);
+    }
+    
+    private void listenerTastoEscape() {
+        InterfacciaGioco interfacciaGioco = this;
+        Giocatore giocatore1 = this.giocatore;
+        panelPrincipale.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "escape");
+        panelPrincipale.getActionMap().put("escape", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Apri un nuovo JFrame quando il tasto Esc è premuto
+                new InterfacciaPausa(interfacciaGioco, giocatore1).setVisible(true);
+            }
+        });
     }
     
 
@@ -152,7 +198,7 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         panelDestra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0), 2));
 
         buttonInventario.setBackground(new java.awt.Color(0, 102, 0));
-        buttonInventario.setFont(new java.awt.Font("Cambria", 0, 18)); // NOI18N
+        buttonInventario.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         buttonInventario.setForeground(new java.awt.Color(0, 0, 0));
         buttonInventario.setText("INVENTARIO");
         buttonInventario.addActionListener(new java.awt.event.ActionListener() {
@@ -233,7 +279,7 @@ public class InterfacciaGioco extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Devi inserire un comando!");
         }
         else {
-           
+            
                 this.outputParser = this.parser.analizzaComando(s);
                 
                 if (this.outputParser.getAzione().ordinal() == AzioneSuInterfaccia.FINE.ordinal()) {
@@ -241,8 +287,7 @@ public class InterfacciaGioco extends javax.swing.JFrame {
                     this.gestisciFinale();
                     return;
                 }
-                
-            
+               
                 this.textAreaOutput.append(s.toUpperCase() + "\n\n" + outputParser.getStringaDaStampare() + "\n Che vuoi fare? ");
                 if (this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAINTEGRA || 
                     this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAROTTA) {
@@ -283,40 +328,7 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         this.textAreaOutput.append("\nCOMPLIMENTI: HAI COMPLETATO IL GIOCO CON SUCCESSO!");
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InterfacciaGioco.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InterfacciaGioco.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InterfacciaGioco.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InterfacciaGioco.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new InterfacciaGioco().setVisible(true);
-            }
-        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane barraScrolloTextArea;

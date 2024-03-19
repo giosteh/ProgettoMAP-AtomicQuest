@@ -1,12 +1,13 @@
 
 package entita;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
 
-public class ItemContenitore extends Item {
+public class ItemContenitore extends Item implements Serializable {
 
     private Set<Item> itemsContenuti = new TreeSet<>();
     private boolean aperto;

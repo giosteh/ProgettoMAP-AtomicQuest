@@ -2,9 +2,10 @@
 package entita;
 
 import grafo.NodoInesistenteException;
+import java.io.Serializable;
 
 
-public abstract class Player {
+public abstract class Player implements Serializable {
 
     private final String nome;
     private final Inventario inventario = new Inventario();

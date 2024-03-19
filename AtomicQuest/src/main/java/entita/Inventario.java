@@ -1,12 +1,13 @@
 
 package entita;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
 
-public class Inventario {
+public class Inventario implements Serializable {
     
     private Set<Item> items = new TreeSet<>();
 
