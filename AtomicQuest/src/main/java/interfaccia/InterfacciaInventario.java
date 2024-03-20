@@ -28,17 +28,17 @@ public class InterfacciaInventario extends javax.swing.JFrame {
     
     private void visualizzaInventario(Giocatore giocatore) {
         if (giocatore.getInventario().contieneItem(Items.TESSERINO))
-            this.labelTesserino.setIcon(new ImageIcon("Tesserino.jpg"));
+            this.labelTesserino.setIcon(new ImageIcon("./risorse/img/Tesserino.jpg"));
         if (giocatore.getInventario().contieneItem(Items.CACCIAVITE))
-            this.labelCacciavite.setIcon(new ImageIcon("Cacciavite.jpg"));
+            this.labelCacciavite.setIcon(new ImageIcon("./risorse/img/Cacciavite.jpg"));
         if (giocatore.getInventario().contieneItem(Items.TELECOMANDO))
-            this.labelTelecomando.setIcon(new ImageIcon("Telecomando.jpg"));
+            this.labelTelecomando.setIcon(new ImageIcon("./risorse/img/Telecomando.jpg"));
         if (giocatore.getInventario().contieneItem(Items.CHIAVE))
-            this.labelChiave.setIcon(new ImageIcon("Chiave.jpg"));
+            this.labelChiave.setIcon(new ImageIcon("./risorse/img/Chiave.jpg"));
         if (giocatore.getInventario().contieneItem(Items.FOGLIO))
-            this.labelFoglio.setIcon(new ImageIcon("Foglio.jpg"));
+            this.labelFoglio.setIcon(new ImageIcon("./risorse/img/Foglio.jpg"));
         if (giocatore.getInventario().contieneItem(Items.TORCIA))
-            this.labelTorcia.setIcon(new ImageIcon("Torcia.jpg"));
+            this.labelTorcia.setIcon(new ImageIcon("./risorse/img/Torcia.jpg"));
     }
     
      private void centraFrame() {

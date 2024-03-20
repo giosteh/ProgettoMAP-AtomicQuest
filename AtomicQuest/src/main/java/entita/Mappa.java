@@ -48,7 +48,7 @@ public class Mappa implements Serializable {
     }
 
     public void initMappa() {
-        List<String> stringhe = GestioneFile.caricaList("stringhe.dat");
+        List<String> stringhe = GestioneFile.caricaList("./risorse/files/stringhe.dat");
         
         Stanza cortile = new Stanza(Stanze.CORTILE, stringhe.get(Output.DESCRIZIONECORTILE.ordinal()),
                 stringhe.get(Output.OSSERVACORTILE.ordinal()), stringhe.get(Output.BENVENUTOCORTILE.ordinal()),

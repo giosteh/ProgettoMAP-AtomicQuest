@@ -68,11 +68,11 @@ public class RESTMeteoThread extends Thread {
             try {
                 int meteoID = this.getMeteoID();
                 if (cieloSereno.isMeteoCorrente(meteoID)) {
-                    this.label.setIcon(new ImageIcon("MeteoSole.jpg"));
+                    this.label.setIcon(new ImageIcon("./risorse/img/MeteoSole.jpg"));
                 } else if (nuvoloso.isMeteoCorrente(meteoID)) {
-                    this.label.setIcon(new ImageIcon("MeteoNuvoloso.jpg"));
+                    this.label.setIcon(new ImageIcon("./risorse/img/MeteoNuvoloso.jpg"));
                 } else if (pioggia.isMeteoCorrente(meteoID)) {
-                    this.label.setIcon(new ImageIcon("MeteoPioggia.jpg"));
+                    this.label.setIcon(new ImageIcon("./risorse/img/MeteoPioggia.jpg"));
                 }
                 Thread.sleep(RESTMeteoThread.INTERVALLO);
             } catch (InterruptedException ex) {

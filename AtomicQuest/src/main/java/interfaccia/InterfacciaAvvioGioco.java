@@ -4,10 +4,12 @@
  */
 package interfaccia;
 
+import controller.GestioneSalvataggi;
 import entita.Giocatore;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -39,7 +41,7 @@ public class InterfacciaAvvioGioco extends javax.swing.JFrame {
     }
     
     private void inizializzaIcone() {
-        this.labelCopertina.setIcon(new ImageIcon("Copertina.jpg"));
+        this.labelCopertina.setIcon(new ImageIcon("./risorse/img/Copertina.jpg"));
     }
 
     /**
@@ -147,8 +149,12 @@ public class InterfacciaAvvioGioco extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonEsciActionPerformed
 
     private void buttonContinuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonContinuaActionPerformed
-        new InterfacciaGioco().setVisible(true);
-        this.dispose();
+        if (GestioneSalvataggi.isDBVuoto())
+            JOptionPane.showMessageDialog(this, "Non hai salvato nessuna partita");
+        else {
+            new InterfacciaGioco().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_buttonContinuaActionPerformed
 
     

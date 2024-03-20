@@ -18,16 +18,8 @@ public class Inventario implements Serializable {
         this.items.add(item);
     }
 
-    public Item rimuoviItem(final Items id) {
-        Iterator<Item> it = this.items.iterator();
-        while (it.hasNext()) {
-            Item i = it.next();
-            if (i.getId() == id) {
-                it.remove();
-                return i;
-            }
-        }
-        return null;
+    public void rimuoviItem(final Items id) {
+        this.items.removeIf(i -> i.getId() == id);
     }
 
     public Iterator<Item> iteratore() {
