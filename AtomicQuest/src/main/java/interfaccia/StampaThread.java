@@ -24,7 +24,7 @@ public class StampaThread extends Thread {
             int indiceCorrente = 0;
 
             while (indiceCorrente < lunghezzaTesto) {
-                int numCaratteri = random.nextInt(8) + 1;
+                int numCaratteri = random.nextInt(20) + 5;
                 StringBuilder sb = new StringBuilder();
 
                 for (int i = 0; i < numCaratteri && indiceCorrente < lunghezzaTesto; i++) {
@@ -39,5 +39,9 @@ public class StampaThread extends Thread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    
+    public void stampa() {
+        this.start();
     }
 }

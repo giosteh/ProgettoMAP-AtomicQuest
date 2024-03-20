@@ -92,20 +92,19 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="179" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="buttonPausa" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="buttonGuida" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                               <Component id="labelTitolo" min="-2" pref="330" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="labelMeteo" max="32767" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="labelMeteo" min="-2" pref="173" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="barraScrolloTextArea" pref="682" max="32767" attributes="0"/>
-                                  <Component id="textFieldInput" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="barraScrolloTextArea" max="32767" attributes="0"/>
+                          <Component id="textFieldInput" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -116,8 +115,10 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="labelTitolo" min="-2" pref="50" max="-2" attributes="0"/>
-                          <Component id="labelMeteo" max="32767" attributes="0"/>
+                          <Component id="labelTitolo" pref="50" max="32767" attributes="0"/>
+                          <Component id="buttonPausa" alignment="0" max="32767" attributes="0"/>
+                          <Component id="buttonGuida" alignment="0" max="32767" attributes="0"/>
+                          <Component id="labelMeteo" alignment="1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="barraScrolloTextArea" min="-2" pref="450" max="-2" attributes="0"/>
@@ -203,6 +204,19 @@
             <Component class="javax.swing.JLabel" name="labelTitolo">
             </Component>
             <Component class="javax.swing.JLabel" name="labelMeteo">
+            </Component>
+            <Component class="javax.swing.JButton" name="buttonPausa">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="PAUSA"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonPausaActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="buttonGuida">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="GUIDA"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

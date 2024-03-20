@@ -8,18 +8,14 @@ import controller.AzioneSuInterfaccia;
 import controller.GestioneSalvataggi;
 import controller.OutputParser;
 import controller.Parser;
+import controller.RESTMeteoThread;
 import entita.Giocatore;
 import entita.LivelloRadioattivita;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.KeyStroke;
+
 
 /**
  *
@@ -35,22 +31,24 @@ public class InterfacciaGioco extends javax.swing.JFrame {
     public InterfacciaGioco(Giocatore giocatore) {
         initComponents();
         centraFrame();
-        listenerTastoEscape();
         this.giocatore = giocatore;
         this.parser = new Parser(this.giocatore);
         this.inizializzaImmaginiLabel();
-        this.textAreaOutput.append(parser.getIntroduzione().getStringaDaStampare() + "\n Che vuoi fare?? ");
+        new RESTMeteoThread(this.labelMeteo).visualizzaMeteo();
+        String s = parser.getIntroduzione().getStringaDaStampare() + "\n Che vuoi fare?? ";;
+        new StampaThread(s, this.textAreaOutput).stampa();
+        //this.textAreaOutput.append(parser.getIntroduzione().getStringaDaStampare() + "\n Che vuoi fare?? ");
     }
     
     public InterfacciaGioco() {
         initComponents();
         centraFrame();
-        listenerTastoEscape();
         Giocatore giocatore = GestioneSalvataggi.selezionaDaDB("Utente");
         this.giocatore = giocatore;
         this.parser = new Parser(this.giocatore);
         this.inizializzaImmaginiLabelDopoCaricamento();
-        this.textAreaOutput.append(this.giocatore.getStanzaCorrente().getDescrizione() + "\n Che vuoi fare?? ");
+        new RESTMeteoThread(this.labelMeteo).visualizzaMeteo();
+        this.textAreaOutput.append(this.giocatore.getStanzaCorrente().getBenvenuto() + "\n Che vuoi fare?? ");
     }
                 
     
@@ -62,17 +60,18 @@ public class InterfacciaGioco extends javax.swing.JFrame {
     }
     
     private void inizializzaImmaginiLabelDopoCaricamento() {
+        this.labelTitolo.setIcon(new ImageIcon("Titolo.png"));
         if (this.giocatore.isTutaIntegra())
             this.labelTuta.setIcon(new ImageIcon("TutaIntegra.jpg"));
         else
             this.labelTuta.setIcon(new ImageIcon("TutaRotta.jpg"));
         
         if (this.giocatore.getStanzaCorrente().getEsposizRadioattiva() == LivelloRadioattivita.BASSO)
-            this.labelMeteo.setIcon(new ImageIcon("RadiazioneBassa.jpg"));
+            this.labelRadioattivita.setIcon(new ImageIcon("RadiazioneBassa.jpg"));
         else if (this.giocatore.getStanzaCorrente().getEsposizRadioattiva() == LivelloRadioattivita.MEDIO)
-            this.labelMeteo.setIcon(new ImageIcon("RadiazioneMedia.jpg"));
+            this.labelRadioattivita.setIcon(new ImageIcon("RadiazioneMedia.jpg"));
         else if (this.giocatore.getStanzaCorrente().getEsposizRadioattiva() == LivelloRadioattivita.ELEVATO)
-            this.labelMeteo.setIcon(new ImageIcon("RadiazioneElevata.jpg"));
+            this.labelRadioattivita.setIcon(new ImageIcon("RadiazioneElevata.jpg"));
             
     }
     
@@ -91,18 +90,6 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         setLocation(x, y);
     }
     
-    private void listenerTastoEscape() {
-        InterfacciaGioco interfacciaGioco = this;
-        Giocatore giocatore1 = this.giocatore;
-        panelPrincipale.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "escape");
-        panelPrincipale.getActionMap().put("escape", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Apri un nuovo JFrame quando il tasto Esc è premuto
-                new InterfacciaPausa(interfacciaGioco, giocatore1).setVisible(true);
-            }
-        });
-    }
     
 
     /**
@@ -121,6 +108,8 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         textFieldInput = new javax.swing.JTextField();
         labelTitolo = new javax.swing.JLabel();
         labelMeteo = new javax.swing.JLabel();
+        buttonPausa = new javax.swing.JButton();
+        buttonGuida = new javax.swing.JButton();
         panelDestra = new javax.swing.JPanel();
         labelTuta = new javax.swing.JLabel();
         buttonInventario = new javax.swing.JButton();
@@ -162,22 +151,32 @@ public class InterfacciaGioco extends javax.swing.JFrame {
             }
         });
 
+        buttonPausa.setText("PAUSA");
+        buttonPausa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPausaActionPerformed(evt);
+            }
+        });
+
+        buttonGuida.setText("GUIDA");
+
         javax.swing.GroupLayout panelSinistraLayout = new javax.swing.GroupLayout(panelSinistra);
         panelSinistra.setLayout(panelSinistraLayout);
         panelSinistraLayout.setHorizontalGroup(
             panelSinistraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelSinistraLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panelSinistraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelSinistraLayout.createSequentialGroup()
-                        .addGap(179, 179, 179)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSinistraLayout.createSequentialGroup()
+                        .addComponent(buttonPausa)
+                        .addGap(18, 18, 18)
+                        .addComponent(buttonGuida)
+                        .addGap(5, 5, 5)
                         .addComponent(labelTitolo, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelMeteo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelSinistraLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(panelSinistraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(barraScrolloTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, 682, Short.MAX_VALUE)
-                            .addComponent(textFieldInput))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelMeteo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(barraScrolloTextArea)
+                    .addComponent(textFieldInput))
                 .addContainerGap())
         );
         panelSinistraLayout.setVerticalGroup(
@@ -185,8 +184,10 @@ public class InterfacciaGioco extends javax.swing.JFrame {
             .addGroup(panelSinistraLayout.createSequentialGroup()
                 .addGap(12, 12, 12)
                 .addGroup(panelSinistraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelTitolo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelMeteo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(labelTitolo, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(buttonPausa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonGuida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelMeteo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(barraScrolloTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -283,12 +284,15 @@ public class InterfacciaGioco extends javax.swing.JFrame {
                 this.outputParser = this.parser.analizzaComando(s);
                 
                 if (this.outputParser.getAzione().ordinal() == AzioneSuInterfaccia.FINE.ordinal()) {
-                    this.textAreaOutput.append("\n\n" + outputParser.getStringaDaStampare());
+                    new StampaThread("\n\n" + outputParser.getStringaDaStampare(), this.textAreaOutput).stampa();
+                    //this.textAreaOutput.append("\n\n" + outputParser.getStringaDaStampare());
                     this.gestisciFinale();
                     return;
                 }
                
-                this.textAreaOutput.append(s.toUpperCase() + "\n\n" + outputParser.getStringaDaStampare() + "\n Che vuoi fare? ");
+                this.textAreaOutput.append(s.toUpperCase() + "\n");
+                new StampaThread("\n\n" + outputParser.getStringaDaStampare() +"\n Che vuoi fare?? ", this.textAreaOutput).stampa();
+                //this.textAreaOutput.append(s.toUpperCase() + "\n\n" + outputParser.getStringaDaStampare() + "\n Che vuoi fare? ");
                 if (this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAINTEGRA || 
                     this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAROTTA) {
                             this.gestisciLabelTuta();
@@ -305,6 +309,11 @@ public class InterfacciaGioco extends javax.swing.JFrame {
     private void buttonInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonInventarioActionPerformed
         new InterfacciaInventario(this.giocatore).setVisible(true);
     }//GEN-LAST:event_buttonInventarioActionPerformed
+
+    private void buttonPausaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPausaActionPerformed
+        new InterfacciaPausa(this, this.giocatore).setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_buttonPausaActionPerformed
 
     private void gestisciLabelTuta() {
         if (this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAINTEGRA)
@@ -332,7 +341,9 @@ public class InterfacciaGioco extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane barraScrolloTextArea;
+    private javax.swing.JButton buttonGuida;
     private javax.swing.JButton buttonInventario;
+    private javax.swing.JButton buttonPausa;
     private javax.swing.JLabel labelMeteo;
     private javax.swing.JLabel labelRadioattivita;
     private javax.swing.JLabel labelTitolo;
