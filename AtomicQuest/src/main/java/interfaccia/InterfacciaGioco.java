@@ -35,9 +35,8 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         this.parser = new Parser(this.giocatore);
         this.inizializzaImmaginiLabel();
         new RESTMeteoThread(this.labelMeteo).visualizzaMeteo();
-        String s = parser.getIntroduzione().getStringaDaStampare() + "\n Che vuoi fare?? ";;
-        new StampaThread(s, this.textAreaOutput).stampa();
-        //this.textAreaOutput.append(parser.getIntroduzione().getStringaDaStampare() + "\n Che vuoi fare?? ");
+        String s = parser.getIntroduzione().getStringaDaStampare() + "\n Che vuoi fare? >> ";;
+        new StampaThread(s, this.textAreaOutput, this.textFieldInput).stampa();
     }
     
     public InterfacciaGioco() {
@@ -48,30 +47,30 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         this.parser = new Parser(this.giocatore);
         this.inizializzaImmaginiLabelDopoCaricamento();
         new RESTMeteoThread(this.labelMeteo).visualizzaMeteo();
-        this.textAreaOutput.append(this.giocatore.getStanzaCorrente().getBenvenuto() + "\n Che vuoi fare?? ");
+        this.textAreaOutput.append(this.giocatore.getStanzaCorrente().getBenvenuto() + "\n Che vuoi fare? >> ");
     }
                 
     
     
     private void inizializzaImmaginiLabel() {
-        this.labelTuta.setIcon(new ImageIcon("TutaIntegra.jpg"));
-        this.labelTitolo.setIcon(new ImageIcon("Titolo.png"));
-        this.labelRadioattivita.setIcon(new ImageIcon("RadiazioneBassa.jpg")); 
+        this.labelTuta.setIcon(new ImageIcon("./risorse/img/TutaIntegra.jpg"));
+        this.labelTitolo.setIcon(new ImageIcon("./risorse/img/Titolo.png"));
+        this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneBassa.jpg")); 
     }
     
     private void inizializzaImmaginiLabelDopoCaricamento() {
-        this.labelTitolo.setIcon(new ImageIcon("Titolo.png"));
+        this.labelTitolo.setIcon(new ImageIcon("./risorse/img/Titolo.png"));
         if (this.giocatore.isTutaIntegra())
-            this.labelTuta.setIcon(new ImageIcon("TutaIntegra.jpg"));
+            this.labelTuta.setIcon(new ImageIcon("./risorse/img/TutaIntegra.jpg"));
         else
-            this.labelTuta.setIcon(new ImageIcon("TutaRotta.jpg"));
+            this.labelTuta.setIcon(new ImageIcon("./risorse/img/TutaRotta.jpg"));
         
         if (this.giocatore.getStanzaCorrente().getEsposizRadioattiva() == LivelloRadioattivita.BASSO)
-            this.labelRadioattivita.setIcon(new ImageIcon("RadiazioneBassa.jpg"));
+            this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneBassa.jpg"));
         else if (this.giocatore.getStanzaCorrente().getEsposizRadioattiva() == LivelloRadioattivita.MEDIO)
-            this.labelRadioattivita.setIcon(new ImageIcon("RadiazioneMedia.jpg"));
+            this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneMedia.jpg"));
         else if (this.giocatore.getStanzaCorrente().getEsposizRadioattiva() == LivelloRadioattivita.ELEVATO)
-            this.labelRadioattivita.setIcon(new ImageIcon("RadiazioneElevata.jpg"));
+            this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneElevata.jpg"));
             
     }
     
@@ -284,14 +283,14 @@ public class InterfacciaGioco extends javax.swing.JFrame {
                 this.outputParser = this.parser.analizzaComando(s);
                 
                 if (this.outputParser.getAzione().ordinal() == AzioneSuInterfaccia.FINE.ordinal()) {
-                    new StampaThread("\n\n" + outputParser.getStringaDaStampare(), this.textAreaOutput).stampa();
+                    new StampaThread("\n\n" + outputParser.getStringaDaStampare(), this.textAreaOutput, this.textFieldInput).stampa();
                     //this.textAreaOutput.append("\n\n" + outputParser.getStringaDaStampare());
                     this.gestisciFinale();
                     return;
                 }
                
                 this.textAreaOutput.append(s.toUpperCase() + "\n");
-                new StampaThread("\n\n" + outputParser.getStringaDaStampare() +"\n Che vuoi fare?? ", this.textAreaOutput).stampa();
+                new StampaThread("\n\n" + outputParser.getStringaDaStampare() +"\n Che vuoi fare? >> ", this.textAreaOutput, this.textFieldInput).stampa();
                 //this.textAreaOutput.append(s.toUpperCase() + "\n\n" + outputParser.getStringaDaStampare() + "\n Che vuoi fare? ");
                 if (this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAINTEGRA || 
                     this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAROTTA) {
@@ -317,24 +316,23 @@ public class InterfacciaGioco extends javax.swing.JFrame {
 
     private void gestisciLabelTuta() {
         if (this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAINTEGRA)
-            this.labelTuta.setIcon(new ImageIcon("TutaIntegra.jpg"));
+            this.labelTuta.setIcon(new ImageIcon("./risorse/img/TutaIntegra.jpg"));
         else
-            this.labelTuta.setIcon(new ImageIcon("TutaRotta.jpg"));
+            this.labelTuta.setIcon(new ImageIcon("./risorse/img/TutaRotta.jpg"));
     }
     
     private void gestisciLabelRadioattivita() {
         
         if (this.outputParser.getAzione() == AzioneSuInterfaccia.RADIAZIONIBASSE)
-            this.labelRadioattivita.setIcon(new ImageIcon("RadiazioneBassa.jpg"));
+            this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneBassa.jpg"));
         else if (this.outputParser.getAzione() == AzioneSuInterfaccia.RADIAZIONIMEDIE)
-            this.labelRadioattivita.setIcon(new ImageIcon("RadiazioneMedia.jpg"));
+            this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneMedia.jpg"));
         else
-            this.labelRadioattivita.setIcon(new ImageIcon("RadiazioneElevata.jpg"));
+            this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneElevata.jpg"));
     }
     
     private void gestisciFinale() {
         this.textFieldInput.setEditable(false);
-        this.textAreaOutput.append("\nCOMPLIMENTI: HAI COMPLETATO IL GIOCO CON SUCCESSO!");
     }
     
    

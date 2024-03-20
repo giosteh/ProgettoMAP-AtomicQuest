@@ -42,9 +42,9 @@ public class Parser {
 
     public Parser(Giocatore giocatore) {
         this.giocatore = giocatore;
-        this.vocabolario = GestioneFile.caricaMap("vocabolario.dat");
-        this.comandi = GestioneFile.caricaMap("comandi.dat");
-        this.stringhe = GestioneFile.caricaList("stringhe.dat");
+        this.vocabolario = GestioneFile.caricaMap("./risorse/files/vocabolario.dat");
+        this.comandi = GestioneFile.caricaMap("./risorse/files/comandi.dat");
+        this.stringhe = GestioneFile.caricaList("./risorse/files/stringhe.dat");
     }
 
     public OutputParser analizzaComando(final String comando) {
@@ -190,8 +190,7 @@ public class Parser {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONUTILE.ordinal()));
                     return;
                 }
-                if (!this.giocatore.getInventario().contieneItem(Items.TESSERINO)) {
-                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                if (!this.isOggettoPresenteInInventario(Items.TESSERINO, outputComando)) {
                     return;
                 }
                 if (stanzaCorrente.getId() == Stanze.ATRIO) {
@@ -218,8 +217,7 @@ public class Parser {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONUTILE.ordinal()));
                     return;
                 }
-                if (!this.giocatore.getInventario().contieneItem(Items.CACCIAVITE)) {
-                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                if (!this.isOggettoPresenteInInventario(Items.CACCIAVITE, outputComando)) {
                     return;
                 }
                 if (this.giocatore.getMappa().verificaModalitaAccesso(stanzaCorrente, Direzione.NORD, ModalitaDiAccesso.APERTO)) {
@@ -235,8 +233,7 @@ public class Parser {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONUTILE.ordinal()));
                     return;
                 }
-                if (!this.giocatore.getInventario().contieneItem(Items.TELECOMANDO)) {
-                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                if (!this.isOggettoPresenteInInventario(Items.TELECOMANDO, outputComando)) {
                     return;
                 }
                 if (this.giocatore.getMappa().verificaModalitaAccesso(stanzaCorrente, Direzione.GIU, ModalitaDiAccesso.APERTO)) {
@@ -252,8 +249,7 @@ public class Parser {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONUTILE.ordinal()));
                     return;
                 }
-                if (!this.giocatore.getInventario().contieneItem(Items.CHIAVE)) {
-                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                if (!this.isOggettoPresenteInInventario(Items.CHIAVE, outputComando)) {
                     return;
                 }
                 if (stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTOSINISTRO).isAperto()) {
@@ -276,15 +272,13 @@ public class Parser {
                 this.giocatore.getMappa().cambiaModalitaDiAccesso(this.giocatore.getMappa().getStanzaPerId(Stanze.ANTICAMERADEPOSITO), Direzione.SUD, ModalitaDiAccesso.APERTO);
                 break;
             case 17: // usa torcia
-                if (!this.giocatore.getInventario().contieneItem(Items.TORCIA)) {
-                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                if (!this.isOggettoPresenteInInventario(Items.TORCIA, outputComando)) {
                     return;
                 }
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVATORCIA.ordinal()));
                 break;
             case 18: // usa foglio
-                if (!this.giocatore.getInventario().contieneItem(Items.FOGLIO)) {
-                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                if (!this.isOggettoPresenteInInventario(Items.FOGLIO, outputComando)) {
                     return;
                 }
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.OSSERVAFOGLIO.ordinal()));
@@ -335,6 +329,7 @@ public class Parser {
                     return;
                 }
                 itemRaccolto = stanzaCorrente.getItemPerId(Items.CACCIAVITE);
+                stanzaCorrente.rimuoviItem(Items.CACCIAVITE);
                 this.giocatore.getInventario().aggiungiItem(itemRaccolto);
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICACACCIAVITEPRESO.ordinal()));
                 stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVASALAVAPORESENZACACCIAVITE.ordinal()));
@@ -349,6 +344,7 @@ public class Parser {
                     return;
                 }
                 itemRaccolto = stanzaCorrente.getItemPerId(Items.TELECOMANDO);
+                stanzaCorrente.rimuoviItem(Items.TELECOMANDO);
                 this.giocatore.getInventario().aggiungiItem(itemRaccolto);
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICATELECOMANDOPRESO.ordinal()));
                 stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVASALAPOMPESENZATELECOMANDO.ordinal()));
@@ -363,6 +359,7 @@ public class Parser {
                     return;
                 }
                 itemRaccolto = stanzaCorrente.getItemPerId(Items.CHIAVE);
+                stanzaCorrente.rimuoviItem(Items.CHIAVE);
                 this.giocatore.getInventario().aggiungiItem(itemRaccolto);
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICACHIAVEPRESA.ordinal()));
                 if (stanzaCorrente.contieneItem(Items.FOGLIO)) 
@@ -380,6 +377,7 @@ public class Parser {
                     return;
                 }
                 itemRaccolto = stanzaCorrente.getItemPerId(Items.FOGLIO);
+                stanzaCorrente.rimuoviItem(Items.FOGLIO);
                 this.giocatore.getInventario().aggiungiItem(itemRaccolto);
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAFOGLIOPRESO.ordinal()));
                 if (stanzaCorrente.contieneItem(Items.CHIAVE)) 
@@ -397,6 +395,7 @@ public class Parser {
                     return;
                 }
                 itemRaccolto = stanzaCorrente.getItemPerId(Items.TORCIA);
+                stanzaCorrente.rimuoviItem(Items.TORCIA);
                 this.giocatore.getInventario().aggiungiItem(itemRaccolto);
                 outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICATORCIAPRESA.ordinal()));
                 stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVASALAREATTORESENZATORCIA.ordinal()));
@@ -462,43 +461,37 @@ public class Parser {
         }
         switch(tipoComando) {
             case 43: // osserva tesserino
-                if (!this.giocatore.getInventario().contieneItem(Items.TESSERINO)) {
-                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                if (!this.isOggettoPresenteInInventario(Items.TESSERINO, outputComando)) {
                     return;
                 }
                 outputComando.setStringaDaStampare(this.giocatore.getInventario().getItemPerId(Items.TESSERINO).getDescrizione());
                 break;
             case 44: // osserva cacciavite
-                if (!this.giocatore.getInventario().contieneItem(Items.CACCIAVITE)) {
-                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                if (!this.isOggettoPresenteInInventario(Items.CACCIAVITE, outputComando)) {
                     return;
                 }
                 outputComando.setStringaDaStampare(this.giocatore.getInventario().getItemPerId(Items.CACCIAVITE).getDescrizione());
                 break;
             case 45: // osserva telecomando
-                if (!this.giocatore.getInventario().contieneItem(Items.TELECOMANDO)) {
-                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                if (!this.isOggettoPresenteInInventario(Items.TELECOMANDO, outputComando)) {
                     return;
                 }
                 outputComando.setStringaDaStampare(this.giocatore.getInventario().getItemPerId(Items.TELECOMANDO).getDescrizione());
                 break;
             case 46: // osserva chiave
-                if (!this.giocatore.getInventario().contieneItem(Items.CHIAVE)) {
-                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                if (!this.isOggettoPresenteInInventario(Items.CHIAVE, outputComando)) {
                     return;
                 }
                 outputComando.setStringaDaStampare(this.giocatore.getInventario().getItemPerId(Items.CHIAVE).getDescrizione());
                 break;
             case 47: // osserva foglio
-                if (!this.giocatore.getInventario().contieneItem(Items.FOGLIO)) {
-                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                if (!this.isOggettoPresenteInInventario(Items.FOGLIO, outputComando)) {
                     return;
                 }
                 outputComando.setStringaDaStampare(this.giocatore.getInventario().getItemPerId(Items.FOGLIO).getDescrizione());
                 break;
             case 48: // osserva torcia
-                if (!this.giocatore.getInventario().contieneItem(Items.TORCIA)) {
-                    outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+                if (!this.isOggettoPresenteInInventario(Items.TORCIA, outputComando)) {
                     return;
                 }
                 outputComando.setStringaDaStampare(this.giocatore.getInventario().getItemPerId(Items.TORCIA).getDescrizione());
@@ -545,6 +538,15 @@ public class Parser {
         }
         outputComando.setStringaDaStampare(this.giocatore.getInventario().toString());
     }
+
+    private boolean isOggettoPresenteInInventario(final Items oggetto, final OutputParser outputComando) {
+        if (!this.giocatore.getInventario().contieneItem(oggetto)) {
+            outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
+            return false;
+        }
+        return true;
+    }
+        
     
     private String ottieniCodiceComando(final String comando) {
         String codiceComando = "";
