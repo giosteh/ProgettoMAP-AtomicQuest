@@ -158,6 +158,11 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         });
 
         buttonGuida.setText("GUIDA");
+        buttonGuida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonGuidaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelSinistraLayout = new javax.swing.GroupLayout(panelSinistra);
         panelSinistra.setLayout(panelSinistraLayout);
@@ -313,6 +318,10 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         new InterfacciaPausa(this, this.giocatore).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_buttonPausaActionPerformed
+
+    private void buttonGuidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuidaActionPerformed
+        new InterfacciaGuida().setVisible(true);
+    }//GEN-LAST:event_buttonGuidaActionPerformed
 
     private void gestisciLabelTuta() {
         if (this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAINTEGRA)
