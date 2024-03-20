@@ -1,0 +1,15 @@
+2024-03-20 14:23:10.812976+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SALVATAGGI" not found (this database is empty); SQL statement:
+SELECT obj FROM salvataggi WHERE (nome = ?) [42104-224]
+2024-03-20 14:23:11.276297+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SALVATAGGI" not found (this database is empty); SQL statement:
+SELECT obj FROM salvataggi WHERE (nome = ?) [42104-224]
+2024-03-20 14:23:11.414663+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SALVATAGGI" not found (this database is empty); SQL statement:
+SELECT obj FROM salvataggi WHERE (nome = ?) [42104-224]
+2024-03-20 14:23:11.569801+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SALVATAGGI" not found (this database is empty); SQL statement:
+SELECT obj FROM salvataggi WHERE (nome = ?) [42104-224]
+2024-03-20 14:23:11.792068+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SALVATAGGI" not found (this database is empty); SQL statement:
+SELECT obj FROM salvataggi WHERE (nome = ?) [42104-224]

@@ -80,4 +80,8 @@ public class RESTMeteoThread extends Thread {
             }
         }
     }
+    
+    public void visualizzaMeteo() {
+        this.start();
+    }
 }

@@ -20,7 +20,7 @@ public class Mappa implements Serializable {
     private final GrafoMap<Stanza, Collegamento> grafo = new GrafoMap<>();
     private final List<Stanza> stanzePresenti = new ArrayList<>();
 
-    private class Collegamento {
+    private class Collegamento implements Serializable {
 
         private final Direzione direzione;
         private ModalitaDiAccesso modalita;
