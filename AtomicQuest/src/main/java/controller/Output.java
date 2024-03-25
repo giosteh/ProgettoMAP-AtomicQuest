@@ -112,4 +112,6 @@ public enum Output {
     OSSERVACHIAVE,
     OSSERVAFOGLIO,
     OSSERVATORCIA,
+    
+    ISTRUZIONI,
 }

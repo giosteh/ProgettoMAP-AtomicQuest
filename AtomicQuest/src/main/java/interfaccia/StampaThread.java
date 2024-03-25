@@ -12,18 +12,25 @@ public class StampaThread extends Thread {
     private final String testo;
     private final JTextArea textArea;
     private final Random random = new Random();
-    private final JTextField textField;
+    private JTextField textField;
 
     public StampaThread(final String testo, final JTextArea textArea, final JTextField textField) {
         this.testo = testo;
         this.textArea = textArea;
         this.textField = textField;
     }
+    
+    public StampaThread(final String testo, final JTextArea textArea) {
+        this.testo = testo;
+        this.textArea = textArea;
+    }
 
     @Override
     public void run() {
         try {
-            this.textField.setEditable(false);
+            if (this.textField != null) {
+                this.textField.setEditable(false);
+            }
             int lunghezzaTesto = testo.length();
             int indiceCorrente = 0;
 
@@ -40,9 +47,11 @@ public class StampaThread extends Thread {
 
                 Thread.sleep(random.nextInt(181) + 20);
             }
-            this.textField.setEditable(true);
+            if (this.textField != null) {
+                this.textField.setEditable(true);
+            }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
     
