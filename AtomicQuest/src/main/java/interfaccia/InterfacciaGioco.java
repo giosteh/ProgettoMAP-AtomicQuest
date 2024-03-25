@@ -10,9 +10,9 @@ import controller.OutputParser;
 import controller.Parser;
 import controller.RESTMeteoThread;
 import entita.Giocatore;
-import entita.LivelloRadioattivita;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -23,31 +23,35 @@ import javax.swing.JOptionPane;
  */
 public class InterfacciaGioco extends javax.swing.JFrame {
 
-    private Parser parser;
+    private final Parser parser;
+    private final Giocatore giocatore;
     private OutputParser outputParser = new OutputParser();
-    private AzioneSuInterfaccia azione;
-    private Giocatore giocatore;
     
     public InterfacciaGioco(Giocatore giocatore) {
-        initComponents();
-        centraFrame();
+        this.initComponents();
+        this.textAreaOutput.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        this.textFieldInput.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        this.centraFrame();
         this.giocatore = giocatore;
         this.parser = new Parser(this.giocatore);
         this.inizializzaImmaginiLabel();
         new RESTMeteoThread(this.labelMeteo).visualizzaMeteo();
-        String s = parser.getIntroduzione().getStringaDaStampare() + "\n Che vuoi fare? >> ";;
+        String s = parser.getIntroduzione().getStringaDaStampare() + "\n Che vuoi fare? >> ";
         new StampaThread(s, this.textAreaOutput, this.textFieldInput).stampa();
+        this.textFieldInput.grabFocus();
     }
     
     public InterfacciaGioco() {
-        initComponents();
-        centraFrame();
-        Giocatore giocatore = GestioneSalvataggi.selezionaDaDB("Utente");
-        this.giocatore = giocatore;
+        this.initComponents();
+        this.textAreaOutput.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        this.textFieldInput.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        this.centraFrame();
+        this.giocatore = GestioneSalvataggi.selezionaDaDB("Utente");
         this.parser = new Parser(this.giocatore);
         this.inizializzaImmaginiLabelDopoCaricamento();
         new RESTMeteoThread(this.labelMeteo).visualizzaMeteo();
         this.textAreaOutput.append(this.giocatore.getStanzaCorrente().getBenvenuto() + "\n Che vuoi fare? >> ");
+        this.textFieldInput.grabFocus();
     }
                 
     
@@ -60,36 +64,36 @@ public class InterfacciaGioco extends javax.swing.JFrame {
     
     private void inizializzaImmaginiLabelDopoCaricamento() {
         this.labelTitolo.setIcon(new ImageIcon("./risorse/img/Titolo.png"));
-        if (this.giocatore.isTutaIntegra())
+        if (this.giocatore.isTutaIntegra()) {
             this.labelTuta.setIcon(new ImageIcon("./risorse/img/TutaIntegra.jpg"));
-        else
+        } else {
             this.labelTuta.setIcon(new ImageIcon("./risorse/img/TutaRotta.jpg"));
+        }
         
-        if (this.giocatore.getStanzaCorrente().getEsposizRadioattiva() == LivelloRadioattivita.BASSO)
-            this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneBassa.jpg"));
-        else if (this.giocatore.getStanzaCorrente().getEsposizRadioattiva() == LivelloRadioattivita.MEDIO)
-            this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneMedia.jpg"));
-        else if (this.giocatore.getStanzaCorrente().getEsposizRadioattiva() == LivelloRadioattivita.ELEVATO)
-            this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneElevata.jpg"));
+        if (null != this.giocatore.getStanzaCorrente().getEsposizRadioattiva())
+            switch (this.giocatore.getStanzaCorrente().getEsposizRadioattiva()) {
+            case BASSO:
+                this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneBassa.jpg"));
+                break;
+            case MEDIO:
+                this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneMedia.jpg"));
+                break;
+            case ELEVATO:
+                this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneElevata.jpg"));
+                break;
+            default:
+                break;
+        }
             
     }
     
     private void centraFrame() {
-        // Ottenere la dimensione dello schermo
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-        // Ottenere la dimensione del frame
         Dimension frameSize = getSize();
-
-        // Calcolare la posizione del frame per centrarlo
         int x = (screenSize.width - frameSize.width) / 2;
         int y = (screenSize.height - frameSize.height) / 2;
-
-        // Impostare la posizione del frame
         setLocation(x, y);
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,7 +109,6 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         barraScrolloTextArea = new javax.swing.JScrollPane();
         textAreaOutput = new javax.swing.JTextArea();
         textFieldInput = new javax.swing.JTextField();
-        labelTitolo = new javax.swing.JLabel();
         labelMeteo = new javax.swing.JLabel();
         buttonPausa = new javax.swing.JButton();
         buttonGuida = new javax.swing.JButton();
@@ -113,6 +116,7 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         labelTuta = new javax.swing.JLabel();
         buttonInventario = new javax.swing.JButton();
         labelRadioattivita = new javax.swing.JLabel();
+        labelTitolo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AtomicQuest");
@@ -121,7 +125,7 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         panelPrincipale.setBackground(new java.awt.Color(0, 0, 0));
 
         panelSinistra.setBackground(new java.awt.Color(0, 0, 0));
-        panelSinistra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0), 2));
+        panelSinistra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(43, 147, 72), 2));
         panelSinistra.setForeground(new java.awt.Color(255, 255, 255));
 
         barraScrolloTextArea.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 52, 0), 2));
@@ -131,18 +135,19 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         textAreaOutput.setEditable(false);
         textAreaOutput.setBackground(new java.awt.Color(0, 0, 0));
         textAreaOutput.setColumns(20);
-        textAreaOutput.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        textAreaOutput.setForeground(new java.awt.Color(0, 102, 0));
+        textAreaOutput.setFont(new java.awt.Font("Courier New", 1, 16)); // NOI18N
+        textAreaOutput.setForeground(new java.awt.Color(210, 252, 131));
         textAreaOutput.setLineWrap(true);
         textAreaOutput.setRows(5);
         textAreaOutput.setWrapStyleWord(true);
-        textAreaOutput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(52, 52, 0), 2));
+        textAreaOutput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(20, 20, 20), 2));
         barraScrolloTextArea.setViewportView(textAreaOutput);
 
-        textFieldInput.setBackground(new java.awt.Color(51, 51, 0));
-        textFieldInput.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        textFieldInput.setForeground(new java.awt.Color(0, 102, 0));
-        textFieldInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0), 2));
+        textFieldInput.setEditable(false);
+        textFieldInput.setBackground(new java.awt.Color(20, 19, 19));
+        textFieldInput.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
+        textFieldInput.setForeground(new java.awt.Color(190, 238, 98));
+        textFieldInput.setBorder(null);
         textFieldInput.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         textFieldInput.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -150,14 +155,22 @@ public class InterfacciaGioco extends javax.swing.JFrame {
             }
         });
 
+        buttonPausa.setBackground(new java.awt.Color(51, 51, 51));
+        buttonPausa.setFont(new java.awt.Font("Courier New", 1, 16)); // NOI18N
+        buttonPausa.setForeground(new java.awt.Color(102, 255, 102));
         buttonPausa.setText("PAUSA");
+        buttonPausa.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 255, 102), 1, true));
         buttonPausa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonPausaActionPerformed(evt);
             }
         });
 
+        buttonGuida.setBackground(new java.awt.Color(51, 51, 51));
+        buttonGuida.setFont(new java.awt.Font("Courier New", 1, 16)); // NOI18N
+        buttonGuida.setForeground(new java.awt.Color(102, 255, 102));
         buttonGuida.setText("GUIDA");
+        buttonGuida.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 255, 102), 1, true));
         buttonGuida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonGuidaActionPerformed(evt);
@@ -168,42 +181,43 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         panelSinistra.setLayout(panelSinistraLayout);
         panelSinistraLayout.setHorizontalGroup(
             panelSinistraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelSinistraLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelSinistraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSinistraLayout.createSequentialGroup()
-                        .addComponent(buttonPausa)
-                        .addGap(18, 18, 18)
-                        .addComponent(buttonGuida)
-                        .addGap(5, 5, 5)
-                        .addComponent(labelTitolo, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(labelMeteo, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(barraScrolloTextArea)
-                    .addComponent(textFieldInput))
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSinistraLayout.createSequentialGroup()
+                .addGroup(panelSinistraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelSinistraLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(buttonPausa, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonGuida, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 356, Short.MAX_VALUE)
+                        .addComponent(labelMeteo, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelSinistraLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panelSinistraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(textFieldInput)
+                            .addComponent(barraScrolloTextArea, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE))))
+                .addGap(15, 15, 15))
         );
         panelSinistraLayout.setVerticalGroup(
             panelSinistraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelSinistraLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addGroup(panelSinistraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelTitolo, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addComponent(buttonPausa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonGuida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelMeteo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panelSinistraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(buttonPausa, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonGuida, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelMeteo, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(barraScrolloTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 456, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(barraScrolloTextArea, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(textFieldInput, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(9, 9, 9))
+                .addComponent(textFieldInput, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
 
         panelDestra.setBackground(new java.awt.Color(0, 0, 0));
-        panelDestra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 0), 2));
+        panelDestra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(43, 147, 72), 2));
 
-        buttonInventario.setBackground(new java.awt.Color(0, 102, 0));
-        buttonInventario.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        buttonInventario.setBackground(new java.awt.Color(102, 255, 102));
+        buttonInventario.setFont(new java.awt.Font("Courier New", 1, 22)); // NOI18N
         buttonInventario.setForeground(new java.awt.Color(0, 0, 0));
         buttonInventario.setText("INVENTARIO");
         buttonInventario.addActionListener(new java.awt.event.ActionListener() {
@@ -216,27 +230,25 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         panelDestra.setLayout(panelDestraLayout);
         panelDestraLayout.setHorizontalGroup(
             panelDestraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDestraLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelRadioattivita, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
             .addGroup(panelDestraLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelDestraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonInventario, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-                    .addComponent(labelTuta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addGroup(panelDestraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(labelRadioattivita, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelDestraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(buttonInventario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                        .addComponent(labelTuta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelDestraLayout.setVerticalGroup(
             panelDestraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDestraLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(labelRadioattivita, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelTuta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(buttonInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15))
+                .addGap(8, 8, 8)
+                .addComponent(labelRadioattivita, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelTuta, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout panelPrincipaleLayout = new javax.swing.GroupLayout(panelPrincipale);
@@ -246,31 +258,35 @@ public class InterfacciaGioco extends javax.swing.JFrame {
             .addGroup(panelPrincipaleLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelSinistra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panelDestra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(panelPrincipaleLayout.createSequentialGroup()
+                .addGap(337, 337, 337)
+                .addComponent(labelTitolo, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelPrincipaleLayout.setVerticalGroup(
             panelPrincipaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPrincipaleLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPrincipaleLayout.createSequentialGroup()
+                .addContainerGap(8, Short.MAX_VALUE)
+                .addComponent(labelTitolo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelPrincipaleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelDestra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelSinistra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 2, Short.MAX_VALUE)
-                .addComponent(panelPrincipale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(panelPrincipale, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipale, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelPrincipale, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -294,7 +310,7 @@ public class InterfacciaGioco extends javax.swing.JFrame {
                     return;
                 }
                
-                this.textAreaOutput.append(s.toUpperCase() + "\n");
+                this.textAreaOutput.append(s.toUpperCase().trim() + "\n");
                 new StampaThread("\n\n" + outputParser.getStringaDaStampare() +"\n Che vuoi fare? >> ", this.textAreaOutput, this.textFieldInput).stampa();
                 //this.textAreaOutput.append(s.toUpperCase() + "\n\n" + outputParser.getStringaDaStampare() + "\n Che vuoi fare? ");
                 if (this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAINTEGRA || 
@@ -324,20 +340,28 @@ public class InterfacciaGioco extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonGuidaActionPerformed
 
     private void gestisciLabelTuta() {
-        if (this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAINTEGRA)
+        if (this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAINTEGRA) {
             this.labelTuta.setIcon(new ImageIcon("./risorse/img/TutaIntegra.jpg"));
-        else
+        } else {
             this.labelTuta.setIcon(new ImageIcon("./risorse/img/TutaRotta.jpg"));
+        }
     }
     
     private void gestisciLabelRadioattivita() {
         
-        if (this.outputParser.getAzione() == AzioneSuInterfaccia.RADIAZIONIBASSE)
-            this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneBassa.jpg"));
-        else if (this.outputParser.getAzione() == AzioneSuInterfaccia.RADIAZIONIMEDIE)
-            this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneMedia.jpg"));
-        else
+        if (null == this.outputParser.getAzione()) {
             this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneElevata.jpg"));
+        } else switch (this.outputParser.getAzione()) {
+            case RADIAZIONIBASSE:
+                this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneBassa.jpg"));
+                break;
+            case RADIAZIONIMEDIE:
+                this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneMedia.jpg"));
+                break;
+            default:
+                this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneElevata.jpg"));
+                break;
+        }
     }
     
     private void gestisciFinale() {

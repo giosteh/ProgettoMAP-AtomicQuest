@@ -61,6 +61,7 @@ public class InterfacciaAvvioGioco extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("AtomicQuest");
+        setFocusableWindowState(false);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));

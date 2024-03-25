@@ -22,8 +22,8 @@ public class RESTMeteoThread extends Thread {
 
     private final RiconoscitoreMeteo pioggia = (id) -> ((id >= 200 && id <= 232) || (id >= 300 && id <= 321)
             || (id >= 500 && id <= 531) || (id >= 701 && id <= 781));
-    private final RiconoscitoreMeteo cieloSereno = (id) -> (id == 800);
-    private final RiconoscitoreMeteo nuvoloso = (id) -> (id >= 801 && id <= 804);
+    private final RiconoscitoreMeteo cieloSereno = (id) -> (id == 800 || id == 801);
+    private final RiconoscitoreMeteo nuvoloso = (id) -> (id >= 802 && id <= 804);
 
     private final static int INTERVALLO = 30000;
 
