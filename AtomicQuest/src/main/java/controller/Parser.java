@@ -212,7 +212,7 @@ public class Parser {
                     stanzaCorrente.setOsserva(this.stringhe.get(Output.OSSERVACORRIDOIOAPERTO.ordinal()));
                 }
                 break;
-            case 13: //usa cacciavite
+            case 13: // usa cacciavite
                 if (stanzaCorrente.getId() != Stanze.ANTICAMERASALAPOMPE) {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONUTILE.ordinal()));
                     return;
@@ -249,7 +249,8 @@ public class Parser {
                     outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONUTILE.ordinal()));
                     return;
                 }
-                if (!this.isOggettoPresenteInInventario(Items.CHIAVE, outputComando)) {
+                if (!this.giocatore.getInventario().contieneItem(Items.CHIAVE)) {
+                    outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICACHIAVENONINPOSSESSO.ordinal()));
                     return;
                 }
                 if (stanzaCorrente.getItemContenitorePerId(Items.ARMADIETTOSINISTRO).isAperto()) {

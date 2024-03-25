@@ -40,13 +40,16 @@ public class Inventario implements Serializable {
     }
 
     public String toString() {
+        if (this.items.isEmpty()) {
+            return "Non hai nulla nel tuo inventario.\n\n";
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("Nel tuo inventario hai:\n");
         for (Item i : this.items) {
-            sb.append(i.toString());
-            sb.append(", ");
+            sb.append(i.toString() + ", ");
         }
-        return sb.toString();
-            
+        sb.deleteCharAt(sb.length() - 1);
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.append(".\n\n").toString();
     }
 }
