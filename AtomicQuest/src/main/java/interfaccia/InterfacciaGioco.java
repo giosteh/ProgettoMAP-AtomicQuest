@@ -51,6 +51,7 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         this.inizializzaImmaginiLabelDopoCaricamento();
         new RESTMeteoThread(this.labelMeteo).visualizzaMeteo();
         this.textAreaOutput.append(this.giocatore.getStanzaCorrente().getBenvenuto() + "\n Che vuoi fare? >> ");
+        this.textFieldInput.setEditable(true);
         this.textFieldInput.grabFocus();
     }
                 
@@ -304,15 +305,13 @@ public class InterfacciaGioco extends javax.swing.JFrame {
                 this.outputParser = this.parser.analizzaComando(s);
                 
                 if (this.outputParser.getAzione().ordinal() == AzioneSuInterfaccia.FINE.ordinal()) {
-                    new StampaThread("\n\n" + outputParser.getStringaDaStampare(), this.textAreaOutput, this.textFieldInput).stampa();
-                    //this.textAreaOutput.append("\n\n" + outputParser.getStringaDaStampare());
-                    this.gestisciFinale();
+                    this.textAreaOutput.append(s.toUpperCase().trim() + "\n");
+                    new StampaThread("\n\n" + outputParser.getStringaDaStampare(), this.textAreaOutput, this.textFieldInput, this.outputParser).stampa();
                     return;
                 }
                
                 this.textAreaOutput.append(s.toUpperCase().trim() + "\n");
                 new StampaThread("\n\n" + outputParser.getStringaDaStampare() +"\n Che vuoi fare? >> ", this.textAreaOutput, this.textFieldInput).stampa();
-                //this.textAreaOutput.append(s.toUpperCase() + "\n\n" + outputParser.getStringaDaStampare() + "\n Che vuoi fare? ");
                 if (this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAINTEGRA || 
                     this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAROTTA) {
                             this.gestisciLabelTuta();
@@ -362,10 +361,6 @@ public class InterfacciaGioco extends javax.swing.JFrame {
                 this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneElevata.jpg"));
                 break;
         }
-    }
-    
-    private void gestisciFinale() {
-        this.textFieldInput.setEditable(false);
     }
     
    

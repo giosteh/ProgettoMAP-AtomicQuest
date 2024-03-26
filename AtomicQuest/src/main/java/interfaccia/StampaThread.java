@@ -1,6 +1,8 @@
 
 package interfaccia;
 
+
+import controller.OutputParser;
 import java.util.Random;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -13,7 +15,9 @@ public class StampaThread extends Thread {
     private final JTextArea textArea;
     private final Random random = new Random();
     private JTextField textField;
-
+    private OutputParser output;
+    
+    
     public StampaThread(final String testo, final JTextArea textArea, final JTextField textField) {
         this.testo = testo;
         this.textArea = textArea;
@@ -23,6 +27,13 @@ public class StampaThread extends Thread {
     public StampaThread(final String testo, final JTextArea textArea) {
         this.testo = testo;
         this.textArea = textArea;
+    }
+    
+    public StampaThread(final String testo, final JTextArea textArea, final JTextField textField, OutputParser output) {
+        this.testo = testo;
+        this.textArea = textArea;
+        this.textField = textField;
+        this.output = output;
     }
 
     @Override
@@ -49,6 +60,10 @@ public class StampaThread extends Thread {
             }
             if (this.textField != null) {
                 this.textField.setEditable(true);
+            }
+            
+            if (this.output != null) {
+                this.textField.setEditable(false);
             }
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
