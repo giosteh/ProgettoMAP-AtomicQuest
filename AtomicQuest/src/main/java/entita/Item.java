@@ -10,27 +10,28 @@ import java.util.Objects;
 public class Item implements Comparable, Serializable {
 
     private final Items id;
+    private String nome;
     private String descrizione;
     private final boolean prendibile;
-    private String nomeItem;
 
     /**
      * Costruttore di default.
      * @param id l'id dell'item
-     * @param nomeItem il nome dell'item
+     * @param nome il nome dell'item
      * @param descrizione la descrizione dell'item
      * @param prendibile true se l'item è prendibile, false altrimenti
      */
-    public Item(final Items id, final String nomeItem,
+    public Item(final Items id, final String nome,
             final String descrizione, final boolean prendibile) {
         this.id = id;
-        this.nomeItem = nomeItem;
+        this.nome = nome;
         this.descrizione = descrizione;
         this.prendibile = prendibile;
     }
 
     /**
      * Metodo che restituisce l'id dell'item.
+     * @return id
      */
     public Items getId() {
         return this.id;
@@ -38,6 +39,7 @@ public class Item implements Comparable, Serializable {
 
     /**
      * Metodo che restituisce la descrizione dell'item.
+     * @return descrizione
      */
     public String getDescrizione() {
         return this.descrizione;
@@ -53,6 +55,7 @@ public class Item implements Comparable, Serializable {
 
     /**
      * Metodo che restituisce true se l'item è prendibile, false altrimenti.
+     * @return prendibile
      */
     public boolean isPrendibile() {
         return this.prendibile;
@@ -88,9 +91,9 @@ public class Item implements Comparable, Serializable {
     
     /**
      * Metodo che restituisce la stringa rappresentante l'item.
+     * @return la stringa che rappresenta l'item
      */
     public String toString() {
-        return this.nomeItem;
+        return this.nome;
     }
-    
 }

@@ -17,6 +17,7 @@ public class GestioneFile {
     /**
      * Metodo che carica una mappa da file.
      * @param nomeFile il nome del file
+     * @return la mappa caricata
      */
     public static <E, F> Map<E, F> caricaMap(final String nomeFile) {
         FileInputStream inFile = null;
@@ -67,6 +68,7 @@ public class GestioneFile {
     /**
      * Metodo che carica una lista da file.
      * @param nomeFile il nome del file
+     * @return la lista caricata
      */
     public static <E> List<E> caricaList(final String nomeFile) {
         FileInputStream inFile = null;

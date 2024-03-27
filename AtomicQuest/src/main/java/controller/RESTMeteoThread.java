@@ -30,7 +30,7 @@ public class RESTMeteoThread extends Thread {
     private final RiconoscitoreMeteo cieloSereno = (id) -> (id == 800 || id == 801);
     private final RiconoscitoreMeteo nuvoloso = (id) -> (id >= 802 && id <= 804);
 
-    private final static int INTERVALLO = 30000;
+    private final static int INTERVALLO = 180000;
 
     private final JLabel label;
 
@@ -43,8 +43,9 @@ public class RESTMeteoThread extends Thread {
 
     /**
      * Metodo che restituisce l'id del meteo.
+     * @return il codice del meteo
      */
-    public int getMeteoID() {
+    private int getMeteoID() {
         String meteoID = "";
         Client client = ClientBuilder.newClient();
         WebTarget target = client.target("https://api.openweathermap.org/data/2.5/weather")

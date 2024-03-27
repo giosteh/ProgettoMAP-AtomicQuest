@@ -21,6 +21,7 @@ public class GrafoMap<N, T> implements Grafo<N, T>, Serializable {
 
     /**
      * Metodo che restituisce true se il grafo è vuoto, false altrimenti.
+     * @return true se il grafo è vuoto, false altrimenti
      */
     public boolean isVuoto() {
         return this.grafo.isEmpty();
@@ -29,6 +30,7 @@ public class GrafoMap<N, T> implements Grafo<N, T>, Serializable {
     /**
      * Metodo che restituisce true se esiste un nodo nel grafo, false altrimenti.
      * @param nodo il nodo da cercare
+     * @return true se il grafo contiene il nodo, false altrimenti
      */
     public boolean esisteNodo(final N nodo) {
         return this.grafo.containsKey(nodo);
@@ -38,6 +40,7 @@ public class GrafoMap<N, T> implements Grafo<N, T>, Serializable {
      * Metodo che restituisce true se esiste un arco tra due nodi, false altrimenti.
      * @param nodo1 il primo nodo
      * @param nodo2 il secondo nodo
+     * @return true se il grafo contiene l'arco, false altrimenti
      */
     public boolean esisteArco(final N nodo1, final N nodo2) {
         if (!this.esisteNodo(nodo1) || !this.esisteNodo(nodo2)) {
@@ -109,6 +112,7 @@ public class GrafoMap<N, T> implements Grafo<N, T>, Serializable {
      * Metodo che restituisce l'etichetta di un arco tra due nodi.
      * @param nodo1 il primo nodo
      * @param nodo2 il secondo nodo
+     * @return l'etichetta dell'arco
      */
     public T leggiArco(final N nodo1, final N nodo2)
             throws NodoInesistenteException, ArcoInesistenteException {
@@ -124,6 +128,7 @@ public class GrafoMap<N, T> implements Grafo<N, T>, Serializable {
     /**
      * Metodo che restituisce l'insieme dei nodi adiacenti a un nodo.
      * @param nodo il nodo di cui si vogliono conoscere i nodi adiacenti
+     * @return l'insieme dei nodi adiacenti
      */
     public Set<N> adiacenti(final N nodo)
             throws NodoInesistenteException {
@@ -136,6 +141,7 @@ public class GrafoMap<N, T> implements Grafo<N, T>, Serializable {
     /**
      * Metodo che restituisce l'insieme delle coppie nodo-etichetta adiacenti a un nodo.
      * @param nodo il nodo di cui si vogliono conoscere le coppie nodo-etichetta adiacenti
+     * @return l'insieme delle entries dei nodi adiacenti
      */
     public Set<Map.Entry<N, T>> adiacentiEntries(final N nodo)
             throws NodoInesistenteException {

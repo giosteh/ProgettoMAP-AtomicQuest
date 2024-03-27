@@ -62,6 +62,7 @@ public class Parser {
     /**
      * Metodo che restituisce l'oggetto di classe OutputParser che rappresenta l'output del comando inserito.
      * @param comando il comando inserito dall'utente
+     * @return l'oggetto OutputParser costruito
      */
     public OutputParser analizzaComando(final String comando) {
         String codiceComando = this.ottieniCodiceComando(comando.toLowerCase());
@@ -600,6 +601,7 @@ public class Parser {
      * Metodo che verifica se l'oggetto è presente nell'inventario del giocatore.
      * @param oggetto l'oggetto da verificare
      * @param outputComando l'output del comando
+     * @return true se l'oggetto è presente nell'inventario
      */
     private boolean isOggettoPresenteInInventario(final Items oggetto, final OutputParser outputComando) {
         if (!this.giocatore.getInventario().contieneItem(oggetto)) {
@@ -612,6 +614,7 @@ public class Parser {
     /**
      * Metodo che restituisce il codice del comando inserito.
      * @param comando il comando inserito dall'utente
+     * @return il codice del comando
      */
     private String ottieniCodiceComando(final String comando) {
         String codiceComando = "";
@@ -627,6 +630,7 @@ public class Parser {
 
     /**
      * Metodo che verifica se il giocatore ha preso l'uranio.
+     * @return true se il giocatore ha preso l'uranio, false altrimenti
      */
     private boolean verificaUranio() {
         return this.giocatore.isUranioPreso();
@@ -634,6 +638,7 @@ public class Parser {
 
     /**
      * Metodo che resituisce l'introduzione del gioco.
+     * @return l'oggetto OutputParser iniziale
      */
     public OutputParser getIntroduzione() {
         OutputParser outputComando = new OutputParser();

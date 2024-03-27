@@ -37,6 +37,7 @@ public class Inventario implements Serializable {
 
     /**
      * Metodo che restituisce l'iteratore degli item.
+     * @return items.iterator
      */
     public Iterator<Item> iteratore() {
         return this.items.iterator();
@@ -45,6 +46,7 @@ public class Inventario implements Serializable {
     /**
      * Metodo che restituisce l'item corrispondente all'id.
      * @param item l'id dell'item
+     * @return l'item corrispondente all'id
      */
     public Item getItemPerId(final Items item) {
         for (Item i : this.items) {
@@ -58,6 +60,7 @@ public class Inventario implements Serializable {
     /**
      * Metodo che restituisce true se l'inventario contiene un item, false altrimenti.
      * @param id l'id dell'item
+     * @return true se l'inventario contiene l'item, false altrimenti
      */
     public boolean contieneItem(final Items id) {
         return this.getItemPerId(id) != null;
@@ -65,6 +68,7 @@ public class Inventario implements Serializable {
 
     /**
      * Metodo che restituisce la stringa rappresentante l'inventario.
+     * @return la stringa che rappresenta l'inventario
      */
     public String toString() {
         if (this.items.isEmpty()) {
