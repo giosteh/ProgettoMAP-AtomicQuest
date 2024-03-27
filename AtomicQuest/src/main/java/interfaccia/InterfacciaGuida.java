@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package interfaccia;
 
 import controller.GestioneFile;
@@ -10,15 +7,9 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.List;
 
-/**
- *
- * @author giuse
- */
+
 public class InterfacciaGuida extends javax.swing.JFrame {
 
-    /**
-     * Creates new form InterfacciaGuida
-     */
     public InterfacciaGuida() {
         initComponents();
         centraFrame();
@@ -26,17 +17,10 @@ public class InterfacciaGuida extends javax.swing.JFrame {
     }
     
     private void centraFrame() {
-        // Ottenere la dimensione dello schermo
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-        // Ottenere la dimensione del frame
         Dimension frameSize = getSize();
-
-        // Calcolare la posizione del frame per centrarlo
         int x = (screenSize.width - frameSize.width) / 2;
         int y = (screenSize.height - frameSize.height) / 2;
-
-        // Impostare la posizione del frame
         setLocation(x, y);
     }
     
@@ -62,34 +46,39 @@ public class InterfacciaGuida extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setAutoscrolls(true);
         jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jScrollPane1.setViewportView(null);
 
         textAreaIstruzioni.setEditable(false);
+        textAreaIstruzioni.setBackground(new java.awt.Color(0, 0, 0));
         textAreaIstruzioni.setColumns(20);
-        textAreaIstruzioni.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        textAreaIstruzioni.setFont(new java.awt.Font("Courier New", 0, 16)); // NOI18N
+        textAreaIstruzioni.setForeground(new java.awt.Color(153, 255, 102));
         textAreaIstruzioni.setLineWrap(true);
         textAreaIstruzioni.setRows(5);
         textAreaIstruzioni.setWrapStyleWord(true);
+        textAreaIstruzioni.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jScrollPane1.setViewportView(textAreaIstruzioni);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(40, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package interfaccia;
 
 import java.awt.Dimension;
@@ -9,14 +6,11 @@ import java.awt.Toolkit;
 import controller.GestioneSalvataggi;
 import entita.Giocatore;
 
-/**
- *
- * @author giuse
- */
+
 public class InterfacciaPausa extends javax.swing.JFrame {
 
-    private InterfacciaGioco interfacciaGioco;
-    private Giocatore giocatore;
+    private final InterfacciaGioco interfacciaGioco;
+    private final Giocatore giocatore;
     
     public InterfacciaPausa(InterfacciaGioco interfacciaGioco, Giocatore giocatore) {
         initComponents();
@@ -27,17 +21,10 @@ public class InterfacciaPausa extends javax.swing.JFrame {
     }
     
      private void centraFrame() {
-        // Ottenere la dimensione dello schermo
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-        // Ottenere la dimensione del frame
         Dimension frameSize = getSize();
-
-        // Calcolare la posizione del frame per centrarlo
         int x = (screenSize.width - frameSize.width) / 2;
         int y = (screenSize.height - frameSize.height) / 2;
-
-        // Impostare la posizione del frame
         setLocation(x, y);
     }
 
@@ -60,21 +47,33 @@ public class InterfacciaPausa extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
+        buttonRiprendi.setBackground(new java.awt.Color(43, 147, 72));
+        buttonRiprendi.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
+        buttonRiprendi.setForeground(new java.awt.Color(255, 255, 255));
         buttonRiprendi.setText("RIPRENDI");
+        buttonRiprendi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         buttonRiprendi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonRiprendiActionPerformed(evt);
             }
         });
 
+        buttonSalva.setBackground(new java.awt.Color(43, 147, 72));
+        buttonSalva.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
+        buttonSalva.setForeground(new java.awt.Color(255, 255, 255));
         buttonSalva.setText("SALVA");
+        buttonSalva.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         buttonSalva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonSalvaActionPerformed(evt);
             }
         });
 
+        buttonEsci.setBackground(new java.awt.Color(43, 147, 72));
+        buttonEsci.setFont(new java.awt.Font("Courier New", 1, 18)); // NOI18N
+        buttonEsci.setForeground(new java.awt.Color(255, 255, 255));
         buttonEsci.setText("ESCI");
+        buttonEsci.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         buttonEsci.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonEsciActionPerformed(evt);
@@ -86,23 +85,23 @@ public class InterfacciaPausa extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(210, 210, 210)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonRiprendi, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonSalva, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonEsci, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(210, Short.MAX_VALUE))
+                .addGap(46, 46, 46)
+                .addComponent(buttonRiprendi, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(buttonSalva, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(buttonEsci, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(buttonRiprendi, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
-                .addComponent(buttonSalva, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
-                .addComponent(buttonEsci, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(50, Short.MAX_VALUE))
+                .addGap(60, 60, 60)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonRiprendi, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonSalva, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonEsci, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(60, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -113,7 +112,7 @@ public class InterfacciaPausa extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
