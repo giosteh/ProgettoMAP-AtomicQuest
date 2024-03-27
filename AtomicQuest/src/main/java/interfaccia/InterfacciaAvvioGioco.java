@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package interfaccia;
 
 import controller.GestioneSalvataggi;
@@ -11,10 +8,7 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author giuse
- */
+
 public class InterfacciaAvvioGioco extends javax.swing.JFrame {
 
     private final Giocatore giocatore = new Giocatore("Utente");
@@ -26,17 +20,10 @@ public class InterfacciaAvvioGioco extends javax.swing.JFrame {
     }
     
     private void centraFrame() {
-        // Ottenere la dimensione dello schermo
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-        // Ottenere la dimensione del frame
         Dimension frameSize = getSize();
-
-        // Calcolare la posizione del frame per centrarlo
         int x = (screenSize.width - frameSize.width) / 2;
         int y = (screenSize.height - frameSize.height) / 2;
-
-        // Impostare la posizione del frame
         setLocation(x, y);
     }
     
@@ -66,30 +53,33 @@ public class InterfacciaAvvioGioco extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
-        buttonNuovaPartita.setBackground(new java.awt.Color(0, 102, 0));
-        buttonNuovaPartita.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        buttonNuovaPartita.setBackground(new java.awt.Color(183, 255, 50));
+        buttonNuovaPartita.setFont(new java.awt.Font("Courier New", 1, 22)); // NOI18N
         buttonNuovaPartita.setForeground(new java.awt.Color(0, 0, 0));
         buttonNuovaPartita.setText("NUOVA PARTITA");
+        buttonNuovaPartita.setBorder(null);
         buttonNuovaPartita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonNuovaPartitaActionPerformed(evt);
             }
         });
 
-        buttonContinua.setBackground(new java.awt.Color(0, 102, 0));
-        buttonContinua.setFont(new java.awt.Font("Candara", 1, 18)); // NOI18N
+        buttonContinua.setBackground(new java.awt.Color(247, 195, 43));
+        buttonContinua.setFont(new java.awt.Font("Courier New", 1, 22)); // NOI18N
         buttonContinua.setForeground(new java.awt.Color(0, 0, 0));
         buttonContinua.setText("CONTINUA");
+        buttonContinua.setBorder(null);
         buttonContinua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonContinuaActionPerformed(evt);
             }
         });
 
-        buttonEsci.setBackground(new java.awt.Color(0, 102, 0));
-        buttonEsci.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
-        buttonEsci.setForeground(new java.awt.Color(0, 0, 0));
+        buttonEsci.setBackground(new java.awt.Color(0, 0, 0));
+        buttonEsci.setFont(new java.awt.Font("Courier New", 1, 22)); // NOI18N
+        buttonEsci.setForeground(new java.awt.Color(204, 255, 51));
         buttonEsci.setText("ESCI");
+        buttonEsci.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 255, 51), 2));
         buttonEsci.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonEsciActionPerformed(evt);
@@ -101,29 +91,29 @@ public class InterfacciaAvvioGioco extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(buttonNuovaPartita, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(110, 110, 110)
-                .addComponent(buttonContinua, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
-                .addComponent(buttonEsci, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonNuovaPartita, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addComponent(buttonContinua, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addComponent(buttonEsci, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(89, 89, 89))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(189, 189, 189)
-                .addComponent(labelCopertina, javax.swing.GroupLayout.PREFERRED_SIZE, 591, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(152, 152, 152)
+                .addComponent(labelCopertina, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(152, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(labelCopertina, javax.swing.GroupLayout.PREFERRED_SIZE, 449, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonNuovaPartita, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonContinua, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonEsci, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addComponent(labelCopertina, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonNuovaPartita, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonContinua, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonEsci, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -150,9 +140,9 @@ public class InterfacciaAvvioGioco extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonEsciActionPerformed
 
     private void buttonContinuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonContinuaActionPerformed
-        if (GestioneSalvataggi.isDBVuoto())
+        if (GestioneSalvataggi.isDBVuoto()) {
             JOptionPane.showMessageDialog(this, "Non hai salvato nessuna partita");
-        else {
+        } else {
             new InterfacciaGioco().setVisible(true);
             this.dispose();
         }

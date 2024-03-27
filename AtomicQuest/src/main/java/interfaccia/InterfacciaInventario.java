@@ -1,24 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package interfaccia;
 
-import controller.OutputParser;
-import controller.AzioneSuInterfaccia;
 import entita.Giocatore;
 import entita.Items;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author giuse
- */
-public class InterfacciaInventario extends javax.swing.JFrame {
 
-    private Giocatore giocatore;
+public class InterfacciaInventario extends javax.swing.JFrame {
     
     public InterfacciaInventario(Giocatore giocatore) {
         initComponents();
@@ -27,32 +17,31 @@ public class InterfacciaInventario extends javax.swing.JFrame {
     }
     
     private void visualizzaInventario(Giocatore giocatore) {
-        if (giocatore.getInventario().contieneItem(Items.TESSERINO))
+        if (giocatore.getInventario().contieneItem(Items.TESSERINO)) {
             this.labelTesserino.setIcon(new ImageIcon("./risorse/img/Tesserino.jpg"));
-        if (giocatore.getInventario().contieneItem(Items.CACCIAVITE))
+        }
+        if (giocatore.getInventario().contieneItem(Items.CACCIAVITE)) {
             this.labelCacciavite.setIcon(new ImageIcon("./risorse/img/Cacciavite.jpg"));
-        if (giocatore.getInventario().contieneItem(Items.TELECOMANDO))
+        }
+        if (giocatore.getInventario().contieneItem(Items.TELECOMANDO)) {
             this.labelTelecomando.setIcon(new ImageIcon("./risorse/img/Telecomando.jpg"));
-        if (giocatore.getInventario().contieneItem(Items.CHIAVE))
+        }
+        if (giocatore.getInventario().contieneItem(Items.CHIAVE)) {
             this.labelChiave.setIcon(new ImageIcon("./risorse/img/Chiave.jpg"));
-        if (giocatore.getInventario().contieneItem(Items.FOGLIO))
+        }
+        if (giocatore.getInventario().contieneItem(Items.FOGLIO)) {
             this.labelFoglio.setIcon(new ImageIcon("./risorse/img/Foglio.jpg"));
-        if (giocatore.getInventario().contieneItem(Items.TORCIA))
+        }
+        if (giocatore.getInventario().contieneItem(Items.TORCIA)) {
             this.labelTorcia.setIcon(new ImageIcon("./risorse/img/Torcia.jpg"));
+        }
     }
-    
-     private void centraFrame() {
-        // Ottenere la dimensione dello schermo
+
+    private void centraFrame() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
-        // Ottenere la dimensione del frame
         Dimension frameSize = getSize();
-
-        // Calcolare la posizione del frame per centrarlo
         int x = (screenSize.width - frameSize.width) / 2;
         int y = (screenSize.height - frameSize.height) / 2;
-
-        // Impostare la posizione del frame
         setLocation(x, y);
     }
 
@@ -87,7 +76,7 @@ public class InterfacciaInventario extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addGap(18, 18, 18)
                 .addComponent(labelTesserino, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(labelCacciavite, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -95,16 +84,16 @@ public class InterfacciaInventario extends javax.swing.JFrame {
                 .addComponent(labelTelecomando, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(labelFoglio, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(labelChiave, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(labelTorcia, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
+                .addContainerGap(37, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(labelTorcia, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                     .addComponent(labelChiave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -112,20 +101,18 @@ public class InterfacciaInventario extends javax.swing.JFrame {
                     .addComponent(labelTelecomando, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelTesserino, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelCacciavite, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(21, 21, 21))
+                .addGap(37, 37, 37))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();

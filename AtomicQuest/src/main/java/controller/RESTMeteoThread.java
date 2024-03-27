@@ -76,7 +76,7 @@ public class RESTMeteoThread extends Thread {
                 }
                 Thread.sleep(RESTMeteoThread.INTERVALLO);
             } catch (InterruptedException ex) {
-                ex.printStackTrace();
+                System.err.println(ex.getMessage());
             }
         }
     }

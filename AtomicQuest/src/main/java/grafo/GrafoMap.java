@@ -69,17 +69,6 @@ public class GrafoMap<N, T> implements Grafo<N, T>, Serializable {
         this.grafo.get(nodo1).put(nodo2, val);
     }
 
-    public void scriviArco(final N nodo1, final N nodo2, final T val)
-            throws NodoInesistenteException, ArcoInesistenteException {
-        if (!this.esisteNodo(nodo1) || !this.esisteNodo(nodo2)) {
-            throw new NodoInesistenteException();
-        }
-        if (!this.esisteArco(nodo1, nodo2)) {
-            throw new ArcoInesistenteException();
-        }
-        this.grafo.get(nodo1).put(nodo2, val);
-    }
-
     public T leggiArco(final N nodo1, final N nodo2)
             throws NodoInesistenteException, ArcoInesistenteException {
         if (!this.esisteNodo(nodo1) || !this.esisteNodo(nodo2)) {
