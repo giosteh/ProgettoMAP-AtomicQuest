@@ -9,9 +9,15 @@ import java.io.ObjectOutputStream;
 import java.util.Map;
 import java.util.List;
 
-
+/**
+ * Classe che si occupa della gestione dei file.
+ */
 public class GestioneFile {
 
+    /**
+     * Metodo che carica una mappa da file.
+     * @param nomeFile il nome del file
+     */
     public static <E, F> Map<E, F> caricaMap(final String nomeFile) {
         FileInputStream inFile = null;
         try {
@@ -34,6 +40,11 @@ public class GestioneFile {
         return null;
     }
 
+    /**
+     * Metodo che salva una mappa su file.
+     * @param mappa la mappa da salvare
+     * @param nomeFile il nome del file
+     */
     public static <E, F> void salvaMap(Map<E, F> mappa, final String nomeFile) {
         FileOutputStream outFile = null;
         try {
@@ -53,6 +64,10 @@ public class GestioneFile {
         }
     }
 
+    /**
+     * Metodo che carica una lista da file.
+     * @param nomeFile il nome del file
+     */
     public static <E> List<E> caricaList(final String nomeFile) {
         FileInputStream inFile = null;
         try {
@@ -73,6 +88,11 @@ public class GestioneFile {
         return null;
     }
 
+    /**
+     * Metodo che salva una lista su file.
+     * @param lista la lista da salvare
+     * @param nomeFile il nome del file
+     */
     public static <E> void salvaList(List<E> lista, final String nomeFile) {
         FileOutputStream outFile = null;
         try {

@@ -8,7 +8,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-
+/**
+ * Classe che rappresenta un thread per la stampa di un testo.
+ */
 public class StampaThread extends Thread {
     
     private final String testo;
@@ -17,18 +19,35 @@ public class StampaThread extends Thread {
     private JTextField textField;
     private OutputParser output;
     
-    
+    /**
+     * Costruttore con parametri.
+     * @param testo il testo da stampare
+     * @param textArea l'area di testo in cui stampare il testo
+     * @param textField il campo di testo da disabilitare
+     */
     public StampaThread(final String testo, final JTextArea textArea, final JTextField textField) {
         this.testo = testo;
         this.textArea = textArea;
         this.textField = textField;
     }
     
+    /**
+     * Costruttore con parametri.
+     * @param testo il testo da stampare
+     * @param textArea l'area di testo in cui stampare il testo
+     */
     public StampaThread(final String testo, final JTextArea textArea) {
         this.testo = testo;
         this.textArea = textArea;
     }
     
+    /**
+     * Costruttore con parametri.
+     * @param testo il testo da stampare
+     * @param textArea l'area di testo in cui stampare il testo
+     * @param textField il campo di testo da disabilitare
+     * @param output l'output da stampare
+     */
     public StampaThread(final String testo, final JTextArea textArea, final JTextField textField, OutputParser output) {
         this.testo = testo;
         this.textArea = textArea;
@@ -70,6 +89,9 @@ public class StampaThread extends Thread {
         }
     }
     
+    /**
+     * Metodo che avvia il thread.
+     */
     public void stampa() {
         this.start();
     }

@@ -3,7 +3,9 @@ package grafo;
 
 import java.util.Set;
 
-
+/**
+ * Interfaccia che rappresenta un grafo.
+ */
 public interface Grafo<N, T> {
 
     public boolean isVuoto();

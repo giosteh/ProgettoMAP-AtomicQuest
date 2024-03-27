@@ -7,15 +7,23 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.List;
 
-
+/**
+ * Classe che rappresenta l'interfaccia della guida.
+ */
 public class InterfacciaGuida extends javax.swing.JFrame {
 
+    /**
+     * Costruttore di default.
+     */
     public InterfacciaGuida() {
         initComponents();
         centraFrame();
         visualizzaIstruzioni();
     }
     
+    /**
+     * Metodo che centra il frame.
+     */
     private void centraFrame() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
@@ -24,6 +32,9 @@ public class InterfacciaGuida extends javax.swing.JFrame {
         setLocation(x, y);
     }
     
+    /**
+     * Metodo che visualizza le istruzioni.
+     */
     private void visualizzaIstruzioni() {
         List<String> stringhe = GestioneFile.caricaList("./risorse/files/stringhe.dat");
         String s  = stringhe.get(Output.ISTRUZIONI.ordinal());

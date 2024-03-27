@@ -15,13 +15,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-
+/**
+ * Classe che si occupa della gestione dei salvataggi.
+ */
 public class GestioneSalvataggi {
     
     private static final String CREAZIONETABELLA = "CREATE TABLE IF NOT EXISTS salvataggi"
             + "(id INT AUTO_INCREMENT PRIMARY KEY, nome VARCHAR(1024), obj BLOB);";
 
-
+    /**
+     * Metodo che si connette al database.
+     */
     private static Connection connettiAlDB() {
         String dbpath = "jdbc:h2:./risorse/db/salvataggio";
         Properties props = new Properties();
@@ -36,6 +40,9 @@ public class GestioneSalvataggi {
         return null;
     }
 
+    /**
+     * Metodo che crea la tabella nel database.
+     */
     public static void creaTabellaInDB() {
         try (Connection conn = GestioneSalvataggi.connettiAlDB();
                 Statement stm = conn.createStatement()) {
@@ -45,6 +52,11 @@ public class GestioneSalvataggi {
         }
     }
 
+    /**
+     * Metodo che inserisce un oggetto nel database.
+     * @param nome il nome dell'oggetto da inserire
+     * @param obj l'oggetto da inserire
+     */
     public static boolean inserisciInDB(final String nome, final Giocatore obj) {
         try (Connection conn = GestioneSalvataggi.connettiAlDB();
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -63,6 +75,10 @@ public class GestioneSalvataggi {
         return false;
     }
 
+    /**
+     * Metodo che seleziona un oggetto dal database.
+     * @param nome il nome dell'oggetto da selezionare
+     */
     public static Giocatore selezionaDaDB(final String nome) {
         try (Connection conn = GestioneSalvataggi.connettiAlDB();
                 PreparedStatement pstm = conn.prepareStatement("SELECT obj FROM salvataggi WHERE (nome = ?)")) {
@@ -86,6 +102,10 @@ public class GestioneSalvataggi {
         return null;
     }
 
+    /**
+     * Metodo che rimuove un oggetto dal database.
+     * @param nome il nome dell'oggetto da rimuovere
+     */
     public static void rimuoviDaDB(final String nome) {
         try (Connection conn = GestioneSalvataggi.connettiAlDB();
                 PreparedStatement pstm = conn.prepareStatement("DELETE FROM salvataggi WHERE (nome = ?)")) {
@@ -97,6 +117,9 @@ public class GestioneSalvataggi {
         }
     }
     
+    /**
+     * Metodo che verifica se il database è vuoto.
+     */
     public static boolean isDBVuoto() {
         try (Connection conn = GestioneSalvataggi.connettiAlDB();
                 Statement stm = conn.createStatement();

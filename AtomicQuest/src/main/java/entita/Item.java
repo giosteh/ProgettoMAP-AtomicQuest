@@ -4,7 +4,9 @@ package entita;
 import java.io.Serializable;
 import java.util.Objects;
 
-
+/**
+ * Classe che rappresenta un item.
+ */
 public class Item implements Comparable, Serializable {
 
     private final Items id;
@@ -12,6 +14,13 @@ public class Item implements Comparable, Serializable {
     private final boolean prendibile;
     private String nomeItem;
 
+    /**
+     * Costruttore di default.
+     * @param id l'id dell'item
+     * @param nomeItem il nome dell'item
+     * @param descrizione la descrizione dell'item
+     * @param prendibile true se l'item è prendibile, false altrimenti
+     */
     public Item(final Items id, final String nomeItem,
             final String descrizione, final boolean prendibile) {
         this.id = id;
@@ -20,18 +29,31 @@ public class Item implements Comparable, Serializable {
         this.prendibile = prendibile;
     }
 
+    /**
+     * Metodo che restituisce l'id dell'item.
+     */
     public Items getId() {
         return this.id;
     }
 
+    /**
+     * Metodo che restituisce la descrizione dell'item.
+     */
     public String getDescrizione() {
         return this.descrizione;
     }
 
+    /**
+     * Metodo che imposta la descrizione dell'item.
+     * @param descrizione la descrizione dell'item
+     */
     public void setDescrizione(final String descrizione) {
         this.descrizione = descrizione;
     }
 
+    /**
+     * Metodo che restituisce true se l'item è prendibile, false altrimenti.
+     */
     public boolean isPrendibile() {
         return this.prendibile;
     }
@@ -64,6 +86,9 @@ public class Item implements Comparable, Serializable {
         return this.id.compareTo(other.id);
     }
     
+    /**
+     * Metodo che restituisce la stringa rappresentante l'item.
+     */
     public String toString() {
         return this.nomeItem;
     }

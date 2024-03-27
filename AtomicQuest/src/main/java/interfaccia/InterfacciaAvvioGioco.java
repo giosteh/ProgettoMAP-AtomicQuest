@@ -8,17 +8,25 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-
+/**
+ * Classe che rappresenta l'interfaccia di avvio del gioco.
+ */
 public class InterfacciaAvvioGioco extends javax.swing.JFrame {
 
     private final Giocatore giocatore = new Giocatore("Utente");
     
+    /**
+     * Costruttore di default.
+     */
     public InterfacciaAvvioGioco() {
-        initComponents();
-        inizializzaIcone();
-        centraFrame();
+        this.initComponents();
+        this.inizializzaIcone();
+        this.centraFrame();
     }
     
+    /**
+     * Metodo che centra il frame.
+     */
     private void centraFrame() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
@@ -27,6 +35,9 @@ public class InterfacciaAvvioGioco extends javax.swing.JFrame {
         setLocation(x, y);
     }
     
+    /**
+     * Metodo che inizializza le icone.
+     */
     private void inizializzaIcone() {
         this.labelCopertina.setIcon(new ImageIcon("./risorse/img/Copertina.jpg"));
     }

@@ -1,7 +1,9 @@
 
 package grafo;
 
-
+/**
+ * Eccezione lanciata quando si cerca di rimuovere un arco non esistente.
+ */
 public class ArcoInesistenteException extends Exception {
 
     @Override
