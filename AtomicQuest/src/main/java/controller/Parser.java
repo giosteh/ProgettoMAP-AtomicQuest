@@ -16,13 +16,21 @@ import java.util.Scanner;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-
+/**
+ * Classe che si occupa del parsing dei comandi inseriti dall'utente.
+ */
 public class Parser {
 
+    /**
+     * Interfaccia funzionale che rappresenta un validatore di comandi.
+     */
     interface ValidatoreComando {
         boolean isValido(String comando);
     }
 
+    /**
+     * Interfaccia funzionale che rappresenta un riconoscitore di comandi.
+     */
     interface RiconoscitoreComando {
         boolean riconosci(int tipoComando);
     }
@@ -40,6 +48,10 @@ public class Parser {
     private final RiconoscitoreComando riconoscitoreComandoDove = (a) -> (a == 56);
     private final RiconoscitoreComando riconoscitoreComandoStampaInventario = (a) -> (a == 57);
 
+    /**
+     * Costruttore della classe.
+     * @param giocatore il giocatore
+     */
     public Parser(Giocatore giocatore) {
         this.giocatore = giocatore;
         this.vocabolario = GestioneFile.caricaMap("./risorse/files/vocabolario.dat");
@@ -47,6 +59,10 @@ public class Parser {
         this.stringhe = GestioneFile.caricaList("./risorse/files/stringhe.dat");
     }
 
+    /**
+     * Metodo che restituisce l'oggetto di classe OutputParser che rappresenta l'output del comando inserito.
+     * @param comando il comando inserito dall'utente
+     */
     public OutputParser analizzaComando(final String comando) {
         String codiceComando = this.ottieniCodiceComando(comando.toLowerCase());
         ValidatoreComando validatore = (a) -> (this.comandi.get(a) != null);
@@ -76,6 +92,11 @@ public class Parser {
         return outputComando;
     }
 
+    /**
+     * Metodo che gestisce lo spostamento del giocatore.
+     * @param tipoComando il tipo di comando
+     * @param outputComando l'output del comando
+     */
     private void gestisciSpostamento(final int tipoComando, final OutputParser outputComando) {
         Direzione direzione = null;
         Stanza stanzaCorrente = this.giocatore.getStanzaCorrente();
@@ -155,6 +176,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Metodo che gestisce l'osservazione della stanza corrente.
+     * @param tipoComando il tipo di comando
+     * @param outputComando l'output del comando
+     */
     private void gestisciOsserva(final int tipoComando, final OutputParser outputComando) {
         if (verificaUranio()) {
             outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASCELTAOBBLIGATORIA.ordinal()));
@@ -163,6 +189,11 @@ public class Parser {
         outputComando.setStringaDaStampare(this.giocatore.getStanzaCorrente().getOsserva());
     }
 
+    /**
+     * Metodo che gestisce l'uso degli oggetti.
+     * @param tipoComando il tipo di comando
+     * @param outputComando l'output del comando
+     */
     private void gestisciUso(final int tipoComando, final OutputParser outputComando) {
         Stanza stanzaCorrente = this.giocatore.getStanzaCorrente();
         if (verificaUranio()) {
@@ -294,6 +325,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Metodo che gestisce l'inventario del giocatore.
+     * @param tipoComando il tipo di comando
+     * @param outputComando l'output del comando
+     */
     private void gestisciInventario(final int tipoComando, final OutputParser outputComando) {
         Stanza stanzaCorrente = this.giocatore.getStanzaCorrente();
         Item itemRaccolto = null;
@@ -422,6 +458,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Metodo che gestisce il finale del gioco.
+     * @param tipoComando il tipo di comando
+     * @param outputComando l'output del comando
+     */
     private void gestisciFinale(final int tipoComando, final OutputParser outputComando) {
         switch (tipoComando) {
             case 53: // prendi uranio
@@ -455,6 +496,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Metodo che gestisce l'osservazione degli oggetti.
+     * @param tipoComando il tipo di comando
+     * @param outputComando l'output del comando
+     */
     private void gestisciOsservaItem(final int tipoComando, final OutputParser outputComando) {
         if (verificaUranio()) {
             outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASCELTAOBBLIGATORIA.ordinal()));
@@ -524,6 +570,11 @@ public class Parser {
         }
     }
 
+    /**
+     * Metodo che gestisce il comando per sapere dove si trova il giocatore.
+     * @param tipoComando il tipo di comando
+     * @param outputComando l'output del comando
+     */
     private void gestisciDove(final int tipoComando, final OutputParser outputComando) {
         if (verificaUranio()) {
             outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASCELTAOBBLIGATORIA.ordinal()));
@@ -532,6 +583,11 @@ public class Parser {
         outputComando.setStringaDaStampare(this.giocatore.getStanzaCorrente().getBenvenuto());
     }
 
+    /**
+     * Metodo che gestisce la stampa dell'inventario del giocatore.
+     * @param tipoComando il tipo di comando
+     * @param outputComando l'output del comando
+     */
     private void gestisciStampaInventario(final int tipoComando, final OutputParser outputComando) {
         if (verificaUranio()) {
             outputComando.setStringaDaStampare(stringhe.get(Output.NOTIFICASCELTAOBBLIGATORIA.ordinal()));
@@ -540,6 +596,11 @@ public class Parser {
         outputComando.setStringaDaStampare(this.giocatore.getInventario().toString());
     }
 
+    /**
+     * Metodo che verifica se l'oggetto è presente nell'inventario del giocatore.
+     * @param oggetto l'oggetto da verificare
+     * @param outputComando l'output del comando
+     */
     private boolean isOggettoPresenteInInventario(final Items oggetto, final OutputParser outputComando) {
         if (!this.giocatore.getInventario().contieneItem(oggetto)) {
             outputComando.setStringaDaStampare(this.stringhe.get(Output.NOTIFICAOGGETTONONINPOSSESSO.ordinal()));
@@ -547,8 +608,11 @@ public class Parser {
         }
         return true;
     }
-        
     
+    /**
+     * Metodo che restituisce il codice del comando inserito.
+     * @param comando il comando inserito dall'utente
+     */
     private String ottieniCodiceComando(final String comando) {
         String codiceComando = "";
         Scanner scanComando = new Scanner(comando.replaceAll("\\p{Punct}", " ").trim());
@@ -561,10 +625,16 @@ public class Parser {
         return codiceComando;
     }
 
+    /**
+     * Metodo che verifica se il giocatore ha preso l'uranio.
+     */
     private boolean verificaUranio() {
         return this.giocatore.isUranioPreso();
     }
 
+    /**
+     * Metodo che resituisce l'introduzione del gioco.
+     */
     public OutputParser getIntroduzione() {
         OutputParser outputComando = new OutputParser();
         outputComando.setStringaDaStampare(this.stringhe.get(Output.INTRODUZIONE.ordinal()) + this.stringhe.get(Output.DESCRIZIONECORTILE.ordinal()));

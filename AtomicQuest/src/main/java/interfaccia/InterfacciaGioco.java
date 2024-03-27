@@ -13,13 +13,19 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-
+/**
+ * Classe che rappresenta l'interfaccia di gioco principale.
+ */
 public class InterfacciaGioco extends javax.swing.JFrame {
 
     private final Parser parser;
     private final Giocatore giocatore;
     private OutputParser outputParser = new OutputParser();
     
+    /**
+     * Costruttore con parametri per la nuova partita.
+     * @param giocatore il giocatore
+     */
     public InterfacciaGioco(Giocatore giocatore) {
         this.initComponents();
         this.textAreaOutput.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -34,6 +40,9 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         this.textFieldInput.grabFocus();
     }
     
+    /**
+     * Costruttore per la continuazione di una partita.
+     */
     public InterfacciaGioco() {
         this.initComponents();
         this.textAreaOutput.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -48,12 +57,18 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         this.textFieldInput.grabFocus();
     }
     
+    /**
+     * Metodo che inizializza le immagini delle label.
+     */
     private void inizializzaImmaginiLabel() {
         this.labelTuta.setIcon(new ImageIcon("./risorse/img/TutaIntegra.jpg"));
         this.labelTitolo.setIcon(new ImageIcon("./risorse/img/Titolo.png"));
         this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneBassa.jpg")); 
     }
     
+    /**
+     * Metodo che inizializza le immagini delle label dopo il caricamento.
+     */
     private void inizializzaImmaginiLabelDopoCaricamento() {
         this.labelTitolo.setIcon(new ImageIcon("./risorse/img/Titolo.png"));
         if (this.giocatore.isTutaIntegra()) {
@@ -78,6 +93,9 @@ public class InterfacciaGioco extends javax.swing.JFrame {
             }
     }
 
+    /**
+     * Metodo che centra il frame.
+     */
     private void centraFrame() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
@@ -330,6 +348,9 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         new InterfacciaGuida().setVisible(true);
     }//GEN-LAST:event_buttonGuidaActionPerformed
 
+    /**
+     * Metodo che gestisce l'immagine della tuta.
+     */
     private void gestisciLabelTuta() {
         if (this.outputParser.getAzione() == AzioneSuInterfaccia.TUTAINTEGRA) {
             this.labelTuta.setIcon(new ImageIcon("./risorse/img/TutaIntegra.jpg"));
@@ -338,6 +359,9 @@ public class InterfacciaGioco extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Metodo che gestisce l'immagine della radioattività.
+     */
     private void gestisciLabelRadioattivita() {
         if (null == this.outputParser.getAzione()) {
             this.labelRadioattivita.setIcon(new ImageIcon("./risorse/img/RadiazioneElevata.jpg"));

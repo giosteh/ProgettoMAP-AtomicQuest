@@ -7,15 +7,25 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
-
+/**
+ * Classe che rappresenta l'interfaccia dell'inventario.
+ */
 public class InterfacciaInventario extends javax.swing.JFrame {
     
+    /**
+     * Costruttore di default.
+     * @param giocatore il giocatore
+     */
     public InterfacciaInventario(Giocatore giocatore) {
         initComponents();
         this.centraFrame();
         this.visualizzaInventario(giocatore);
     }
     
+    /**
+     * Metodo che visualizza l'inventario.
+     * @param giocatore il giocatore
+     */
     private void visualizzaInventario(Giocatore giocatore) {
         if (giocatore.getInventario().contieneItem(Items.TESSERINO)) {
             this.labelTesserino.setIcon(new ImageIcon("./risorse/img/Tesserino.jpg"));
@@ -37,6 +47,9 @@ public class InterfacciaInventario extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Metodo che centra il frame.
+     */
     private void centraFrame() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();

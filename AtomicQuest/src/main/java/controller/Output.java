@@ -1,7 +1,9 @@
 
 package controller;
 
-
+/**
+ * Enumerazione che rappresenta i possibili output del gioco.
+ */
 public enum Output {
     INTRODUZIONE,
     

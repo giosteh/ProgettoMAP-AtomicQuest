@@ -13,9 +13,14 @@ import javax.ws.rs.core.Response;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-
+/**
+ * Classe che si occupa di gestire il meteo tramite REST.
+ */
 public class RESTMeteoThread extends Thread {
-    
+
+    /**
+     * Interfaccia funzionale per riconoscere il meteo.
+     */
     private interface RiconoscitoreMeteo {
         boolean isMeteoCorrente(int meteoID);
     }
@@ -29,12 +34,16 @@ public class RESTMeteoThread extends Thread {
 
     private final JLabel label;
 
-    
+    /**
+     * Costruttore di default.
+     */
     public RESTMeteoThread(final JLabel label) {
         this.label = label;
     }
 
-
+    /**
+     * Metodo che restituisce l'id del meteo.
+     */
     public int getMeteoID() {
         String meteoID = "";
         Client client = ClientBuilder.newClient();
@@ -63,6 +72,9 @@ public class RESTMeteoThread extends Thread {
         return Integer.parseInt(meteoID);
     }
 
+    /**
+     * Metodo che esegue il thread.
+     */
     public void run() {
         while (true) {
             try {
@@ -80,7 +92,10 @@ public class RESTMeteoThread extends Thread {
             }
         }
     }
-    
+
+    /**
+     * Metodo che visualizza il meteo.
+     */
     public void visualizzaMeteo() {
         this.start();
     }

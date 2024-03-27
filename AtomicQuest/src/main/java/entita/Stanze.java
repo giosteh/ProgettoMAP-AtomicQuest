@@ -3,6 +3,9 @@ package entita;
 
 import java.io.Serializable;
 
+/**
+ * Enumerazione che rappresenta le stanze.
+ */
 public enum Stanze implements Serializable {
     CORTILE,
     ATRIO,

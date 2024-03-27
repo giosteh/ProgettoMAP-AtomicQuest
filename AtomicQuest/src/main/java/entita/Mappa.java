@@ -14,39 +14,65 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
+/**
+ * Classe che rappresenta la mappa del gioco.
+ */
 public class Mappa implements Serializable {
     
     private final GrafoMap<Stanza, Collegamento> grafo = new GrafoMap<>();
     private final List<Stanza> stanzePresenti = new ArrayList<>();
 
+    /**
+     * Classe che rappresenta il collegamento tra due stanze.
+     */
     private class Collegamento implements Serializable {
 
         private final Direzione direzione;
         private ModalitaDiAccesso modalita;
 
+        /**
+         * Costruttore di default della classe Collegamento.
+         * @param direzione la direzione del collegamento
+         * @param modalita la modalità di accesso del collegamento
+         */
         private Collegamento(final Direzione direzione, final ModalitaDiAccesso modalita) {
             this.direzione = direzione;
             this.modalita = modalita;
         }
 
+        /**
+         * Metodo che restituisce la direzione del collegamento.
+         */
         public Direzione getDirezione() {
             return this.direzione;
         }
 
+        /**
+         * Metodo che restituisce la modalità di accesso del collegamento.
+         */
         public ModalitaDiAccesso getModalita() {
             return this.modalita;
         }
 
+        /**
+         * Metodo che imposta la modalità di accesso del collegamento.
+         * @param modalita la modalità di accesso del collegamento
+         */
         public void setModalita(final ModalitaDiAccesso modalita) {
             this.modalita = modalita;
         }
     }
 
+    /**
+     * Costruttore di default della classe Mappa.
+     */
     public Mappa() {
         this.initMappa();
     }
 
+    /**
+     * Metodo che inizializza la mappa del gioco.
+     */
     public void initMappa() {
         List<String> stringhe = GestioneFile.caricaList("./risorse/files/stringhe.dat");
         
@@ -207,6 +233,10 @@ public class Mappa implements Serializable {
         }
     }
 
+    /**
+     * Metodo che restituisce le stanze adiacenti a una stanza.
+     * @param stanza la stanza di cui si vogliono conoscere le stanze adiacenti
+     */
     public Iterator<Stanza> getStanzeAdiacenti(final Stanza stanza) {
         try {
             return this.grafo.adiacenti(stanza).iterator();
@@ -216,10 +246,19 @@ public class Mappa implements Serializable {
         return null;
     }
 
+    /**
+     * Metodo che restituisce la stanza per un id.
+     * @param id l'id della stanza
+     */
     public Stanza getStanzaPerId(final Stanze id) {
         return this.stanzePresenti.get(id.ordinal());
     }
 
+    /**
+     * Metodo che restituisce la stanza per una direzione.
+     * @param stanza la stanza di partenza
+     * @param direzione la direzione
+     */
     public Stanza getStanzaPerDirezione(final Stanza stanza, final Direzione direzione) {
         try {
             Set<Map.Entry<Stanza, Collegamento>> adj = this.grafo.adiacentiEntries(stanza);
@@ -236,10 +275,21 @@ public class Mappa implements Serializable {
         return null;
     }
 
+    /**
+     * Metodo che restituisce true se esiste una stanza successiva, false altrimenti.
+     * @param stanza la stanza di partenza
+     * @param direzione la direzione
+     */
     public boolean esisteStanzaSuccessiva(final Stanza stanza, final Direzione direzione) {
         return this.getStanzaPerDirezione(stanza, direzione) != null;
     }
 
+    /**
+     * Metodo che imposta la modalità di accesso di un collegamento.
+     * @param stanza la stanza di partenza
+     * @param direzione la direzione
+     * @param modalita la modalità di accesso
+     */
     public void cambiaModalitaDiAccesso(final Stanza stanza, final Direzione direzione, final ModalitaDiAccesso modalita) {
         try {
             this.grafo.leggiArco(stanza, this.getStanzaPerDirezione(stanza, direzione)).setModalita(modalita);
@@ -248,6 +298,12 @@ public class Mappa implements Serializable {
         }
     }
 
+    /**
+     * Metodo che restituisce true se la modalità di accesso di un collegamento è ugale a quella passata, false altrimenti.
+     * @param stanza la stanza di partenza
+     * @param direzione la direzione
+     * @param modalita la modalità di accesso
+     */
     public boolean verificaModalitaAccesso(final Stanza stanza, final Direzione direzione, final ModalitaDiAccesso modalita) {
         try {
             return this.grafo.leggiArco(stanza, this.getStanzaPerDirezione(stanza, direzione)).getModalita() == modalita;

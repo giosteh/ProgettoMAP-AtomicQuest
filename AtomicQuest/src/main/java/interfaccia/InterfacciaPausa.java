@@ -6,12 +6,19 @@ import java.awt.Toolkit;
 import controller.GestioneSalvataggi;
 import entita.Giocatore;
 
-
+/**
+ * Classe che rappresenta l'interfaccia di pausa.
+ */
 public class InterfacciaPausa extends javax.swing.JFrame {
 
     private final InterfacciaGioco interfacciaGioco;
     private final Giocatore giocatore;
     
+    /**
+     * Costruttore di default.
+     * @param interfacciaGioco l'interfaccia del gioco
+     * @param giocatore il giocatore
+     */
     public InterfacciaPausa(InterfacciaGioco interfacciaGioco, Giocatore giocatore) {
         initComponents();
         centraFrame();
@@ -20,7 +27,10 @@ public class InterfacciaPausa extends javax.swing.JFrame {
         interfacciaGioco.setVisible(false);
     }
     
-     private void centraFrame() {
+    /**
+     * Metodo che centra il frame.
+     */
+    private void centraFrame() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = getSize();
         int x = (screenSize.width - frameSize.width) / 2;
