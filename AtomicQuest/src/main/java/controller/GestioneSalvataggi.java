@@ -25,6 +25,7 @@ public class GestioneSalvataggi {
 
     /**
      * Metodo che si connette al database.
+     * @return l'oggetto Connection
      */
     private static Connection connettiAlDB() {
         String dbpath = "jdbc:h2:./risorse/db/salvataggio";
@@ -56,6 +57,7 @@ public class GestioneSalvataggi {
      * Metodo che inserisce un oggetto nel database.
      * @param nome il nome dell'oggetto da inserire
      * @param obj l'oggetto da inserire
+     * @return true se l'inserimento è riuscito, false altrimenti
      */
     public static boolean inserisciInDB(final String nome, final Giocatore obj) {
         try (Connection conn = GestioneSalvataggi.connettiAlDB();
@@ -78,6 +80,7 @@ public class GestioneSalvataggi {
     /**
      * Metodo che seleziona un oggetto dal database.
      * @param nome il nome dell'oggetto da selezionare
+     * @return il giocatore caricato dal DB
      */
     public static Giocatore selezionaDaDB(final String nome) {
         try (Connection conn = GestioneSalvataggi.connettiAlDB();
@@ -119,6 +122,7 @@ public class GestioneSalvataggi {
     
     /**
      * Metodo che verifica se il database è vuoto.
+     * @return true se vuoto, false altrimenti
      */
     public static boolean isDBVuoto() {
         try (Connection conn = GestioneSalvataggi.connettiAlDB();
@@ -127,9 +131,7 @@ public class GestioneSalvataggi {
             res.next();
             return res.getInt(1) == 0;
         } catch (SQLException ex) {
-            System.err.println(ex.getMessage());
+            return true;
         }
-        return true;
     }
-    
 }

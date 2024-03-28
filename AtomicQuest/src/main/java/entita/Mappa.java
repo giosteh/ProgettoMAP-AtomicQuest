@@ -42,6 +42,7 @@ public class Mappa implements Serializable {
 
         /**
          * Metodo che restituisce la direzione del collegamento.
+         * @return direzione
          */
         public Direzione getDirezione() {
             return this.direzione;
@@ -49,6 +50,7 @@ public class Mappa implements Serializable {
 
         /**
          * Metodo che restituisce la modalità di accesso del collegamento.
+         * @return modalita
          */
         public ModalitaDiAccesso getModalita() {
             return this.modalita;
@@ -236,6 +238,7 @@ public class Mappa implements Serializable {
     /**
      * Metodo che restituisce le stanze adiacenti a una stanza.
      * @param stanza la stanza di cui si vogliono conoscere le stanze adiacenti
+     * @return l'iteratore sugli adiacenti
      */
     public Iterator<Stanza> getStanzeAdiacenti(final Stanza stanza) {
         try {
@@ -249,6 +252,7 @@ public class Mappa implements Serializable {
     /**
      * Metodo che restituisce la stanza per un id.
      * @param id l'id della stanza
+     * @return la stanza cercata
      */
     public Stanza getStanzaPerId(final Stanze id) {
         return this.stanzePresenti.get(id.ordinal());
@@ -258,6 +262,7 @@ public class Mappa implements Serializable {
      * Metodo che restituisce la stanza per una direzione.
      * @param stanza la stanza di partenza
      * @param direzione la direzione
+     * @return la stanza cercata
      */
     public Stanza getStanzaPerDirezione(final Stanza stanza, final Direzione direzione) {
         try {
@@ -279,6 +284,7 @@ public class Mappa implements Serializable {
      * Metodo che restituisce true se esiste una stanza successiva, false altrimenti.
      * @param stanza la stanza di partenza
      * @param direzione la direzione
+     * @return true se la stanza esiste, false altrimenti
      */
     public boolean esisteStanzaSuccessiva(final Stanza stanza, final Direzione direzione) {
         return this.getStanzaPerDirezione(stanza, direzione) != null;
@@ -303,6 +309,7 @@ public class Mappa implements Serializable {
      * @param stanza la stanza di partenza
      * @param direzione la direzione
      * @param modalita la modalità di accesso
+     * @return true se la modalità è quella indicata, false altrimenti
      */
     public boolean verificaModalitaAccesso(final Stanza stanza, final Direzione direzione, final ModalitaDiAccesso modalita) {
         try {

@@ -26,6 +26,7 @@ public class Giocatore extends Player implements Serializable {
 
     /**
      * Metodo che restituisce true se la tuta è integra, false altrimenti.
+     * @return tutaIntegra
      */
     public boolean isTutaIntegra() {
         return this.tutaIntegra;
@@ -41,6 +42,7 @@ public class Giocatore extends Player implements Serializable {
 
     /**
      * Metodo che restituisce la stanza corrente.
+     * @return stanzaCorrente
      */
     public Stanza getStanzaCorrente() {
         return this.stanzaCorrente;
@@ -56,6 +58,7 @@ public class Giocatore extends Player implements Serializable {
 
     /**
      * Metodo che restituisce la mappa.
+     * @return mappa
      */
     public Mappa getMappa() {
         return this.mappa;
@@ -71,6 +74,7 @@ public class Giocatore extends Player implements Serializable {
 
     /**
      * Metodo che restituisce true se l'uranio è stato preso, false altrimenti.
+     * @return uranioPreso
      */
     public boolean isUranioPreso() {
         return this.uranioPreso;
@@ -86,6 +90,7 @@ public class Giocatore extends Player implements Serializable {
 
     /**
      * Metodo che restituisce true se il codice è stato scoperto, false altrimenti.
+     * @return codiceScoperto
      */
     public boolean isCodiceScoperto() {
         return this.codiceScoperto;

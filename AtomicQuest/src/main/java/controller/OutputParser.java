@@ -28,6 +28,7 @@ public class OutputParser {
 
     /**
      * Metodo che restituisce la stringa da stampare.
+     * @return la stringa da stampare
      */
     public String getStringaDaStampare() {
         return stringaDaStampare;
@@ -35,6 +36,7 @@ public class OutputParser {
 
     /**
      * Metodo che restituisce l'azione da eseguire sull'interfaccia.
+     * @return l'azione da eseguire sull'interfaccia
      */
     public AzioneSuInterfaccia getAzione() {
         return azione;

@@ -22,6 +22,7 @@ public abstract class Player implements Serializable {
 
     /**
      * Metodo che restituisce il nome del giocatore.
+     * @return nome
      */
     public String getNome() {
         return this.nome;
@@ -29,6 +30,7 @@ public abstract class Player implements Serializable {
 
     /**
      * Metodo che restituisce l'inventario del giocatore.
+     * @return inventario
      */
     public Inventario getInventario() {
         return this.inventario;

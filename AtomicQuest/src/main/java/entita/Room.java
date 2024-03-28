@@ -14,8 +14,8 @@ public class Room implements Serializable {
     private final String descrizione;
     private String osserva;
     private final String benvenuto;
-    private final Set<Item> itemPresenti = new TreeSet<>();
-    private final Set<ItemContenitore> itemContenitoriPresenti = new TreeSet<>();
+    private final Set<Item> itemsPresenti = new TreeSet<>();
+    private final Set<ItemContenitore> itemsContenitoriPresenti = new TreeSet<>();
 
     /**
      * Costruttore di default.
@@ -24,7 +24,6 @@ public class Room implements Serializable {
      * @param benvenuto il messaggio di benvenuto della stanza
      */
     public Room(final String descrizione, final String osserva, final String benvenuto) {
-
         this.descrizione = descrizione;
         this.osserva = osserva;
         this.benvenuto = benvenuto;
@@ -32,6 +31,7 @@ public class Room implements Serializable {
 
     /**
      * Metodo che restituisce la descrizione della stanza.
+     * @return descrizione
      */
     public String getDescrizione() {
         return this.descrizione;
@@ -39,6 +39,7 @@ public class Room implements Serializable {
 
     /**
      * Metodo che restituisce il messaggio di benvenuto della stanza.
+     * @return benvenuto
      */
     public String getBenvenuto() {
         return this.benvenuto;
@@ -46,6 +47,7 @@ public class Room implements Serializable {
 
     /**
      * Metodo che restituisce la descrizione della stanza quando si osserva.
+     * @return osserva
      */
     public String getOsserva() {
         return osserva;
@@ -64,7 +66,7 @@ public class Room implements Serializable {
      * @param item l'item da aggiungere
      */
     public void aggiungiItem(final Item item) {
-        this.itemPresenti.add(item);
+        this.itemsPresenti.add(item);
     }
 
     /**
@@ -72,14 +74,15 @@ public class Room implements Serializable {
      * @param id l'id dell'item da rimuovere
      */
     public void rimuoviItem(final Items id) {
-        this.itemPresenti.removeIf(i -> i.getId() == id);
+        this.itemsPresenti.removeIf(i -> i.getId() == id);
     }
 
     /**
      * Metodo che restituisce l'iteratore degli item presenti nella stanza.
+     * @return itemsPresenti.iterator
      */
     public Iterator<Item> iteratoreItem() {
-        return this.itemPresenti.iterator();
+        return this.itemsPresenti.iterator();
     }
     
     /**
@@ -87,14 +90,15 @@ public class Room implements Serializable {
      * @param itemContenitore l'item contenitore da aggiungere
      */
     public void aggiungiItemContenitore(final ItemContenitore itemContenitore) {
-        this.itemContenitoriPresenti.add(itemContenitore);
+        this.itemsContenitoriPresenti.add(itemContenitore);
     }
 
     /**
      * Metodo che restituisce l'iteratore degli item contenitori presenti nella stanza.
+     * @return itemsContenitoriPresenti.iterator
      */
     public Iterator<ItemContenitore> iteratoreItemContenitore() {
-        return this.itemContenitoriPresenti.iterator();
+        return this.itemsContenitoriPresenti.iterator();
     }
 
 }

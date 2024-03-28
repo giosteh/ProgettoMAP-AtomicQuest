@@ -31,6 +31,7 @@ public class Stanza extends Room implements Serializable {
 
     /**
      * Metodo che restituisce il livello di esposizione radioattiva della stanza.
+     * @return esposizRadioattiva
      */
     public LivelloRadioattivita getEsposizRadioattiva() {
         return this.esposizRadioattiva;
@@ -38,6 +39,7 @@ public class Stanza extends Room implements Serializable {
 
     /**
      * Metodo che restituisce true se la stanza ha un livello di esposizione radioattiva medio o elevato, false altrimenti.
+     * @return true se l'esposizione radioattiva è medio-alta, false altrimenti
      */
     public boolean isRadioattiva() {
         return this.esposizRadioattiva == LivelloRadioattivita.MEDIO || this.esposizRadioattiva == LivelloRadioattivita.ELEVATO;
@@ -45,6 +47,7 @@ public class Stanza extends Room implements Serializable {
 
     /**
      * Metodo che restituisce true se la stanza è stata visitata, false altrimenti.
+     * @return visitata
      */
     public boolean isVisitata() {
         return this.visitata;
@@ -60,6 +63,7 @@ public class Stanza extends Room implements Serializable {
 
     /**
      * Metodo che restituisce l'id della stanza.
+     * @return id
      */
     public Stanze getId() {
         return id;
@@ -90,6 +94,7 @@ public class Stanza extends Room implements Serializable {
     /**
      * Metodo che restituisce l'item corrispondente all'id.
      * @param id l'id dell'item
+     * @return l'item cercato
      */
     public Item getItemPerId(final Items id) {
         Iterator<Item> it = this.iteratoreItem();
@@ -106,6 +111,7 @@ public class Stanza extends Room implements Serializable {
     /**
      * Metodo che restituisce true se la stanza contiene un item, false altrimenti.
      * @param id l'id dell'item
+     * @return true se l'item è presente nella stanza, false altrimenti
      */
     public boolean contieneItem(final Items id) {
         return this.getItemPerId(id) != null;
@@ -114,6 +120,7 @@ public class Stanza extends Room implements Serializable {
     /**
      * Metodo che restituisce l'item contenitore corrispondente all'id.
      * @param id l'id dell'item contenitore
+     * @return l'item contenitore cercato
      */
     public ItemContenitore getItemContenitorePerId(final Items id) {
         Iterator<ItemContenitore> it = this.iteratoreItemContenitore();
@@ -126,5 +133,4 @@ public class Stanza extends Room implements Serializable {
         }
         return itemCercato;
     }
-
 }

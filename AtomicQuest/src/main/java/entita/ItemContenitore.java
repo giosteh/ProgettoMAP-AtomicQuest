@@ -39,6 +39,7 @@ public class ItemContenitore extends Item implements Serializable {
     /**
      * Metodo che rimuove un item dall'item contenitore.
      * @param id l'id dell'item da rimuovere
+     * @return l'item rimosso
      */
     public Item rimuoviItem(final Items id) {
         Iterator<Item> it = this.itemsContenuti.iterator();
@@ -54,6 +55,7 @@ public class ItemContenitore extends Item implements Serializable {
 
     /**
      * Metodo che restituisce true se l'item è aperto, false altrimenti.
+     * @return aperto
      */
     public boolean isAperto() {
         return this.aperto;
@@ -69,6 +71,7 @@ public class ItemContenitore extends Item implements Serializable {
 
     /**
      * Metodo che restituisce l'iteratore degli item contenuti.
+     * @return itemsContenuti.iterator
      */
     public Iterator<Item> iteratore() {
         return this.itemsContenuti.iterator();
