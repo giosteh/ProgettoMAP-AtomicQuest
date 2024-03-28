@@ -169,6 +169,9 @@ adiacenti(G', n')
 
 ![Specifica algebrica](specifica-algebrica.png)
 
+Specifichiamo che i metodi "inserisciArcoConEtichetta" e "adiacentiEntries" non sono stati riportati in quanto del tutto speculari rispettivamente a "inserisciArco" e "adiacenti".
+
+
 ### 2.3 Scelte implementative
 
 Elenchiamo ora gli *argomenti* utilizzati all'interno del nostro progetto e ne illustriamo l'impiego.
