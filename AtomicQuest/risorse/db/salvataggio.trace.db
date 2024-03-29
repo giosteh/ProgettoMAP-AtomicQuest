@@ -1,3 +1,9 @@
-2024-03-29 18:47:34.762167+01:00 jdbc[3]: exception
+2024-03-29 23:00:50.982000+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SALVATAGGI" not found (this database is empty); SQL statement:
+SELECT COUNT(*) FROM salvataggi [42104-224]
+2024-03-29 23:00:53.657000+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SALVATAGGI" not found (this database is empty); SQL statement:
+SELECT COUNT(*) FROM salvataggi [42104-224]
+2024-03-29 23:00:56.831000+01:00 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "SALVATAGGI" not found (this database is empty); SQL statement:
 SELECT COUNT(*) FROM salvataggi [42104-224]
