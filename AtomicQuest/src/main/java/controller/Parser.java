@@ -10,9 +10,11 @@ import entita.Stanza;
 import entita.Stanze;
 import entita.Items;
 import entita.Item;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -617,14 +619,14 @@ public class Parser {
      * @return il codice del comando
      */
     private String ottieniCodiceComando(final String comando) {
-        String codiceComando = "";
-        Scanner scanComando = new Scanner(comando.replaceAll("\\p{Punct}", " ").trim());
-        scanComando.useDelimiter("\\s+");
-        
+        StringTokenizer tokenizer = new StringTokenizer(comando.replaceAll("\\p{Punct}", " ").trim());
+
         Function<String, String> codiceMapper = this.vocabolario::get;
-        codiceComando = scanComando.tokens().map(codiceMapper)
-                .collect(Collectors.joining("", codiceComando, ""));
-        scanComando.close();
+        List<Object> tokensList = Collections.list(tokenizer);
+        String codiceComando = tokensList.stream()
+                            .map(Object::toString)
+                            .map(codiceMapper)
+                            .collect(Collectors.joining());
         return codiceComando;
     }
 
