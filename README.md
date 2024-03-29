@@ -1,7 +1,5 @@
 # "Atomic Quest" - Un'avventura testuale
 
-# DOCUMENTAZIONE ATOMIC QUEST
-
 ## Team: Stea Giovanni, Scazzari Lorenzo, Ventrella Giuseppe
 
 Abbiamo realizzato un'avventura testuale, scritta in linguaggio Java, con titolo **Atomic Quest**.
