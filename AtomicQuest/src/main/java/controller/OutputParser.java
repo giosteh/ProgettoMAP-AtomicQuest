@@ -51,7 +51,7 @@ public class OutputParser {
     }
 
     /**
-     * Metodo che imposta l'azione da eseguire sull'interfaccia.+
+     * Metodo che imposta l'azione da eseguire sull'interfaccia.
      * @param azione l'azione da eseguire sull'interfaccia
      */
     public void setAzione(AzioneSuInterfaccia azione) {
